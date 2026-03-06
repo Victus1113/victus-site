@@ -1,0 +1,52 @@
+body {
+    background-color: #39344B; /* 靛色背景 */
+    color: #f0f0f0;            /* 白色文字 */
+    font-family: "Times New Roman", "Yu Mincho", "MS Mincho", serif;
+    line-height: 2;
+}
+
+/* 整個內容區 */
+.container {
+    width: 520px;
+    margin-left: 120px;
+    margin-top: 120px;
+}
+
+/* 標題 */
+h1 {
+    font-weight: normal;
+    letter-spacing: 6px;
+    font-size: 28px;
+    margin-bottom: 40px;
+}
+
+/* 引言文字 */
+.quote {
+    margin: 50px 0;
+    font-style: italic;
+    color: #cccccc;
+}
+
+/* 分隔線 */
+hr {
+    border: none;
+    border-top: 1px solid #666;
+    margin: 40px 0;
+}
+
+/* 連結 */
+a {
+    color: #ffffff;
+    text-decoration: none;
+    line-height: 2.2;
+}
+
+/* 滑鼠移上去 */
+a:hover {
+    color: #aaaaaa;
+}
+
+p {
+    max-width: 480px;
+    letter-spacing: 1px;
+}
