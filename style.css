@@ -41,11 +41,15 @@ a {
     line-height: 2.2;
 }
 
+a {
+    transition: 0.2s;
+}
+
 /* 滑鼠移上去 */
 a:hover {
     color: #aaaaaa;
-    text-decoration: underline; /* 底線 */
-    font-size: 15px; /* 字體變小 */
+    text-decoration: underline;
+    transform: scale(1.1);
 }
 
 p {
@@ -53,6 +57,7 @@ p {
     letter-spacing: 1px;
 
 }
+
 
 
 
