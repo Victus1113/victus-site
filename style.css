@@ -45,6 +45,7 @@ a {
     color: white;
     text-decoration: none;
     transition: 0.3s;
+    display: inline-block;
 }
 
 /* 底線動畫 */
@@ -72,6 +73,7 @@ p {
     letter-spacing: 1px;
 
 }
+
 
 
 
