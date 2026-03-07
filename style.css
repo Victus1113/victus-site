@@ -1,6 +1,6 @@
 body {
-    background-color: #39344B; /* 靛色背景 */
-    color: #f0f0f0;            /* 白色文字 */
+    background: linear-gradient(#2d2838, #1a1822);
+    color: #f0f0f0;
     font-family: "Times New Roman", "Yu Mincho", "MS Mincho", serif;
     line-height: 2;
 }
@@ -8,23 +8,28 @@ body {
 /* 整個內容區 */
 .container {
     width: 520px;
-    margin-left: 120px;
+    margin-left: 140px;
     margin-top: 120px;
+    padding-left: 40px;
+    border-left: 1px solid #555;
 }
 
 /* 標題 */
 h1 {
     font-weight: normal;
-    letter-spacing: 6px;
-    font-size: 28px;
+    letter-spacing: 8px;
+    font-size: 32px;
     margin-bottom: 40px;
+    text-shadow: 0 0 12px rgba(255,255,255,0.15);
 }
 
 /* 引言文字 */
 .quote {
-    margin: 50px 0;
+    margin: 60px 0;
     font-style: italic;
-    color: #cccccc;
+    color: #bbbbbb;
+    border-left: 2px solid #777;
+    padding-left: 15px;
 }
 
 /* 分隔線 */
@@ -38,14 +43,14 @@ hr {
 a {
     color: #ffffff;
     text-decoration: none;
-    line-height: 2.2;
+    line-height: 2.4;
+    letter-spacing: 2px;
+    transition: 0.3s;
 }
 
-a {
-    color: white;
-    text-decoration: none;
-    transition: 0.3s;
-    display: inline-block;
+a:hover {
+    color: #dddddd;
+    text-shadow: 0 0 6px #aaaaaa;
 }
 
 /* 底線動畫 */
@@ -73,6 +78,7 @@ p {
     letter-spacing: 1px;
 
 }
+
 
 
 
