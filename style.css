@@ -53,6 +53,13 @@ a:hover {
     text-shadow: 0 0 6px #aaaaaa;
 }
 
+a {
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+    display: inline-block;
+}
+
 /* 底線動畫 */
 a::after {
     content: "";
@@ -78,6 +85,7 @@ p {
     letter-spacing: 1px;
 
 }
+
 
 
 
