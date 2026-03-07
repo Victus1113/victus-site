@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>故事背景 - Backfire</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>故事 WORLD</h1>
+
+<p>
+講述一位普通高中生－－維特的日常生活。
+  在家裡，他是最不受寵的小孩，在爸爸的高壓式教育和媽媽的差別待遇下默默長大；在學校，他是個不被看好的學生、安靜又不起眼的邊緣人、備受同儕霸凌排擠的黑羊。
+  然而，到了放學時間，在一位35歲男人的家中，維特則是握有掌控權的支配者......關係中的兩人，究竟會成為彼此生命的救贖，抑或是將彼此推向逐漸腐爛的深淵？
+</p>
+
+<hr>
+
+<p>
+世界正在安靜運轉中。
+</p>
+
+<a href="index.html">← 回到首頁</a>
+
+</div>
+
+</body>
+</html>
