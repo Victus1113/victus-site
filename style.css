@@ -45,7 +45,7 @@ a {
 a:hover {
     color: #aaaaaa;
     text-decoration: underline; /* 底線 */
-    font-size: 15px; /* 字體變大 */
+    font-size: 15px; /* 字體變小 */
 }
 
 p {
@@ -53,6 +53,7 @@ p {
     letter-spacing: 1px;
 
 }
+
 
 
 
