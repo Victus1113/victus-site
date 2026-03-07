@@ -44,9 +44,12 @@ a {
 /* 滑鼠移上去 */
 a:hover {
     color: #aaaaaa;
+    text-decoration: underline; /* 底線 */
+    font-size: 22px; /* 字體變大 */
 }
 
 p {
     max-width: 480px;
     letter-spacing: 1px;
+
 }
