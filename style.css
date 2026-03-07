@@ -24,7 +24,7 @@ h1 {
 .quote {
     margin: 50px 0;
     font-style: italic;
-    color: #f0f0f0;
+    color: #cccccc;
 }
 
 /* 分隔線 */
@@ -53,4 +53,5 @@ p {
     letter-spacing: 1px;
 
 }
+
 
