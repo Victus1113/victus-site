@@ -155,6 +155,34 @@ p {
 
 }
 
+/* =========================
+   手機首頁排版
+========================= */
+
+@media (max-width:768px){
+
+.container{
+
+    width: auto;
+    margin: 80px 24px;
+    padding-left: 20px;
+
+}
+
+h1{
+
+    font-size: 26px;
+    letter-spacing: 4px;
+
+}
+
+.quote{
+
+    margin: 40px 0;
+
+}
+
+}
 
 
 
