@@ -3,6 +3,7 @@ body {
     color: #f0f0f0;
     font-family: "Times New Roman", "Yu Mincho", "MS Mincho", serif;
     line-height: 2;
+    min-height: 100vh;
 }
 
 /* 整個內容區 */
@@ -87,6 +88,27 @@ p {
 }
 
 
+/* 手機版調整 */
+@media (max-width: 600px) {
+
+.container {
+    width: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 80px;
+    padding-left: 20px;
+}
+
+h1 {
+    font-size: 26px;
+    letter-spacing: 4px;
+}
+
+p {
+    max-width: 100%;
+}
+
+}
 
 
 
