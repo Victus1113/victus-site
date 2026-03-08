@@ -91,6 +91,11 @@ p {
 /* 手機版閱讀模式 */
 @media (max-width: 600px) {
 
+body {
+    line-height: 2.2;
+}
+
+
 .container {
     width: auto;
     margin-left: auto;
@@ -110,6 +115,7 @@ p {
 }
 
 }
+
 
 
 
