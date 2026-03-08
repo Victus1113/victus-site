@@ -93,14 +93,6 @@ a:hover {
     text-shadow: 0 0 6px #aaaaaa;
 }
 
-/* hover */
-
-a:hover {
-
-    color: #dddddd;
-    text-shadow: 0 0 6px #aaaaaa;
-}
-
 
 
 p {
@@ -230,6 +222,7 @@ nav a{
 }
 
 }
+
 
 
 
