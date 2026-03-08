@@ -94,13 +94,24 @@ p {
 ========================= */
 
 .page{
-    max-width: 720px;
-    margin: 40px auto;
-    padding: 0 20px;
 
-    color: #e6e6e6;
-    font-size: 18px;
-    line-height: 1.9;
+    max-width:680px;
+    margin:60px auto;
+    padding:0 24px;
+
+    color:#e6e6e6;
+
+    font-size:19px;
+    line-height:2.1;
+
+    letter-spacing:0.5px;
+}
+
+/* 電子書閱讀感 */
+
+.page p{
+
+    text-align:justify;
 }
 
 /* 標題 */
@@ -197,6 +208,7 @@ nav a{
 }
 
 }
+
 
 
 
