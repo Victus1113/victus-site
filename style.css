@@ -56,13 +56,14 @@ hr {
 
 a {
 
-    color: white;
+    color: #ffffff;
     text-decoration: none;
 
-    position: relative;
-    display: inline-block;
-
+    line-height: 2.4;
     letter-spacing: 2px;
+
+    display: inline-block;
+    position: relative;
 
     transition: 0.3s;
 }
@@ -85,6 +86,11 @@ a::after {
     transition: width 0.3s ease;
 }
 
+a:hover::after {
+
+    width: 100%;
+}
+
 /* hover */
 
 a:hover {
@@ -93,10 +99,7 @@ a:hover {
     text-shadow: 0 0 6px #aaaaaa;
 }
 
-a:hover::after {
 
-    width: 100%;
-}
 
 p {
     max-width: 480px;
@@ -225,6 +228,7 @@ nav a{
 }
 
 }
+
 
 
 
