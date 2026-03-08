@@ -156,30 +156,44 @@ p {
 }
 
 /* =========================
-   手機首頁排版
+   手機首頁：哥德小說排版
 ========================= */
 
 @media (max-width:768px){
 
 .container{
 
-    width: auto;
-    margin: 80px 24px;
-    padding-left: 20px;
+    width:auto;
+    margin:90px 28px;
+    padding-left:18px;
 
+    border-left:1px solid #666;
 }
+
+/* 標題 */
 
 h1{
 
-    font-size: 26px;
-    letter-spacing: 4px;
-
+    font-size:28px;
+    letter-spacing:6px;
+    line-height:1.6;
 }
+
+/* 引言 */
 
 .quote{
 
-    margin: 40px 0;
+    margin:50px 0;
+    font-size:18px;
+}
 
+/* 導航 */
+
+nav a{
+
+    display:block;
+    margin:12px 0;
+    font-size:18px;
 }
 
 }
