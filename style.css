@@ -1,9 +1,19 @@
-body {
-    background: linear-gradient(#2d2838, #1a1822);
-    color: #f0f0f0;
-    font-family: "Times New Roman", "Yu Mincho", "MS Mincho", serif;
-    line-height: 2;
-    min-height: 100vh;
+body{
+
+    background:
+    radial-gradient(circle at top,#3a3447,#1a1822 70%);
+
+    color:#f0f0f0;
+
+    font-family:
+    "Times New Roman",
+    "Yu Mincho",
+    "MS Mincho",
+    serif;
+
+    min-height:100vh;
+
+    line-height:2;
 }
 
 /* 整個內容區 */
@@ -208,6 +218,7 @@ nav a{
 }
 
 }
+
 
 
 
