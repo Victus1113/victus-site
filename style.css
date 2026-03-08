@@ -55,42 +55,31 @@ hr {
 /* 連結 */
 
 a {
-
-    color: #ffffff;
+    color: white;
     text-decoration: none;
-
-    line-height: 2.4;
-    letter-spacing: 2px;
-
-    display: inline-block;
-    position: relative;
-
     transition: 0.3s;
+    display: inline-block;
 }
 
-/* 底線 */
-
+/* 底線動畫 */
 a::after {
-
     content: "";
-
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-
-    width: 0%;
+    display: block;
+    width: 0;
     height: 1px;
-
     background: white;
+    transition: width 0.3s;
+}
 
-    transition: width 0.3s ease;
+/* 滑鼠移上去 */
+a:hover {
+    color: #dddddd;
+    text-shadow: 0 0 6px #aaaaaa;
 }
 
 a:hover::after {
-
     width: 100%;
 }
-
 /* hover */
 
 a:hover {
@@ -228,6 +217,7 @@ nav a{
 }
 
 }
+
 
 
 
