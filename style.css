@@ -68,7 +68,7 @@ a{
 a::after{
 
     content:"";
-    position:absolute;   /* 新增 */
+    position:absolute;
 
     left:0;
     bottom:-2px;
@@ -79,6 +79,8 @@ a::after{
     background:white;
 
     transition:width 0.3s;
+
+    pointer-events:none;
 }
 
 /* hover */
@@ -216,12 +218,14 @@ h1{
 
 nav a{
 
-    display:block;
+    display:inline-block;
     margin:12px 0;
     font-size:18px;
+
 }
 
 }
+
 
 
 
