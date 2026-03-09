@@ -1,7 +1,10 @@
+/* =========================
+   基本設定
+========================= */
+
 body{
 
-    background:
-    radial-gradient(circle at top,#3a3447,#1a1822 70%);
+    background:radial-gradient(circle at top,#3a3447,#1a1822 70%);
 
     color:#f0f0f0;
 
@@ -16,58 +19,93 @@ body{
     line-height:2;
 }
 
-/* 整個內容區 */
-.container {
-    width: 520px;
-    margin-left: 140px;
-    margin-top: 120px;
-    padding-left: 40px;
-    border-left: 1px solid #555;
+
+/* =========================
+   首頁版面
+========================= */
+
+.container{
+
+    width:520px;
+    margin-left:140px;
+    margin-top:120px;
+
+    padding-left:40px;
+
+    border-left:1px solid #555;
 }
 
+
 /* 標題 */
-h1 {
-    font-weight: normal;
-    letter-spacing: 8px;
-    font-size: 32px;
-    margin-bottom: 40px;
+
+h1{
+
+    font-weight:normal;
+
+    letter-spacing:8px;
+
+    font-size:32px;
+
+    margin-bottom:40px;
+
     text-shadow:
     0 0 10px rgba(255,255,255,0.15),
     0 0 25px rgba(255,255,255,0.05);
 }
 
-/* 引言文字 */
-.quote {
-    margin: 60px 0;
-    font-style: italic;
-    color: #bbbbbb;
-    border-left: 2px solid #777;
-    padding-left: 15px;
+
+/* 引言 */
+
+.quote{
+
+    margin:60px 0;
+
+    font-style:italic;
+
+    color:#bbbbbb;
+
+    border-left:2px solid #777;
+
+    padding-left:15px;
 }
+
 
 /* 分隔線 */
-hr {
-    border: none;
-    border-top: 1px solid #666;
-    margin: 40px 0;
+
+hr{
+
+    border:none;
+
+    border-top:1px solid #666;
+
+    margin:40px 0;
 }
 
-/* 連結 */
+
+/* =========================
+   連結 hover 動畫
+========================= */
 
 a{
+
     color:white;
+
     text-decoration:none;
-    transition:0.3s;
 
     display:inline-block;
-    position:relative;   /* 新增 */
+
+    position:relative;
+
+    transition:0.3s;
 }
+
 
 /* 底線 */
 
 a::after{
 
     content:"";
+
     position:absolute;
 
     left:0;
@@ -83,107 +121,135 @@ a::after{
     pointer-events:none;
 }
 
+
 /* hover */
 
+a:hover{
+
+    color:#dddddd;
+
+    text-shadow:0 0 6px #aaaaaa;
+}
+
 a:hover::after{
+
     width:100%;
-}
-
-/* 滑鼠移上去 */
-a:hover {
-    color: #dddddd;
-    text-shadow: 0 0 6px #aaaaaa;
-}
-
-
-
-p {
-    max-width: 480px;
-    letter-spacing: 1px;
-
 }
 
 
 /* =========================
-   閱讀頁面共用排版
-   (story / character / novel)
+   文章文字
+========================= */
+
+p{
+
+    max-width:480px;
+
+    letter-spacing:1px;
+}
+
+
+/* =========================
+   閱讀頁面
+   story / character / novel
 ========================= */
 
 .page{
 
     max-width:680px;
+
     margin:60px auto;
+
     padding:0 24px;
 
     color:#e6e6e6;
 
     font-size:19px;
+
     line-height:2.1;
 
     letter-spacing:0.5px;
 }
+
 
 /* 電子書閱讀感 */
 
 .page p{
 
     text-align:justify;
+
+    margin-bottom:18px;
 }
+
 
 /* 標題 */
 
 .page h1{
-    font-size: 28px;
-    margin-bottom: 20px;
-    letter-spacing: 2px;
+
+    font-size:28px;
+
+    margin-bottom:20px;
+
+    letter-spacing:2px;
 }
+
 
 /* 副標題 */
 
 .page h2{
-    font-size: 22px;
-    margin-top: 30px;
-    margin-bottom: 12px;
+
+    font-size:22px;
+
+    margin-top:30px;
+
+    margin-bottom:12px;
 }
 
-/* 段落 */
-
-.page p{
-    margin-bottom: 18px;
-}
 
 /* 返回首頁 */
 
 .back{
-    display: inline-block;
-    margin-top: 30px;
-    font-size: 16px;
+
+    display:inline-block;
+
+    margin-top:30px;
+
+    font-size:16px;
 }
 
-/* 手機版 */
+
+/* =========================
+   手機閱讀模式
+========================= */
 
 @media (max-width:768px){
 
 .page{
-    margin: 25px auto;
-    padding: 0 18px;
 
-    font-size: 20px;
-    line-height: 2;
+    margin:25px auto;
+
+    padding:0 18px;
+
+    font-size:20px;
+
+    line-height:2;
 }
 
 .page h1{
-    font-size: 26px;
+
+    font-size:26px;
 }
 
 .page h2{
-    font-size: 22px;
+
+    font-size:22px;
 }
 
 }
+
 
 /* =========================
-   手機首頁：哥德小說排版
+   手機首頁排版
 ========================= */
 
 @media (max-width:768px){
@@ -191,57 +257,46 @@ p {
 .container{
 
     width:auto;
+
     margin:90px 28px;
+
     padding-left:18px;
 
     border-left:1px solid #666;
 }
+
 
 /* 標題 */
 
 h1{
 
     font-size:28px;
+
     letter-spacing:6px;
+
     line-height:1.6;
 }
+
 
 /* 引言 */
 
 .quote{
 
     margin:50px 0;
+
     font-size:18px;
 }
+
 
 /* 導航 */
 
 nav a{
 
     display:inline-block;
+
     margin:12px 0;
+
     font-size:18px;
-
 }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
