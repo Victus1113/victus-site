@@ -11,7 +11,35 @@
 
 </head>
 
+<div id="viewer">
+<img id="bigImage">
+</div>
 
+<script>
+
+const images = document.querySelectorAll(".gallery img");
+const viewer = document.getElementById("viewer");
+const bigImage = document.getElementById("bigImage");
+
+images.forEach(img => {
+
+img.onclick = function(){
+
+viewer.style.display = "flex";
+bigImage.src = this.src;
+
+}
+
+});
+
+viewer.onclick = function(){
+
+viewer.style.display = "none";
+
+}
+
+</script>
+  
 <body>
 
 <div class="page">
