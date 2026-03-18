@@ -369,8 +369,18 @@ border:1px solid #666;
 @media (max-width:768px){
 
 .gallery{
-    grid-template-columns:1fr;   /* ⭐ 一排一張 */
-    gap:16px;
+    grid-template-columns:1fr;
+    gap:20px;
+}
+
+.gallery img{
+    width:100%;
+}
+
+/* ⭐ 返回首頁變大好點 */
+.back{
+    font-size:20px;
+    padding:10px 0;
 }
 
 }
