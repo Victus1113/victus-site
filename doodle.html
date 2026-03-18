@@ -50,34 +50,65 @@
 
 <script>
 
-const images = document.querySelectorAll(".gallery img");
+const galleries = document.querySelectorAll(".gallery");
 const viewer = document.getElementById("viewer");
 const bigImage = document.getElementById("bigImage");
 
-let current = 0;
+let currentIndex = 0;
+let currentGallery = [];
 
-/* 開圖 */
-images.forEach((img, index) => {
-    img.onclick = function(){
-        current = index;
-        showImage();
-        viewer.style.display = "flex";
-    }
+/* 點圖片 */
+galleries.forEach(gallery => {
+
+    const imgs = gallery.querySelectorAll("img");
+
+    imgs.forEach((img, index) => {
+
+        img.onclick = function(){
+
+            currentGallery = imgs;   // ⭐ 記住是哪一區
+            currentIndex = index;
+
+            showImage();
+            viewer.style.display = "flex";
+        }
+
+    });
+
 });
 
 /* 顯示圖片 */
 function showImage(){
-    bigImage.src = images[current].src;
+    bigImage.src = currentGallery[currentIndex].src;
 }
 
-/* ⭐ 點背景才關閉 */
+/* 點背景關閉 */
 viewer.addEventListener("click", function(e){
     if(e.target === viewer){
         viewer.style.display = "none";
     }
 });
 
-/* 左右滑動 */
+/* 👉 點左右切換（電腦+手機） */
+viewer.addEventListener("click", function(e){
+
+    if(e.target !== viewer) return;
+
+    const x = e.clientX;
+    const width = window.innerWidth;
+
+    if(x < width / 2){
+        // 左邊 → 上一張
+        currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+    }else{
+        // 右邊 → 下一張
+        currentIndex = (currentIndex + 1) % currentGallery.length;
+    }
+
+    showImage();
+});
+
+/* 👉 手機滑動 */
 let startX = 0;
 
 viewer.addEventListener("touchstart", e => {
@@ -88,12 +119,12 @@ viewer.addEventListener("touchend", e => {
     let endX = e.changedTouches[0].clientX;
 
     if(endX - startX > 50){
-        current = (current - 1 + images.length) % images.length;
+        currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
         showImage();
     }
 
     if(startX - endX > 50){
-        current = (current + 1) % images.length;
+        currentIndex = (currentIndex + 1) % currentGallery.length;
         showImage();
     }
 });
