@@ -18,16 +18,21 @@
 <h1>插圖 DOODLE</h1>
 
 <p>
-筆者的塗鴉、角色插圖及小漫畫。
+角色塗鴉＆小漫畫。
 </p>
 
+<h2>插圖</h2>
+
 <div class="gallery">
+    <img src="img/members.jpg">
+    <img src="img/sh.jpg">
+</div>
 
-<img src="img/members.jpg">
-<img src="img/sh.jpg">
-<img src="img/cure.jpg">
-<img src="img/speachless.jpg">
+<h2>漫畫</h2>
 
+<div class="gallery">
+    <img src="img/cure.jpg">
+    <img src="img/speachless.jpg">
 </div>
 
 <a class="back" href="index.html">← 回到首頁</a>
@@ -47,22 +52,49 @@ const images = document.querySelectorAll(".gallery img");
 const viewer = document.getElementById("viewer");
 const bigImage = document.getElementById("bigImage");
 
-images.forEach(img => {
+let current = 0;
 
-img.onclick = function(){
-
-viewer.style.display = "flex";
-bigImage.src = this.src;
-
-}
-
+/* 開圖 */
+images.forEach((img, index) => {
+    img.onclick = function(){
+        current = index;
+        showImage();
+        viewer.style.display = "flex";
+    }
 });
 
-viewer.onclick = function(){
-
-viewer.style.display = "none";
-
+/* 顯示圖片 */
+function showImage(){
+    bigImage.src = images[current].src;
 }
+
+/* 點背景關閉 */
+viewer.onclick = function(){
+    viewer.style.display = "none";
+}
+
+/* 左右滑動（手機） */
+let startX = 0;
+
+viewer.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+});
+
+viewer.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+
+    if(endX - startX > 50){
+        // 👉 往右滑（上一張）
+        current = (current - 1 + images.length) % images.length;
+        showImage();
+    }
+
+    if(startX - endX > 50){
+        // 👉 往左滑（下一張）
+        current = (current + 1) % images.length;
+        showImage();
+    }
+});
 
 </script>
 
