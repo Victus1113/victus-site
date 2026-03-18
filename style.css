@@ -178,6 +178,8 @@ p{
     text-align:justify;
 
     margin-bottom:18px;
+
+    max-width:none;   /* ⭐ 新增 */
 }
 
 
@@ -223,25 +225,20 @@ p{
    手機閱讀模式
 ========================= */
 
+@media (max-width:768px){
+
 .page{
-    margin:10px auto;   /* ⭐ 更貼邊 */
+    margin:10px auto;
     padding:0 16px;
-}
-
-    padding:0 18px;
-
     font-size:20px;
-
     line-height:2;
 }
 
 .page h1{
-
     font-size:26px;
 }
 
 .page h2{
-
     font-size:22px;
 }
 
@@ -258,7 +255,7 @@ p{
 
     width:auto;
 
-    margin:90px 28px;
+    margin:80px 20px;
 
     padding-left:18px;
 
@@ -317,18 +314,14 @@ margin-top:30px;
 }
 
 .gallery img{
-
     width:100%;
-    height:auto;           /* ⭐ 新增（防變形） */
-
-    border-radius:6px;     /* ⭐ 新增（好看） */
+    height:auto;
+    border-radius:6px;
     border:1px solid #555;
-
     transition:0.3s;
-
-    cursor:pointer;        /* ⭐ 新增（可點擊感） */
+    cursor:pointer;
+    box-shadow:0 0 15px rgba(0,0,0,0.4); /* ⭐ 新增 */
 }
-
 
 
 
