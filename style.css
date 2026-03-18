@@ -360,10 +360,12 @@ z-index:999;
 
 #viewer img{
 
-max-width:90%;
-max-height:90%;
+max-width:95%;      /* ⭐ 原本 90 → 改大 */
+max-height:85%;     /* ⭐ 原本 90 → 改小一點（更像閱讀） */
 
 border:1px solid #666;
+
+transition:0.3s;    /* ⭐ 新增（切換更順） */
 }
 
 @media (max-width:768px){
