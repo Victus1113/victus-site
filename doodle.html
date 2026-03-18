@@ -44,7 +44,9 @@
 
 <!-- 圖片放大查看器 -->
 <div id="viewer">
-
+    
+    <div id="close">✕</div>
+    
     <div id="prev">‹</div>
 
     <img id="bigImage">
@@ -57,7 +59,8 @@
 
 
 <script>
-
+    
+const closeBtn = document.getElementById("close");
 const prev = document.getElementById("prev");
 const next = document.getElementById("next");
 const counter = document.getElementById("counter");
@@ -102,15 +105,18 @@ viewer.addEventListener("click", function(e){
     // 點圖片 → 不動
     if(e.target === bigImage) return;
 
-    // 點背景 → 判斷左右
-    const x = e.clientX;
-    const width = window.innerWidth;
+    // 點箭頭 / X → 不在這裡處理
+    if(e.target.id === "prev" || e.target.id === "next" || e.target.id === "close") return;
 
-    // 點很中間 → 關閉（避免誤觸）
-    if(Math.abs(x - width/2) < 50){
+    // 👉 點黑背景 → 關閉（你要的功能）
+    if(e.target === viewer){
         viewer.style.display = "none";
         return;
     }
+
+    // 👉 點左右區域 → 切換
+    const x = e.clientX;
+    const width = window.innerWidth;
 
     if(x < width / 2){
         currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
@@ -121,6 +127,12 @@ viewer.addEventListener("click", function(e){
     showImage();
 });
 
+/* 點 X 關閉 */
+
+closeBtn.onclick = function(e){
+    e.stopPropagation();   // ⭐ 不影響背景點擊
+    viewer.style.display = "none";
+}    
 
 
 /* 👉 手機滑動 */
