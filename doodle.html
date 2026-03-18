@@ -68,12 +68,14 @@ function showImage(){
     bigImage.src = images[current].src;
 }
 
-/* 點背景關閉 */
-viewer.onclick = function(){
-    viewer.style.display = "none";
-}
+/* ⭐ 點背景才關閉 */
+viewer.addEventListener("click", function(e){
+    if(e.target === viewer){
+        viewer.style.display = "none";
+    }
+});
 
-/* 左右滑動（手機） */
+/* 左右滑動 */
 let startX = 0;
 
 viewer.addEventListener("touchstart", e => {
@@ -84,20 +86,17 @@ viewer.addEventListener("touchend", e => {
     let endX = e.changedTouches[0].clientX;
 
     if(endX - startX > 50){
-        // 👉 往右滑（上一張）
         current = (current - 1 + images.length) % images.length;
         showImage();
     }
 
     if(startX - endX > 50){
-        // 👉 往左滑（下一張）
         current = (current + 1) % images.length;
         showImage();
     }
 });
 
 </script>
-
 
 </body>
 </html>
