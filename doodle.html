@@ -403,6 +403,24 @@ viewer.addEventListener("click", e=>{
     closeViewer();
 });
 
+document.addEventListener("keydown", e=>{
+
+    /* 只有 viewer 開啟時才作用 */
+    if(viewer.style.display !== "flex") return;
+
+    /* 如果正在放大（scale > 1），不要切圖（避免干擾拖曳體驗） */
+    if(scale > 1) return;
+
+    if(e.key === "ArrowLeft"){
+        goPrev();
+    }
+
+    if(e.key === "ArrowRight"){
+        goNext();
+    }
+
+});
+
 </script>
 
 </body>
