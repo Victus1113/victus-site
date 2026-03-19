@@ -6,25 +6,41 @@
 <meta charset="UTF-8">
 <title>Doodle</title>
 <link rel="stylesheet" href="style.css">
+<style>
+/* 縮小遮罩範圍，只覆蓋圖片四周，不整個畫面 */
+#viewer {
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+#viewer img {
+    max-width: 100%;
+    max-height: 100%;
+    cursor: grab;
+}
+</style>
 </head>
 
 <body>
 
 <div class="page">
-
 <h1>插圖 DOODLE</h1>
-
 <p>角色塗鴉＆小漫畫。</p>
 
 <h2>插圖</h2>
-
 <div class="gallery">
     <img src="img/members.jpg">
     <img src="img/sh.jpg">
 </div>
 
 <h2>漫畫</h2>
-
 <div class="gallery">
     <img src="img/humor.jpg">
     <img src="img/s3x.jpg">
@@ -33,7 +49,6 @@
 </div>
 
 <a class="back" href="index.html">← 回到首頁</a>
-
 </div>
 
 <div id="viewer">
@@ -70,6 +85,8 @@ let startY = 0;
 
 let initialDistance = null;
 let isMoved = false;
+let touchStartX = 0;
+let touchStartY = 0;
 
 function updateTransform(){
     bigImage.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
@@ -77,8 +94,8 @@ function updateTransform(){
 
 function clampPosition(){
     const rect = bigImage.getBoundingClientRect();
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
+    const vw = viewer.clientWidth;
+    const vh = viewer.clientHeight;
     const maxX = (rect.width - vw)/2;
     const maxY = (rect.height - vh)/2;
     posX = maxX>0?Math.min(maxX,Math.max(-maxX,posX)):0;
@@ -126,12 +143,14 @@ closeBtn.onclick=e=>{ e.stopPropagation(); closeViewer(); }
 prev.onclick=e=>{ e.stopPropagation(); currentIndex=(currentIndex-1+currentGallery.length)%currentGallery.length; showImage(); }
 next.onclick=e=>{ e.stopPropagation(); currentIndex=(currentIndex+1)%currentGallery.length; showImage(); }
 
+// 鍵盤左右對應上下頁
 document.addEventListener("keydown", e=>{
     if(viewer.style.display!=="flex") return;
     if(e.key==="ArrowLeft"){ currentIndex=(currentIndex-1+currentGallery.length)%currentGallery.length; showImage(); }
     if(e.key==="ArrowRight"){ currentIndex=(currentIndex+1)%currentGallery.length; showImage(); }
 });
 
+// 滾輪縮放
 bigImage.addEventListener("wheel", e=>{
     e.preventDefault();
     let prevScale = scale;
@@ -144,6 +163,7 @@ bigImage.addEventListener("wheel", e=>{
     clampPosition(); updateTransform();
 });
 
+// 滑鼠拖曳
 bigImage.addEventListener("mousedown", e=>{
     if(scale<=1) return;
     isDragging=true; velocityX=0; velocityY=0;
@@ -166,7 +186,14 @@ viewer.addEventListener("touchstart", e=>{
     if(e.touches.length===1){
         startX=e.touches[0].clientX;
         startY=e.touches[0].clientY;
+        touchStartX=startX;
+        touchStartY=startY;
         isMoved=false;
+    }
+    if(e.touches.length===2){
+        let dx=e.touches[0].clientX-e.touches[1].clientX;
+        let dy=e.touches[0].clientY-e.touches[1].clientY;
+        initialDistance=Math.sqrt(dx*dx+dy*dy);
     }
 });
 
@@ -176,7 +203,6 @@ viewer.addEventListener("touchmove", e=>{
         let dx=e.touches[0].clientX-e.touches[1].clientX;
         let dy=e.touches[0].clientY-e.touches[1].clientY;
         let distance = Math.sqrt(dx*dx+dy*dy);
-        if(!initialDistance) initialDistance=distance;
         let scaleChange = distance/initialDistance;
         scale=Math.min(Math.max(1,scale*scaleChange),4);
         initialDistance=distance;
@@ -197,27 +223,36 @@ viewer.addEventListener("touchend", e=>{
     initialDistance=null;
     const touch = e.changedTouches[0];
     const x=touch.clientX, y=touch.clientY;
-
     const rect = bigImage.getBoundingClientRect();
     const insideImage = x>=rect.left && x<=rect.right && y>=rect.top && y<=rect.bottom;
 
     if(!isMoved){
-        if(insideImage) return; // 點圖片不動
-        // 判斷點黑背景
-        const viewerRect = viewer.getBoundingClientRect();
-        if(x>=viewerRect.left && x<=viewerRect.right && y>=viewerRect.top && y<=viewerRect.bottom){
-            // 左右切換
-            if(x<window.innerWidth/2){
+        if(insideImage){
+            // 手機左右點圖片換頁
+            if(x < rect.left + rect.width/2){
+                currentIndex=(currentIndex-1+currentGallery.length)%currentGallery.length;
+            }else{
+                currentIndex=(currentIndex+1)%currentGallery.length;
+            }
+            showImage();
+            return;
+        }else{
+            // 點背景關閉
+            closeViewer();
+        }
+    }else{
+        // 手指滑動後慣性
+        let dx = x - touchStartX;
+        if(Math.abs(dx) > 50){
+            if(dx>0){
                 currentIndex=(currentIndex-1+currentGallery.length)%currentGallery.length;
             }else{
                 currentIndex=(currentIndex+1)%currentGallery.length;
             }
             showImage();
         }else{
-            closeViewer();
+            inertia();
         }
-    }else{
-        inertia();
     }
 });
 
