@@ -324,10 +324,16 @@ window.addEventListener("mouseup", ()=>{
     }
 });
 
-/* ===== 手機觸控 ===== */
+
+/* ===== 手機觸控（最終穩定版） ===== */
+
+let tapTimer = null;
+let lastTapTime = 0;
 
 viewer.addEventListener("touchstart", e=>{
+
     if(e.touches.length===1){
+
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
 
@@ -344,9 +350,10 @@ viewer.addEventListener("touchstart", e=>{
     }
 });
 
-/* ===== 移動 ===== */
+
 viewer.addEventListener("touchmove", e=>{
 
+    /* 雙指縮放 */
     if(e.touches.length===2){
         e.preventDefault();
 
@@ -356,13 +363,14 @@ viewer.addEventListener("touchmove", e=>{
         let distance = Math.sqrt(dx*dx + dy*dy);
         let ratio = distance / initialDistance;
 
-        scale = Math.min(Math.max(1, scale*ratio),4);
+        scale = Math.min(Math.max(1, scale * ratio), 4);
         initialDistance = distance;
 
         clamp();
         updateTransform();
     }
 
+    /* 單指拖曳 */
     if(e.touches.length===1 && scale>1){
         e.preventDefault();
 
@@ -371,13 +379,18 @@ viewer.addEventListener("touchmove", e=>{
         let dx = touch.clientX - startX;
         let dy = touch.clientY - startY;
 
-        if(Math.abs(dx)>5 || Math.abs(dy)>5) isMoved = true;
+        if(Math.abs(dx)>5 || Math.abs(dy)>5){
+            isMoved = true;
+        }
 
-        posX+=dx; posY+=dy;
-        velocityX=dx; velocityY=dy;
+        posX += dx;
+        posY += dy;
 
-        startX=touch.clientX;
-        startY=touch.clientY;
+        velocityX = dx;
+        velocityY = dy;
+
+        startX = touch.clientX;
+        startY = touch.clientY;
 
         clamp();
         updateTransform();
@@ -385,36 +398,71 @@ viewer.addEventListener("touchmove", e=>{
 
 }, {passive:false});
 
-/* ===== 手機結束（整合版） ===== */
+
+
 viewer.addEventListener("touchend", e=>{
 
     initialDistance = null;
 
     const now = Date.now();
-    const tapGap = now - lastTap;
-
     const touch = e.changedTouches[0];
-    const dx = touch.clientX - touchStartX;
 
-    /* ===== 雙擊 ===== */
-    if(tapGap < 300){
+    let dx = touch.clientX - touchStartX;
 
-        if(scale===1){
-            scale=2;
-        }else{
-            scale=1;
-            posX=0;
-            posY=0;
-        }
-
-        clamp();
-        updateTransform();
-
-        lastTap=0;
+    /* ===== 1. 滑動優先 ===== */
+    if(scale === 1 && Math.abs(dx) > 40){
+        if(dx > 0) goPrev();
+        else goNext();
         return;
     }
 
-    lastTap = now;
+    /* ===== 2. 雙擊 ===== */
+    if(now - lastTapTime < 250){
+
+        clearTimeout(tapTimer);
+
+        if(scale === 1){
+            scale = 2;
+        }else{
+            scale = 1;
+            posX = 0;
+            posY = 0;
+        }
+
+        clamp();
+
+        bigImage.style.transition = "transform 0.25s cubic-bezier(0.22,1,0.36,1)";
+        updateTransform();
+
+        setTimeout(()=>{
+            bigImage.style.transition = "0.08s linear";
+        },250);
+
+        lastTapTime = 0;
+        return;
+    }
+
+    lastTapTime = now;
+
+    /* ===== 3. 單擊（延遲） ===== */
+    tapTimer = setTimeout(()=>{
+
+        if(scale === 1){
+
+            if(touch.clientX < window.innerWidth / 2){
+                goPrev();
+            }else{
+                goNext();
+            }
+
+        }else{
+            inertia();
+        }
+
+    }, 250);
+
+});
+
 
     /* ===== 滑動切換 ===== */
     if(scale===1 && !isMoved){
