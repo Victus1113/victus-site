@@ -178,6 +178,7 @@ function updateTransform(){
 
 /* 限制不要拖出邊界 */
 function clamp(){
+
     const rect = bigImage.getBoundingClientRect();
     const vw = window.innerWidth;
     const vh = window.innerHeight;
@@ -185,8 +186,19 @@ function clamp(){
     const maxX = (rect.width - vw)/2;
     const maxY = (rect.height - vh)/2;
 
-    posX = maxX > 0 ? Math.min(maxX, Math.max(-maxX, posX)) : 0;
-    posY = maxY > 0 ? Math.min(maxY, Math.max(-maxY, posY)) : 0;
+    /* ⭐ 橡皮筋阻力 */
+    function rubberBand(value, max){
+        if(value > max){
+            return max + (value - max) * 0.3;
+        }
+        if(value < -max){
+            return -max + (value + max) * 0.3;
+        }
+        return value;
+    }
+
+    posX = maxX > 0 ? rubberBand(posX, maxX) : 0;
+    posY = maxY > 0 ? rubberBand(posY, maxY) : 0;
 }
 
 /* 阻尼 */
@@ -200,9 +212,41 @@ function inertia(){
     clamp();
     updateTransform();
 
-    if(Math.abs(velocityX) > 0.1 || Math.abs(velocityY) > 0.1){
-        requestAnimationFrame(inertia);
-    }
+if(Math.abs(velocityX) > 0.1 || Math.abs(velocityY) > 0.1){
+    requestAnimationFrame(inertia);
+}else{
+    snapBack(); // ⭐ 收回邊界
+}
+}
+
+function snapBack(){
+
+    const rect = bigImage.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    const maxX = (rect.width - vw)/2;
+    const maxY = (rect.height - vh)/2;
+
+    let targetX = posX;
+    let targetY = posY;
+
+    if(posX > maxX) targetX = maxX;
+    if(posX < -maxX) targetX = -maxX;
+
+    if(posY > maxY) targetY = maxY;
+    if(posY < -maxY) targetY = -maxY;
+
+    bigImage.style.transition = "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)";
+
+    posX = targetX;
+    posY = targetY;
+
+    updateTransform();
+
+    setTimeout(()=>{
+        bigImage.style.transition = "transform 0.08s linear";
+    },300);
 }
 
 /* ===== 點圖片開啟 ===== */
@@ -225,7 +269,7 @@ galleries.forEach(gallery=>{
 function showImage(){
     bigImage.src = currentGallery[currentIndex].src;
 
-    scale = 1;
+    /* ⭐ 保留 scale（不要重設） */
     posX = 0;
     posY = 0;
     velocityX = 0;
@@ -276,6 +320,9 @@ bigImage.addEventListener("wheel", e=>{
     posY -= (e.clientY - rect.top - rect.height/2) * (ratio - 1);
 
     clamp();
+        /* ⭐ 就加這一行 */
+    bigImage.style.transition = "transform 0.08s linear";
+    
     updateTransform();
 });
 
@@ -425,15 +472,13 @@ let lastTap = 0;
 
 viewer.addEventListener("touchend", e=>{
 
-    if(e.touches.length > 0) return; // 保險
+    if(e.touches.length > 0) return;
 
     const now = Date.now();
     const tapGap = now - lastTap;
 
-    /* ===== 雙擊判定（300ms內） ===== */
     if(tapGap < 300){
 
-        /* 只在點到圖片時才觸發 */
         const touch = e.changedTouches[0];
         const rect = bigImage.getBoundingClientRect();
 
@@ -445,9 +490,19 @@ viewer.addEventListener("touchend", e=>{
 
         if(!insideImage) return;
 
-        /* ===== 切換縮放 ===== */
+        /* ===== ⭐ 放大到點擊位置 ===== */
         if(scale === 1){
-            scale = 2;   // 放大倍率（你可以改 2.5）
+
+            let newScale = 2;
+
+            const offsetX = touch.clientX - (rect.left + rect.width / 2);
+            const offsetY = touch.clientY - (rect.top + rect.height / 2);
+
+            posX -= offsetX * (newScale - 1);
+            posY -= offsetY * (newScale - 1);
+
+            scale = newScale;
+
         }else{
             scale = 1;
             posX = 0;
@@ -455,9 +510,16 @@ viewer.addEventListener("touchend", e=>{
         }
 
         clamp();
+
+        /* ⭐ easing 動畫 */
+        bigImage.style.transition = "transform 0.25s cubic-bezier(0.22, 1, 0.36, 1)";
         updateTransform();
 
-        lastTap = 0; // 重置避免連續觸發
+        setTimeout(()=>{
+            bigImage.style.transition = "transform 0.08s linear";
+        }, 250);
+
+        lastTap = 0;
         return;
     }
 
