@@ -61,18 +61,33 @@
 
 
 <script>
-    
+
 const closeBtn = document.getElementById("close");
 const prev = document.getElementById("prev");
 const next = document.getElementById("next");
 const counter = document.getElementById("counter");
-    
+
 const galleries = document.querySelectorAll(".gallery");
 const viewer = document.getElementById("viewer");
 const bigImage = document.getElementById("bigImage");
 
 let currentIndex = 0;
 let currentGallery = [];
+
+/* ⭐ 縮放 + 拖曳參數 */
+let scale = 1;
+let posX = 0;
+let posY = 0;
+
+let isDragging = false;
+let startX = 0;
+let startY = 0;
+
+/* ⭐ 統一 transform */
+function updateTransform(){
+    bigImage.style.transform =
+        "translate(" + posX + "px," + posY + "px) scale(" + scale + ")";
+}
 
 /* 點圖片 */
 galleries.forEach(gallery => {
@@ -83,39 +98,45 @@ galleries.forEach(gallery => {
 
         img.onclick = function(){
 
-            currentGallery = imgs;   // ⭐ 記住是哪一區
+            currentGallery = imgs;
             currentIndex = index;
 
             showImage();
             viewer.style.display = "flex";
-            
-            document.body.style.overflow = "hidden"; // ⭐ 加這行
-            
-            viewer.style.display = "none";
-            
-            document.body.style.overflow = "";
+
+            document.body.style.overflow = "hidden";
         }
 
     });
 
 });
 
+/* 顯示圖片 */
+function showImage(){
+    bigImage.src = currentGallery[currentIndex].src;
 
+    scale = 1;
+    posX = 0;
+    posY = 0;
+
+    updateTransform();
+
+    counter.innerText = (currentIndex + 1) + " / " + currentGallery.length;
+}
+
+/* 點背景 / 切換 */
 viewer.addEventListener("click", function(e){
 
-    // 點圖片 → 不動
     if(e.target === bigImage) return;
 
-    // 點箭頭 / X → 不在這裡處理
     if(e.target.id === "prev" || e.target.id === "next" || e.target.id === "close") return;
 
-    // 👉 點黑背景 → 關閉（你要的功能）
     if(e.target === viewer){
         viewer.style.display = "none";
+        document.body.style.overflow = "";
         return;
     }
 
-    // 👉 點左右區域 → 切換
     const x = e.clientX;
     const width = window.innerWidth;
 
@@ -128,37 +149,14 @@ viewer.addEventListener("click", function(e){
     showImage();
 });
 
-/* 點 X 關閉 */
-
+/* 關閉 */
 closeBtn.onclick = function(e){
-    e.stopPropagation();   // ⭐ 不影響背景點擊
+    e.stopPropagation();
     viewer.style.display = "none";
-}    
-
-
-/* 👉 手機滑動 */
-let startX = 0;
-
-viewer.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-});
-
-viewer.addEventListener("touchend", e => {
-    let endX = e.changedTouches[0].clientX;
-
-    if(endX - startX > 50){
-        currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-        showImage();
-    }
-
-    if(startX - endX > 50){
-        currentIndex = (currentIndex + 1) % currentGallery.length;
-        showImage();
-    }
-});
+    document.body.style.overflow = "";
+}
 
 /* 左右按鈕 */
-
 prev.onclick = function(e){
     e.stopPropagation();
     currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
@@ -171,6 +169,7 @@ next.onclick = function(e){
     showImage();
 }
 
+/* 鍵盤 */
 document.addEventListener("keydown", function(e){
 
     if(viewer.style.display !== "flex") return;
@@ -187,8 +186,7 @@ document.addEventListener("keydown", function(e){
 
 });
 
-let scale = 1;
-
+/* 滾輪縮放（電腦） */
 bigImage.addEventListener("wheel", function(e){
     e.preventDefault();
 
@@ -200,15 +198,44 @@ bigImage.addEventListener("wheel", function(e){
 
     scale = Math.min(Math.max(1, scale), 3);
 
-    bigImage.style.transform = "scale(" + scale + ")";
+    updateTransform();
 });
 
+/* 滑鼠拖曳 */
+bigImage.addEventListener("mousedown", e => {
+    if(scale <= 1) return;
+
+    isDragging = true;
+    startX = e.clientX - posX;
+    startY = e.clientY - posY;
+});
+
+window.addEventListener("mousemove", e => {
+    if(!isDragging) return;
+
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+
+    updateTransform();
+});
+
+window.addEventListener("mouseup", () => {
+    isDragging = false;
+});
+
+/* 手機觸控 */
 let initialDistance = null;
+
+viewer.addEventListener("touchstart", e => {
+    if(e.touches.length === 1){
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+    }
+});
 
 viewer.addEventListener("touchmove", function(e){
 
     if(e.touches.length === 2){
-
         e.preventDefault();
 
         let dx = e.touches[0].clientX - e.touches[1].clientX;
@@ -222,11 +249,23 @@ viewer.addEventListener("touchmove", function(e){
 
         let scaleChange = distance / initialDistance;
 
-        let newScale = scale * scaleChange;
+        scale = Math.min(Math.max(1, scale * scaleChange), 3);
 
-        newScale = Math.min(Math.max(1, newScale), 3);
+        updateTransform();
+    }
 
-        bigImage.style.transform = "scale(" + newScale + ")";
+    if(e.touches.length === 1 && scale > 1){
+        e.preventDefault();
+
+        let touch = e.touches[0];
+
+        posX += touch.clientX - startX;
+        posY += touch.clientY - startY;
+
+        startX = touch.clientX;
+        startY = touch.clientY;
+
+        updateTransform();
     }
 
 }, { passive:false });
@@ -235,15 +274,6 @@ viewer.addEventListener("touchend", function(){
     initialDistance = null;
 });
 
-function showImage(){
-    bigImage.src = currentGallery[currentIndex].src;
-
-    scale = 1; // ⭐ 重置縮放
-    bigImage.style.transform = "scale(1)";
-
-    counter.innerText = (currentIndex + 1) + " / " + currentGallery.length;
-}
-    
 </script>
 
 </body>
