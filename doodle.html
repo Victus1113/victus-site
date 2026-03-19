@@ -175,6 +175,9 @@ let touchStartX = 0;
 let touchStartY = 0;
 let isMoved = false;
 
+let isTouchDevice = false;
+let lastTapTime = 0;
+
 /* ===== 更新 ===== */
 function updateTransform(){
     bigImage.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
@@ -257,9 +260,22 @@ closeBtn.onclick = e=>{
     closeViewer();
 };
 
-/* ===== 箭頭 ===== */
+/* ===== 箭頭（桌機） ===== */
 prev.onclick = e=>{ e.stopPropagation(); goPrev(); }
 next.onclick = e=>{ e.stopPropagation(); goNext(); }
+
+/* ===== 箭頭（手機專用） ===== */
+prev.addEventListener("touchstart", e=>{
+    isTouchDevice = true;
+    e.stopPropagation();
+    goPrev();
+}, {passive:true});
+
+next.addEventListener("touchstart", e=>{
+    isTouchDevice = true;
+    e.stopPropagation();
+    goNext();
+}, {passive:true});
 
 /* ===== 鍵盤 ===== */
 document.addEventListener("keydown", e=>{
@@ -270,7 +286,7 @@ document.addEventListener("keydown", e=>{
     if(e.key==="ArrowRight") goNext();
 });
 
-/* ===== 滾輪縮放 ===== */
+/* ===== 滾輪縮放（桌機） ===== */
 bigImage.addEventListener("wheel", e=>{
     e.preventDefault();
 
@@ -288,7 +304,7 @@ bigImage.addEventListener("wheel", e=>{
     updateTransform();
 });
 
-/* ===== 滑鼠拖曳 ===== */
+/* ===== 滑鼠拖曳（桌機） ===== */
 bigImage.addEventListener("mousedown", e=>{
     if(scale<=1) return;
 
@@ -323,12 +339,12 @@ window.addEventListener("mouseup", ()=>{
 });
 
 /* ======================================
-   手機觸控（最終穩定・不卡頓版）
+   手機觸控（穩定版）
 ====================================== */
 
-let lastTapTime = 0;
-
 viewer.addEventListener("touchstart", e=>{
+
+    isTouchDevice = true;
 
     if(e.touches.length===1){
         startX = e.touches[0].clientX;
@@ -349,7 +365,6 @@ viewer.addEventListener("touchstart", e=>{
 
 viewer.addEventListener("touchmove", e=>{
 
-    /* ===== 雙指縮放 ===== */
     if(e.touches.length===2){
         e.preventDefault();
 
@@ -366,7 +381,6 @@ viewer.addEventListener("touchmove", e=>{
         updateTransform();
     }
 
-    /* ===== 單指拖曳（放大時） ===== */
     if(e.touches.length===1 && scale>1){
         e.preventDefault();
 
@@ -394,7 +408,6 @@ viewer.addEventListener("touchmove", e=>{
 
 }, {passive:false});
 
-
 viewer.addEventListener("touchend", e=>{
 
     initialDistance = null;
@@ -403,14 +416,14 @@ viewer.addEventListener("touchend", e=>{
     const touch = e.changedTouches[0];
     const dx = touch.clientX - touchStartX;
 
-    /* ===== 1️⃣ 滑動優先（完全不卡） ===== */
-    if(scale === 1 && Math.abs(dx) > 40){
+    /* 滑動 */
+    if(scale === 1 && Math.abs(dx) > 50){
         if(dx > 0) goPrev();
         else goNext();
         return;
     }
 
-    /* ===== 2️⃣ 雙擊（不延遲） ===== */
+    /* 雙擊 */
     if(now - lastTapTime < 250){
 
         if(scale === 1){
@@ -422,13 +435,7 @@ viewer.addEventListener("touchend", e=>{
         }
 
         clamp();
-
-        bigImage.style.transition = "transform 0.25s cubic-bezier(0.22,1,0.36,1)";
         updateTransform();
-
-        setTimeout(()=>{
-            bigImage.style.transition = "0.08s linear";
-        },250);
 
         lastTapTime = 0;
         return;
@@ -436,10 +443,10 @@ viewer.addEventListener("touchend", e=>{
 
     lastTapTime = now;
 
-    /* ===== 3️⃣ 單擊（立即反應，不延遲） ===== */
+    /* 單擊 */
     if(scale === 1 && !isMoved){
 
-        if(touch.clientX < window.innerWidth / 2){
+        if(touch.clientX < window.innerWidth/2){
             goPrev();
         }else{
             goNext();
@@ -451,9 +458,13 @@ viewer.addEventListener("touchend", e=>{
 
 });
 
-/* ===== 點背景關閉 ===== */
+/* ===== 點背景關閉（桌機 only） ===== */
 viewer.addEventListener("click", e=>{
+
+    if(isTouchDevice) return;
+
     if(e.target===bigImage || e.target.id==="prev" || e.target.id==="next" || e.target.id==="close") return;
+
     closeViewer();
 });
 
