@@ -87,6 +87,9 @@ let isDragging = false;
 let startX = 0;
 let startY = 0;
 
+let initialDistance = null;
+let isMoved = false;
+
 /* ===== 更新 transform ===== */
 
 function updateTransform(){
@@ -105,20 +108,11 @@ function clampPosition(){
     const maxX = (rect.width - vw) / 2;
     const maxY = (rect.height - vh) / 2;
 
-    if(maxX > 0){
-        posX = Math.min(maxX, Math.max(-maxX, posX));
-    }else{
-        posX = 0;
-    }
-
-    if(maxY > 0){
-        posY = Math.min(maxY, Math.max(-maxY, posY));
-    }else{
-        posY = 0;
-    }
+    posX = maxX > 0 ? Math.min(maxX, Math.max(-maxX, posX)) : 0;
+    posY = maxY > 0 ? Math.min(maxY, Math.max(-maxY, posY)) : 0;
 }
 
-/* ===== 慣性動畫 ===== */
+/* ===== 慣性 ===== */
 
 function inertia(){
 
@@ -145,13 +139,11 @@ galleries.forEach(gallery => {
     imgs.forEach((img, index) => {
 
         img.onclick = function(){
-
             currentGallery = imgs;
             currentIndex = index;
 
             showImage();
             viewer.style.display = "flex";
-
             document.body.style.overflow = "hidden";
         }
 
@@ -174,32 +166,6 @@ function showImage(){
 
     counter.innerText = (currentIndex + 1) + " / " + currentGallery.length;
 }
-
-/* ===== 點背景 ===== */
-
-viewer.addEventListener("click", function(e){
-
-    if(e.target === bigImage) return;
-
-    if(e.target.id === "prev" || e.target.id === "next" || e.target.id === "close") return;
-
-    if(e.target === viewer){
-        viewer.style.display = "none";
-        document.body.style.overflow = "";
-        return;
-    }
-
-    const x = e.clientX;
-    const width = window.innerWidth;
-
-    if(x < width / 2){
-        currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-    }else{
-        currentIndex = (currentIndex + 1) % currentGallery.length;
-    }
-
-    showImage();
-});
 
 /* ===== 關閉 ===== */
 
@@ -248,23 +214,14 @@ bigImage.addEventListener("wheel", function(e){
 
     let prevScale = scale;
 
-    if(e.deltaY < 0){
-        scale += 0.1;
-    }else{
-        scale -= 0.1;
-    }
-
+    scale += e.deltaY < 0 ? 0.1 : -0.1;
     scale = Math.min(Math.max(1, scale), 4);
 
-    /* ⭐ 以滑鼠位置為中心縮放 */
     const rect = bigImage.getBoundingClientRect();
-    const offsetX = e.clientX - rect.left;
-    const offsetY = e.clientY - rect.top;
-
     const ratio = scale / prevScale;
 
-    posX -= (offsetX - rect.width / 2) * (ratio - 1);
-    posY -= (offsetY - rect.height / 2) * (ratio - 1);
+    posX -= (e.clientX - rect.left - rect.width/2) * (ratio - 1);
+    posY -= (e.clientY - rect.top - rect.height/2) * (ratio - 1);
 
     clampPosition();
     updateTransform();
@@ -276,7 +233,6 @@ bigImage.addEventListener("mousedown", e => {
     if(scale <= 1) return;
 
     isDragging = true;
-
     velocityX = 0;
     velocityY = 0;
 
@@ -306,22 +262,23 @@ window.addEventListener("mousemove", e => {
 window.addEventListener("mouseup", () => {
     if(isDragging){
         isDragging = false;
-        inertia(); // ⭐ 慣性
+        inertia();
     }
 });
 
 /* ===== 手機 ===== */
-
-let initialDistance = null;
 
 viewer.addEventListener("touchstart", e => {
 
     if(e.touches.length === 1){
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
+        isMoved = false;
     }
 
 });
+
+/* ===== 手機移動 / 縮放 ===== */
 
 viewer.addEventListener("touchmove", function(e){
 
@@ -339,7 +296,6 @@ viewer.addEventListener("touchmove", function(e){
         }
 
         let scaleChange = distance / initialDistance;
-
         scale = Math.min(Math.max(1, scale * scaleChange), 4);
 
         initialDistance = distance;
@@ -357,6 +313,10 @@ viewer.addEventListener("touchmove", function(e){
         let dx = touch.clientX - startX;
         let dy = touch.clientY - startY;
 
+        if(Math.abs(dx) > 5 || Math.abs(dy) > 5){
+            isMoved = true;
+        }
+
         posX += dx;
         posY += dy;
 
@@ -372,10 +332,35 @@ viewer.addEventListener("touchmove", function(e){
 
 }, { passive:false });
 
-viewer.addEventListener("touchend", function(){
+/* ===== 手機結束 ===== */
+
+viewer.addEventListener("touchend", function(e){
+
     initialDistance = null;
 
-    inertia(); // ⭐ 手機也有慣性
+    if(!isMoved){
+
+        const touch = e.changedTouches[0];
+        const x = touch.clientX;
+        const width = window.innerWidth;
+
+        const target = document.elementFromPoint(x, touch.clientY);
+
+        if(target === bigImage) return;
+        if(target.id === "prev" || target.id === "next" || target.id === "close") return;
+
+        if(x < width / 2){
+            currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+        }else{
+            currentIndex = (currentIndex + 1) % currentGallery.length;
+        }
+
+        showImage();
+
+    }else{
+        inertia();
+    }
+
 });
 
 </script>
