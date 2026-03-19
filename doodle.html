@@ -6,31 +6,107 @@
 <meta charset="UTF-8">
 <title>Doodle</title>
 <link rel="stylesheet" href="style.css">
+
 <style>
-/* 縮小遮罩範圍，只覆蓋圖片四周，不整個畫面 */
-#viewer {
-    position: fixed;
-    top: 10%;
-    left: 10%;
-    width: 80%;
-    height: 80%;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+
+/* ===== Viewer 改回全螢幕 ===== */
+#viewer{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.95);
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    z-index:9999;
 }
-#viewer img {
-    max-width: 100%;
-    max-height: 100%;
-    cursor: grab;
+
+/* 圖片完整顯示 */
+#viewer img{
+    max-width:95vw;
+    max-height:90vh;
+    object-fit:contain;
+
+    transition:0.3s;
 }
+
+/* ===== 箭頭 ===== */
+#prev, #next{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+
+    font-size:40px;
+    color:white;
+
+    padding:20px;
+    cursor:pointer;
+
+    opacity:0.6;
+    z-index:10;
+}
+
+/* ⭐ 關鍵：確保一定在畫面內 */
+#prev{ left:5vw; }
+#next{ right:5vw; }
+
+#prev:hover, #next:hover{
+    opacity:1;
+}
+
+/* ===== 關閉 ===== */
+#close{
+    position:absolute;
+    top:20px;
+    right:20px;
+
+    font-size:28px;
+    color:white;
+
+    cursor:pointer;
+}
+
+/* ===== 頁數 ===== */
+#counter{
+    position:absolute;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+
+    color:#ccc;
+}
+
+/* ===== 手機優化 ===== */
+@media (max-width:768px){
+
+#viewer img{
+    max-width:100%;
+    max-height:75vh;
+}
+
+/* 箭頭縮小但一定可見 */
+#prev, #next{
+    font-size:30px;
+    padding:10px;
+}
+
+#prev{ left:10px; }
+#next{ right:10px; }
+
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="page">
+
 <h1>插圖 DOODLE</h1>
 <p>角色塗鴉＆小漫畫。</p>
 
@@ -49,217 +125,114 @@
 </div>
 
 <a class="back" href="index.html">← 回到首頁</a>
+
 </div>
 
+<!-- Viewer -->
 <div id="viewer">
+
     <div id="close">✕</div>
+
     <div id="prev">‹</div>
+
     <img id="bigImage">
+
     <div id="next">›</div>
+
     <div id="counter">1 / 1</div>
+
 </div>
 
 <script>
-const closeBtn = document.getElementById("close");
+
+const viewer = document.getElementById("viewer");
+const bigImage = document.getElementById("bigImage");
 const prev = document.getElementById("prev");
 const next = document.getElementById("next");
+const closeBtn = document.getElementById("close");
 const counter = document.getElementById("counter");
 
 const galleries = document.querySelectorAll(".gallery");
-const viewer = document.getElementById("viewer");
-const bigImage = document.getElementById("bigImage");
 
 let currentIndex = 0;
 let currentGallery = [];
 
-let scale = 1;
-let posX = 0;
-let posY = 0;
-
-let velocityX = 0;
-let velocityY = 0;
-
-let isDragging = false;
-let startX = 0;
-let startY = 0;
-
-let initialDistance = null;
-let isMoved = false;
-let touchStartX = 0;
-let touchStartY = 0;
-
-function updateTransform(){
-    bigImage.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
-}
-
-function clampPosition(){
-    const rect = bigImage.getBoundingClientRect();
-    const vw = viewer.clientWidth;
-    const vh = viewer.clientHeight;
-    const maxX = (rect.width - vw)/2;
-    const maxY = (rect.height - vh)/2;
-    posX = maxX>0?Math.min(maxX,Math.max(-maxX,posX)):0;
-    posY = maxY>0?Math.min(maxY,Math.max(-maxY,posY)):0;
-}
-
-function inertia(){
-    velocityX*=0.95;
-    velocityY*=0.95;
-    posX+=velocityX;
-    posY+=velocityY;
-    clampPosition();
-    updateTransform();
-    if(Math.abs(velocityX)>0.1||Math.abs(velocityY)>0.1){
-        requestAnimationFrame(inertia);
-    }
-}
-
+/* 點圖片 */
 galleries.forEach(gallery=>{
     const imgs = gallery.querySelectorAll("img");
+
     imgs.forEach((img,index)=>{
-        img.onclick=function(){
-            currentGallery=imgs;
-            currentIndex=index;
+        img.onclick = ()=>{
+            currentGallery = imgs;
+            currentIndex = index;
             showImage();
-            viewer.style.display="flex";
+            viewer.style.display = "flex";
             document.body.style.overflow="hidden";
         }
     });
 });
 
+/* 顯示圖片 */
 function showImage(){
     bigImage.src = currentGallery[currentIndex].src;
-    scale=1; posX=0; posY=0; velocityX=0; velocityY=0;
-    updateTransform();
-    counter.innerText = (currentIndex+1) + " / " + currentGallery.length;
+    counter.innerText = (currentIndex+1)+" / "+currentGallery.length;
 }
 
+/* 關閉 */
 function closeViewer(){
     viewer.style.display="none";
     document.body.style.overflow="";
 }
 
-closeBtn.onclick=e=>{ e.stopPropagation(); closeViewer(); }
-prev.onclick=e=>{ e.stopPropagation(); currentIndex=(currentIndex-1+currentGallery.length)%currentGallery.length; showImage(); }
-next.onclick=e=>{ e.stopPropagation(); currentIndex=(currentIndex+1)%currentGallery.length; showImage(); }
+closeBtn.onclick = e=>{
+    e.stopPropagation();
+    closeViewer();
+};
 
-// 鍵盤左右對應上下頁
+/* 左右 */
+prev.onclick = e=>{
+    e.stopPropagation();
+    currentIndex = (currentIndex-1+currentGallery.length)%currentGallery.length;
+    showImage();
+};
+
+next.onclick = e=>{
+    e.stopPropagation();
+    currentIndex = (currentIndex+1)%currentGallery.length;
+    showImage();
+};
+
+/* 點背景關閉 */
+viewer.addEventListener("click", e=>{
+    if(e.target===bigImage || e.target.id==="prev" || e.target.id==="next" || e.target.id==="close") return;
+    closeViewer();
+});
+
+/* 鍵盤 */
 document.addEventListener("keydown", e=>{
     if(viewer.style.display!=="flex") return;
-    if(e.key==="ArrowLeft"){ currentIndex=(currentIndex-1+currentGallery.length)%currentGallery.length; showImage(); }
-    if(e.key==="ArrowRight"){ currentIndex=(currentIndex+1)%currentGallery.length; showImage(); }
+
+    if(e.key==="ArrowLeft") prev.click();
+    if(e.key==="ArrowRight") next.click();
 });
 
-// 滾輪縮放
-bigImage.addEventListener("wheel", e=>{
-    e.preventDefault();
-    let prevScale = scale;
-    scale += e.deltaY<0?0.1:-0.1;
-    scale = Math.min(Math.max(1,scale),4);
-    const rect = bigImage.getBoundingClientRect();
-    const ratio = scale/prevScale;
-    posX-=(e.clientX-rect.left-rect.width/2)*(ratio-1);
-    posY-=(e.clientY-rect.top-rect.height/2)*(ratio-1);
-    clampPosition(); updateTransform();
-});
-
-// 滑鼠拖曳
-bigImage.addEventListener("mousedown", e=>{
-    if(scale<=1) return;
-    isDragging=true; velocityX=0; velocityY=0;
-    startX=e.clientX; startY=e.clientY;
-});
-window.addEventListener("mousemove", e=>{
-    if(!isDragging) return;
-    let dx=e.clientX-startX, dy=e.clientY-startY;
-    posX+=dx; posY+=dy; velocityX=dx; velocityY=dy;
-    startX=e.clientX; startY=e.clientY;
-    clampPosition(); updateTransform();
-});
-window.addEventListener("mouseup", ()=>{
-    if(isDragging){ isDragging=false; inertia(); }
-});
-
-/* ===== 手機觸控 ===== */
+/* 手機滑動 */
+let startX = 0;
 
 viewer.addEventListener("touchstart", e=>{
-    if(e.touches.length===1){
-        startX=e.touches[0].clientX;
-        startY=e.touches[0].clientY;
-        touchStartX=startX;
-        touchStartY=startY;
-        isMoved=false;
-    }
-    if(e.touches.length===2){
-        let dx=e.touches[0].clientX-e.touches[1].clientX;
-        let dy=e.touches[0].clientY-e.touches[1].clientY;
-        initialDistance=Math.sqrt(dx*dx+dy*dy);
-    }
+    startX = e.touches[0].clientX;
 });
-
-viewer.addEventListener("touchmove", e=>{
-    if(e.touches.length===2){
-        e.preventDefault();
-        let dx=e.touches[0].clientX-e.touches[1].clientX;
-        let dy=e.touches[0].clientY-e.touches[1].clientY;
-        let distance = Math.sqrt(dx*dx+dy*dy);
-        let scaleChange = distance/initialDistance;
-        scale=Math.min(Math.max(1,scale*scaleChange),4);
-        initialDistance=distance;
-        clampPosition(); updateTransform();
-    }
-    if(e.touches.length===1 && scale>1){
-        e.preventDefault();
-        let touch=e.touches[0];
-        let dx=touch.clientX-startX, dy=touch.clientY-startY;
-        if(Math.abs(dx)>5||Math.abs(dy)>5) isMoved=true;
-        posX+=dx; posY+=dy; velocityX=dx; velocityY=dy;
-        startX=touch.clientX; startY=touch.clientY;
-        clampPosition(); updateTransform();
-    }
-}, {passive:false});
 
 viewer.addEventListener("touchend", e=>{
-    initialDistance=null;
-    const touch = e.changedTouches[0];
-    const x=touch.clientX, y=touch.clientY;
-    const rect = bigImage.getBoundingClientRect();
-    const insideImage = x>=rect.left && x<=rect.right && y>=rect.top && y<=rect.bottom;
+    let endX = e.changedTouches[0].clientX;
 
-    if(!isMoved){
-        if(insideImage){
-            // 手機左右點圖片換頁
-            if(x < rect.left + rect.width/2){
-                currentIndex=(currentIndex-1+currentGallery.length)%currentGallery.length;
-            }else{
-                currentIndex=(currentIndex+1)%currentGallery.length;
-            }
-            showImage();
-            return;
-        }else{
-            // 點背景關閉
-            closeViewer();
-        }
-    }else{
-        // 手指滑動後慣性
-        let dx = x - touchStartX;
-        if(Math.abs(dx) > 50){
-            if(dx>0){
-                currentIndex=(currentIndex-1+currentGallery.length)%currentGallery.length;
-            }else{
-                currentIndex=(currentIndex+1)%currentGallery.length;
-            }
-            showImage();
-        }else{
-            inertia();
-        }
+    if(endX - startX > 50){
+        prev.click();
     }
-});
 
-/* ===== 點黑背景關閉（桌機） ===== */
-viewer.addEventListener("click", e=>{
-    if(e.target===bigImage||e.target.id==="prev"||e.target.id==="next"||e.target.id==="close") return;
-    closeViewer();
+    if(startX - endX > 50){
+        next.click();
+    }
 });
 
 </script>
