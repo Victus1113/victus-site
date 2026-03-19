@@ -3,9 +3,7 @@
 ========================= */
 
 body{
-
     background:radial-gradient(circle at top,#3a3447,#1a1822 70%);
-
     color:#f0f0f0;
 
     font-family:
@@ -15,7 +13,6 @@ body{
     serif;
 
     min-height:100vh;
-
     line-height:2;
 }
 
@@ -25,13 +22,11 @@ body{
 ========================= */
 
 .container{
-
     width:520px;
     margin-left:140px;
     margin-top:120px;
 
     padding-left:40px;
-
     border-left:1px solid #555;
 }
 
@@ -39,13 +34,9 @@ body{
 /* 標題 */
 
 h1{
-
     font-weight:normal;
-
     letter-spacing:8px;
-
     font-size:32px;
-
     margin-bottom:40px;
 
     text-shadow:
@@ -57,15 +48,11 @@ h1{
 /* 引言 */
 
 .quote{
-
     margin:60px 0;
-
     font-style:italic;
-
     color:#bbbbbb;
 
     border-left:2px solid #777;
-
     padding-left:15px;
 }
 
@@ -73,11 +60,8 @@ h1{
 /* 分隔線 */
 
 hr{
-
     border:none;
-
     border-top:1px solid #666;
-
     margin:40px 0;
 }
 
@@ -87,25 +71,19 @@ hr{
 ========================= */
 
 a{
-
     color:white;
-
     text-decoration:none;
 
     display:inline-block;
-
     position:relative;
 
     transition:0.3s;
 }
 
-
 /* 底線 */
 
 a::after{
-
     content:"";
-
     position:absolute;
 
     left:0;
@@ -115,24 +93,19 @@ a::after{
     height:1px;
 
     background:white;
-
     transition:width 0.3s;
 
     pointer-events:none;
 }
 
-
 /* hover */
 
 a:hover{
-
     color:#dddddd;
-
     text-shadow:0 0 6px #aaaaaa;
 }
 
 a:hover::after{
-
     width:100%;
 }
 
@@ -142,21 +115,17 @@ a:hover::after{
 ========================= */
 
 p{
-
     max-width:480px;
-
     letter-spacing:1px;
 }
 
 
 /* =========================
    閱讀頁面
-   story / character / novel
 ========================= */
 
 .page{
-    max-width:900px;   /* ← 原本 680，改大 */
-
+    max-width:900px;
     margin:60px auto;
 
     padding:0 24px;
@@ -164,59 +133,43 @@ p{
     color:#e6e6e6;
 
     font-size:19px;
-
     line-height:2.1;
-
     letter-spacing:0.5px;
 }
-
 
 /* 電子書閱讀感 */
 
 .page p{
-
     text-align:justify;
-
     margin-bottom:18px;
-
-    max-width:none;   /* ⭐ 新增 */
+    max-width:none;
 }
-
 
 /* 標題 */
 
 .page h1{
-
     font-size:28px;
-
     margin-bottom:20px;
-
     letter-spacing:2px;
 }
-
 
 /* 副標題 */
 
 .page h2{
-
     font-size:22px;
 
-    margin-top:50px;     /* 原本 30 → 改大 */
-    margin-bottom:16px;  /* 原本 12 → 改大 */
+    margin-top:50px;
+    margin-bottom:16px;
 
-    letter-spacing:3px;  /* ⭐ 新增 */
-    color:#ddd;          /* ⭐ 新增 */
+    letter-spacing:3px;
+    color:#ddd;
 }
-
 
 /* 返回首頁 */
 
 .back{
-
     display:inline-block;
-
     margin-top:30px;
-
     font-size:16px;
 }
 
@@ -252,84 +205,71 @@ p{
 @media (max-width:768px){
 
 .container{
-
     width:auto;
-
     margin:80px 20px;
 
     padding-left:18px;
-
     border-left:1px solid #666;
 }
 
-
-/* 標題 */
-
 h1{
-
     font-size:28px;
-
     letter-spacing:6px;
-
     line-height:1.6;
 }
 
-
-/* 引言 */
-
 .quote{
-
     margin:50px 0;
-
     font-size:18px;
 }
-
-
-/* 導航 */
 
 nav a{
-
     display:inline-block;
-
     margin:12px 0;
-
     font-size:18px;
 }
 
 }
+
 
 /* =========================
    插圖畫廊
 ========================= */
 
 .gallery{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-
-gap:20px;
-
-margin-top:30px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-top:30px;
 }
 
 .gallery img{
     width:100%;
     height:auto;
+
     border-radius:6px;
     border:1px solid #555;
+
     transition:0.3s;
     cursor:pointer;
-    box-shadow:0 0 15px rgba(0,0,0,0.4); /* ⭐ 新增 */
+
+    box-shadow:0 0 15px rgba(0,0,0,0.4);
+
+    -webkit-tap-highlight-color: rgba(255,255,255,0.08);
 }
 
+/* 防拖曳 */
+.gallery img,
+#viewer img{
+    -webkit-user-drag: none;
+}
 
-
-.gallery img:hover{
-
-transform:scale(1.03);
-
-box-shadow:0 0 10px rgba(255,255,255,0.2);
+/* 只有桌機才有 hover */
+@media (hover: hover){
+    .gallery img:hover{
+        transform:scale(1.03);
+        box-shadow:0 0 10px rgba(255,255,255,0.2);
+    }
 }
 
 
@@ -338,37 +278,48 @@ box-shadow:0 0 10px rgba(255,255,255,0.2);
 ========================= */
 
 #viewer{
+    position:fixed;
+    top:0;
+    left:0;
 
-position:fixed;
+    width:100%;
+    height:100%;
 
-top:0;
-left:0;
+    background:rgba(0,0,0,0.95);
+    backdrop-filter:blur(4px);
 
-width:100%;
-height:100%;
+    display:none;
 
-background:rgba(0,0,0,0.95);
-backdrop-filter:blur(4px);   /* ⭐ 高級感 */
+    align-items:center;
+    justify-content:center;
 
-display:none;
+    z-index:999;
 
-align-items:center;
-justify-content:center;
+    cursor:pointer;
 
-z-index:999;
-
-cursor:pointer;
+    touch-action: none;
 }
 
 #viewer img{
+    max-width:95%;
+    max-height:85%;
 
-max-width:95%;      /* ⭐ 原本 90 → 改大 */
-max-height:85%;     /* ⭐ 原本 90 → 改小一點（更像閱讀） */
+    border:1px solid #666;
 
-border:1px solid #666;
+    transition: transform 0.2s ease;
 
-transition:0.3s;    /* ⭐ 新增（切換更順） */
+    cursor: grab;
+    user-select: none;
 }
+
+#viewer img:active{
+    cursor: grabbing;
+}
+
+
+/* =========================
+   手機畫廊
+========================= */
 
 @media (max-width:768px){
 
@@ -381,7 +332,6 @@ transition:0.3s;    /* ⭐ 新增（切換更順） */
     width:100%;
 }
 
-/* ⭐ 返回首頁變大好點 */
 .back{
     font-size:20px;
     padding:10px 0;
@@ -389,14 +339,13 @@ transition:0.3s;    /* ⭐ 新增（切換更順） */
 
 }
 
+
 /* =========================
-   圖片UI（箭頭＋頁數）
+   圖片UI
 ========================= */
 
 #prev, #next{
-
     position:absolute;
-
     top:50%;
     transform:translateY(-50%);
 
@@ -416,18 +365,11 @@ transition:0.3s;    /* ⭐ 新增（切換更順） */
     opacity:1;
 }
 
-#prev{
-    left:10px;
-}
+#prev{ left:10px; }
+#next{ right:10px; }
 
-#next{
-    right:10px;
-}
-
-/* 頁數 */
 
 #counter{
-
     position:absolute;
 
     bottom:20px;
@@ -437,6 +379,7 @@ transition:0.3s;    /* ⭐ 新增（切換更順） */
     font-size:16px;
     color:#ccc;
 }
+
 
 /* 關閉按鈕 */
 
@@ -449,6 +392,7 @@ transition:0.3s;    /* ⭐ 新增（切換更順） */
     color:white;
 
     cursor:pointer;
+
     opacity:0.7;
     transition:0.3s;
 }
