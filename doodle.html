@@ -421,6 +421,50 @@ document.addEventListener("keydown", e=>{
 
 });
 
+let lastTap = 0;
+
+viewer.addEventListener("touchend", e=>{
+
+    if(e.touches.length > 0) return; // 保險
+
+    const now = Date.now();
+    const tapGap = now - lastTap;
+
+    /* ===== 雙擊判定（300ms內） ===== */
+    if(tapGap < 300){
+
+        /* 只在點到圖片時才觸發 */
+        const touch = e.changedTouches[0];
+        const rect = bigImage.getBoundingClientRect();
+
+        const insideImage =
+            touch.clientX >= rect.left &&
+            touch.clientX <= rect.right &&
+            touch.clientY >= rect.top &&
+            touch.clientY <= rect.bottom;
+
+        if(!insideImage) return;
+
+        /* ===== 切換縮放 ===== */
+        if(scale === 1){
+            scale = 2;   // 放大倍率（你可以改 2.5）
+        }else{
+            scale = 1;
+            posX = 0;
+            posY = 0;
+        }
+
+        clamp();
+        updateTransform();
+
+        lastTap = 0; // 重置避免連續觸發
+        return;
+    }
+
+    lastTap = now;
+
+});
+
 </script>
 
 </body>
