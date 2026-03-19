@@ -74,22 +74,70 @@ const bigImage = document.getElementById("bigImage");
 let currentIndex = 0;
 let currentGallery = [];
 
-/* ⭐ 縮放 + 拖曳參數 */
+/* ===== 狀態 ===== */
+
 let scale = 1;
 let posX = 0;
 let posY = 0;
+
+let velocityX = 0;
+let velocityY = 0;
 
 let isDragging = false;
 let startX = 0;
 let startY = 0;
 
-/* ⭐ 統一 transform */
+/* ===== 更新 transform ===== */
+
 function updateTransform(){
     bigImage.style.transform =
-        "translate(" + posX + "px," + posY + "px) scale(" + scale + ")";
+        `translate(${posX}px, ${posY}px) scale(${scale})`;
 }
 
-/* 點圖片 */
+/* ===== 邊界限制 ===== */
+
+function clampPosition(){
+
+    const rect = bigImage.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    const maxX = (rect.width - vw) / 2;
+    const maxY = (rect.height - vh) / 2;
+
+    if(maxX > 0){
+        posX = Math.min(maxX, Math.max(-maxX, posX));
+    }else{
+        posX = 0;
+    }
+
+    if(maxY > 0){
+        posY = Math.min(maxY, Math.max(-maxY, posY));
+    }else{
+        posY = 0;
+    }
+}
+
+/* ===== 慣性動畫 ===== */
+
+function inertia(){
+
+    velocityX *= 0.95;
+    velocityY *= 0.95;
+
+    posX += velocityX;
+    posY += velocityY;
+
+    clampPosition();
+    updateTransform();
+
+    if(Math.abs(velocityX) > 0.1 || Math.abs(velocityY) > 0.1){
+        requestAnimationFrame(inertia);
+    }
+}
+
+/* ===== 點圖片 ===== */
+
 galleries.forEach(gallery => {
 
     const imgs = gallery.querySelectorAll("img");
@@ -111,20 +159,24 @@ galleries.forEach(gallery => {
 
 });
 
-/* 顯示圖片 */
+/* ===== 顯示圖片 ===== */
+
 function showImage(){
     bigImage.src = currentGallery[currentIndex].src;
 
     scale = 1;
     posX = 0;
     posY = 0;
+    velocityX = 0;
+    velocityY = 0;
 
     updateTransform();
 
     counter.innerText = (currentIndex + 1) + " / " + currentGallery.length;
 }
 
-/* 點背景 / 切換 */
+/* ===== 點背景 ===== */
+
 viewer.addEventListener("click", function(e){
 
     if(e.target === bigImage) return;
@@ -149,14 +201,16 @@ viewer.addEventListener("click", function(e){
     showImage();
 });
 
-/* 關閉 */
+/* ===== 關閉 ===== */
+
 closeBtn.onclick = function(e){
     e.stopPropagation();
     viewer.style.display = "none";
     document.body.style.overflow = "";
 }
 
-/* 左右按鈕 */
+/* ===== 左右 ===== */
+
 prev.onclick = function(e){
     e.stopPropagation();
     currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
@@ -169,7 +223,8 @@ next.onclick = function(e){
     showImage();
 }
 
-/* 鍵盤 */
+/* ===== 鍵盤 ===== */
+
 document.addEventListener("keydown", function(e){
 
     if(viewer.style.display !== "flex") return;
@@ -186,9 +241,12 @@ document.addEventListener("keydown", function(e){
 
 });
 
-/* 滾輪縮放（電腦） */
+/* ===== 滾輪縮放 ===== */
+
 bigImage.addEventListener("wheel", function(e){
     e.preventDefault();
+
+    let prevScale = scale;
 
     if(e.deltaY < 0){
         scale += 0.1;
@@ -196,46 +254,79 @@ bigImage.addEventListener("wheel", function(e){
         scale -= 0.1;
     }
 
-    scale = Math.min(Math.max(1, scale), 3);
+    scale = Math.min(Math.max(1, scale), 4);
 
+    /* ⭐ 以滑鼠位置為中心縮放 */
+    const rect = bigImage.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const offsetY = e.clientY - rect.top;
+
+    const ratio = scale / prevScale;
+
+    posX -= (offsetX - rect.width / 2) * (ratio - 1);
+    posY -= (offsetY - rect.height / 2) * (ratio - 1);
+
+    clampPosition();
     updateTransform();
 });
 
-/* 滑鼠拖曳 */
+/* ===== 滑鼠拖曳 ===== */
+
 bigImage.addEventListener("mousedown", e => {
     if(scale <= 1) return;
 
     isDragging = true;
-    startX = e.clientX - posX;
-    startY = e.clientY - posY;
+
+    velocityX = 0;
+    velocityY = 0;
+
+    startX = e.clientX;
+    startY = e.clientY;
 });
 
 window.addEventListener("mousemove", e => {
     if(!isDragging) return;
 
-    posX = e.clientX - startX;
-    posY = e.clientY - startY;
+    let dx = e.clientX - startX;
+    let dy = e.clientY - startY;
 
+    posX += dx;
+    posY += dy;
+
+    velocityX = dx;
+    velocityY = dy;
+
+    startX = e.clientX;
+    startY = e.clientY;
+
+    clampPosition();
     updateTransform();
 });
 
 window.addEventListener("mouseup", () => {
-    isDragging = false;
+    if(isDragging){
+        isDragging = false;
+        inertia(); // ⭐ 慣性
+    }
 });
 
-/* 手機觸控 */
+/* ===== 手機 ===== */
+
 let initialDistance = null;
 
 viewer.addEventListener("touchstart", e => {
+
     if(e.touches.length === 1){
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
     }
+
 });
 
 viewer.addEventListener("touchmove", function(e){
 
     if(e.touches.length === 2){
+
         e.preventDefault();
 
         let dx = e.touches[0].clientX - e.touches[1].clientX;
@@ -249,22 +340,33 @@ viewer.addEventListener("touchmove", function(e){
 
         let scaleChange = distance / initialDistance;
 
-        scale = Math.min(Math.max(1, scale * scaleChange), 3);
+        scale = Math.min(Math.max(1, scale * scaleChange), 4);
 
+        initialDistance = distance;
+
+        clampPosition();
         updateTransform();
     }
 
     if(e.touches.length === 1 && scale > 1){
+
         e.preventDefault();
 
         let touch = e.touches[0];
 
-        posX += touch.clientX - startX;
-        posY += touch.clientY - startY;
+        let dx = touch.clientX - startX;
+        let dy = touch.clientY - startY;
+
+        posX += dx;
+        posY += dy;
+
+        velocityX = dx;
+        velocityY = dy;
 
         startX = touch.clientX;
         startY = touch.clientY;
 
+        clampPosition();
         updateTransform();
     }
 
@@ -272,6 +374,8 @@ viewer.addEventListener("touchmove", function(e){
 
 viewer.addEventListener("touchend", function(){
     initialDistance = null;
+
+    inertia(); // ⭐ 手機也有慣性
 });
 
 </script>
