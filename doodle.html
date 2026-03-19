@@ -45,7 +45,6 @@
 </div>
 
 <script>
-
 const closeBtn = document.getElementById("close");
 const prev = document.getElementById("prev");
 const next = document.getElementById("next");
@@ -57,8 +56,6 @@ const bigImage = document.getElementById("bigImage");
 
 let currentIndex = 0;
 let currentGallery = [];
-
-/* ===== 狀態 ===== */
 
 let scale = 1;
 let posX = 0;
@@ -74,300 +71,160 @@ let startY = 0;
 let initialDistance = null;
 let isMoved = false;
 
-/* ===== transform ===== */
-
 function updateTransform(){
-    bigImage.style.transform =
-        `translate(${posX}px, ${posY}px) scale(${scale})`;
+    bigImage.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
 }
 
-/* ===== 邊界 ===== */
-
 function clampPosition(){
-
     const rect = bigImage.getBoundingClientRect();
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-
-    const maxX = (rect.width - vw) / 2;
-    const maxY = (rect.height - vh) / 2;
-
-    posX = maxX > 0 ? Math.min(maxX, Math.max(-maxX, posX)) : 0;
-    posY = maxY > 0 ? Math.min(maxY, Math.max(-maxY, posY)) : 0;
+    const maxX = (rect.width - vw)/2;
+    const maxY = (rect.height - vh)/2;
+    posX = maxX>0?Math.min(maxX,Math.max(-maxX,posX)):0;
+    posY = maxY>0?Math.min(maxY,Math.max(-maxY,posY)):0;
 }
 
-/* ===== 慣性 ===== */
-
 function inertia(){
-
-    velocityX *= 0.95;
-    velocityY *= 0.95;
-
-    posX += velocityX;
-    posY += velocityY;
-
+    velocityX*=0.95;
+    velocityY*=0.95;
+    posX+=velocityX;
+    posY+=velocityY;
     clampPosition();
     updateTransform();
-
-    if(Math.abs(velocityX) > 0.1 || Math.abs(velocityY) > 0.1){
+    if(Math.abs(velocityX)>0.1||Math.abs(velocityY)>0.1){
         requestAnimationFrame(inertia);
     }
 }
 
-/* ===== 點圖片 ===== */
-
-galleries.forEach(gallery => {
-
+galleries.forEach(gallery=>{
     const imgs = gallery.querySelectorAll("img");
-
-    imgs.forEach((img, index) => {
-
-        img.onclick = function(){
-            currentGallery = imgs;
-            currentIndex = index;
-
+    imgs.forEach((img,index)=>{
+        img.onclick=function(){
+            currentGallery=imgs;
+            currentIndex=index;
             showImage();
-            viewer.style.display = "flex";
-            document.body.style.overflow = "hidden";
+            viewer.style.display="flex";
+            document.body.style.overflow="hidden";
         }
-
     });
-
 });
-
-/* ===== 顯示 ===== */
 
 function showImage(){
     bigImage.src = currentGallery[currentIndex].src;
-
-    scale = 1;
-    posX = 0;
-    posY = 0;
-    velocityX = 0;
-    velocityY = 0;
-
+    scale=1; posX=0; posY=0; velocityX=0; velocityY=0;
     updateTransform();
-
-    counter.innerText = (currentIndex + 1) + " / " + currentGallery.length;
+    counter.innerText = (currentIndex+1) + " / " + currentGallery.length;
 }
-
-/* ===== 關閉 ===== */
 
 function closeViewer(){
-    viewer.style.display = "none";
-    document.body.style.overflow = "";
+    viewer.style.display="none";
+    document.body.style.overflow="";
 }
 
-closeBtn.onclick = e => {
-    e.stopPropagation();
-    closeViewer();
-}
+closeBtn.onclick=e=>{ e.stopPropagation(); closeViewer(); }
+prev.onclick=e=>{ e.stopPropagation(); currentIndex=(currentIndex-1+currentGallery.length)%currentGallery.length; showImage(); }
+next.onclick=e=>{ e.stopPropagation(); currentIndex=(currentIndex+1)%currentGallery.length; showImage(); }
 
-/* ===== 左右 ===== */
-
-prev.onclick = e => {
-    e.stopPropagation();
-    currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-    showImage();
-}
-
-next.onclick = e => {
-    e.stopPropagation();
-    currentIndex = (currentIndex + 1) % currentGallery.length;
-    showImage();
-}
-
-/* ===== 背景點擊（桌機） ===== */
-
-viewer.addEventListener("click", function(e){
-
-    if(e.target === bigImage) return;
-    if(e.target.id === "prev" || e.target.id === "next" || e.target.id === "close") return;
-
-    /* ⭐ 點黑背景 → 關閉 */
-    if(e.target === viewer){
-        closeViewer();
-        return;
-    }
-
-    /* ⭐ 左右切換 */
-    const x = e.clientX;
-    const width = window.innerWidth;
-
-    if(x < width / 2){
-        currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-    }else{
-        currentIndex = (currentIndex + 1) % currentGallery.length;
-    }
-
-    showImage();
+document.addEventListener("keydown", e=>{
+    if(viewer.style.display!=="flex") return;
+    if(e.key==="ArrowLeft"){ currentIndex=(currentIndex-1+currentGallery.length)%currentGallery.length; showImage(); }
+    if(e.key==="ArrowRight"){ currentIndex=(currentIndex+1)%currentGallery.length; showImage(); }
 });
 
-/* ===== 滾輪縮放 ===== */
-
-bigImage.addEventListener("wheel", function(e){
+bigImage.addEventListener("wheel", e=>{
     e.preventDefault();
-
     let prevScale = scale;
-
-    scale += e.deltaY < 0 ? 0.1 : -0.1;
-    scale = Math.min(Math.max(1, scale), 4);
-
+    scale += e.deltaY<0?0.1:-0.1;
+    scale = Math.min(Math.max(1,scale),4);
     const rect = bigImage.getBoundingClientRect();
-    const ratio = scale / prevScale;
-
-    posX -= (e.clientX - rect.left - rect.width/2) * (ratio - 1);
-    posY -= (e.clientY - rect.top - rect.height/2) * (ratio - 1);
-
-    clampPosition();
-    updateTransform();
+    const ratio = scale/prevScale;
+    posX-=(e.clientX-rect.left-rect.width/2)*(ratio-1);
+    posY-=(e.clientY-rect.top-rect.height/2)*(ratio-1);
+    clampPosition(); updateTransform();
 });
 
-/* ===== 滑鼠拖曳 ===== */
-
-bigImage.addEventListener("mousedown", e => {
-    if(scale <= 1) return;
-
-    isDragging = true;
-    velocityX = 0;
-    velocityY = 0;
-
-    startX = e.clientX;
-    startY = e.clientY;
+bigImage.addEventListener("mousedown", e=>{
+    if(scale<=1) return;
+    isDragging=true; velocityX=0; velocityY=0;
+    startX=e.clientX; startY=e.clientY;
 });
-
-window.addEventListener("mousemove", e => {
+window.addEventListener("mousemove", e=>{
     if(!isDragging) return;
-
-    let dx = e.clientX - startX;
-    let dy = e.clientY - startY;
-
-    posX += dx;
-    posY += dy;
-
-    velocityX = dx;
-    velocityY = dy;
-
-    startX = e.clientX;
-    startY = e.clientY;
-
-    clampPosition();
-    updateTransform();
+    let dx=e.clientX-startX, dy=e.clientY-startY;
+    posX+=dx; posY+=dy; velocityX=dx; velocityY=dy;
+    startX=e.clientX; startY=e.clientY;
+    clampPosition(); updateTransform();
+});
+window.addEventListener("mouseup", ()=>{
+    if(isDragging){ isDragging=false; inertia(); }
 });
 
-window.addEventListener("mouseup", () => {
-    if(isDragging){
-        isDragging = false;
-        inertia();
+/* ===== 手機觸控 ===== */
+
+viewer.addEventListener("touchstart", e=>{
+    if(e.touches.length===1){
+        startX=e.touches[0].clientX;
+        startY=e.touches[0].clientY;
+        isMoved=false;
     }
 });
 
-/* ===== 手機 ===== */
-
-viewer.addEventListener("touchstart", e => {
-
-    if(e.touches.length === 1){
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        isMoved = false;
-    }
-
-});
-
-/* ===== 移動 / 縮放 ===== */
-
-viewer.addEventListener("touchmove", function(e){
-
-    if(e.touches.length === 2){
-
+viewer.addEventListener("touchmove", e=>{
+    if(e.touches.length===2){
         e.preventDefault();
-
-        let dx = e.touches[0].clientX - e.touches[1].clientX;
-        let dy = e.touches[0].clientY - e.touches[1].clientY;
-
-        let distance = Math.sqrt(dx*dx + dy*dy);
-
-        if(!initialDistance){
-            initialDistance = distance;
-        }
-
-        let scaleChange = distance / initialDistance;
-        scale = Math.min(Math.max(1, scale * scaleChange), 4);
-
-        initialDistance = distance;
-
-        clampPosition();
-        updateTransform();
+        let dx=e.touches[0].clientX-e.touches[1].clientX;
+        let dy=e.touches[0].clientY-e.touches[1].clientY;
+        let distance = Math.sqrt(dx*dx+dy*dy);
+        if(!initialDistance) initialDistance=distance;
+        let scaleChange = distance/initialDistance;
+        scale=Math.min(Math.max(1,scale*scaleChange),4);
+        initialDistance=distance;
+        clampPosition(); updateTransform();
     }
-
-    if(e.touches.length === 1 && scale > 1){
-
+    if(e.touches.length===1 && scale>1){
         e.preventDefault();
-
-        let touch = e.touches[0];
-
-        let dx = touch.clientX - startX;
-        let dy = touch.clientY - startY;
-
-        if(Math.abs(dx) > 5 || Math.abs(dy) > 5){
-            isMoved = true;
-        }
-
-        posX += dx;
-        posY += dy;
-
-        velocityX = dx;
-        velocityY = dy;
-
-        startX = touch.clientX;
-        startY = touch.clientY;
-
-        clampPosition();
-        updateTransform();
+        let touch=e.touches[0];
+        let dx=touch.clientX-startX, dy=touch.clientY-startY;
+        if(Math.abs(dx)>5||Math.abs(dy)>5) isMoved=true;
+        posX+=dx; posY+=dy; velocityX=dx; velocityY=dy;
+        startX=touch.clientX; startY=touch.clientY;
+        clampPosition(); updateTransform();
     }
+}, {passive:false});
 
-}, { passive:false });
-
-/* ===== 手機點擊（修正版） ===== */
-
-viewer.addEventListener("touchend", function(e){
-
-    initialDistance = null;
-
+viewer.addEventListener("touchend", e=>{
+    initialDistance=null;
     const touch = e.changedTouches[0];
-    const x = touch.clientX;
-    const y = touch.clientY;
+    const x=touch.clientX, y=touch.clientY;
 
-    /* ⭐ 判斷是否點在圖片內 */
     const rect = bigImage.getBoundingClientRect();
-    const insideImage =
-        x >= rect.left && x <= rect.right &&
-        y >= rect.top && y <= rect.bottom;
+    const insideImage = x>=rect.left && x<=rect.right && y>=rect.top && y<=rect.bottom;
 
     if(!isMoved){
-
-        /* ⭐ 點圖片 → 不動 */
-        if(insideImage) return;
-
-        /* ⭐ 點黑背景 → 關閉 */
-        if(e.target === viewer){
-            closeViewer();
-            return;
-        }
-
-        /* ⭐ 左右切換（不再依賴 target） */
-        if(x < window.innerWidth / 2){
-            currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+        if(insideImage) return; // 點圖片不動
+        // 判斷點黑背景
+        const viewerRect = viewer.getBoundingClientRect();
+        if(x>=viewerRect.left && x<=viewerRect.right && y>=viewerRect.top && y<=viewerRect.bottom){
+            // 左右切換
+            if(x<window.innerWidth/2){
+                currentIndex=(currentIndex-1+currentGallery.length)%currentGallery.length;
+            }else{
+                currentIndex=(currentIndex+1)%currentGallery.length;
+            }
+            showImage();
         }else{
-            currentIndex = (currentIndex + 1) % currentGallery.length;
+            closeViewer();
         }
-
-        showImage();
-
     }else{
         inertia();
     }
+});
 
+/* ===== 點黑背景關閉（桌機） ===== */
+viewer.addEventListener("click", e=>{
+    if(e.target===bigImage||e.target.id==="prev"||e.target.id==="next"||e.target.id==="close") return;
+    closeViewer();
 });
 
 </script>
