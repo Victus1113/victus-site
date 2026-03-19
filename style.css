@@ -301,15 +301,24 @@ nav a{
 }
 
 #viewer img{
-    max-width:95%;
-    max-height:85%;
+    max-width:95vw;
+    max-height:90vh;
+
+    object-fit:contain;
 
     border:1px solid #666;
 
-    transition: transform 0.2s ease;
+    /* ⭐ 關鍵：拖曳時更順，不會卡頓 */
+    will-change: transform;
+
+    /* ⭐ 比較接近 IG 手感（不要太慢） */
+    transition: transform 0.08s linear;
 
     cursor: grab;
     user-select: none;
+
+    /* ⭐ 防止手機手勢干擾（非常重要） */
+    touch-action: none;
 }
 
 #viewer img:active{
