@@ -175,8 +175,6 @@ let touchStartX = 0;
 let touchStartY = 0;
 let isMoved = false;
 
-let lastTap = 0;
-
 /* ===== 更新 ===== */
 function updateTransform(){
     bigImage.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
@@ -324,8 +322,9 @@ window.addEventListener("mouseup", ()=>{
     }
 });
 
-
-/* ===== 手機觸控（最終穩定版） ===== */
+/* ======================================
+   手機觸控（唯一穩定版本）
+====================================== */
 
 let tapTimer = null;
 let lastTapTime = 0;
@@ -333,7 +332,6 @@ let lastTapTime = 0;
 viewer.addEventListener("touchstart", e=>{
 
     if(e.touches.length===1){
-
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
 
@@ -350,10 +348,8 @@ viewer.addEventListener("touchstart", e=>{
     }
 });
 
-
 viewer.addEventListener("touchmove", e=>{
 
-    /* 雙指縮放 */
     if(e.touches.length===2){
         e.preventDefault();
 
@@ -370,7 +366,6 @@ viewer.addEventListener("touchmove", e=>{
         updateTransform();
     }
 
-    /* 單指拖曳 */
     if(e.touches.length===1 && scale>1){
         e.preventDefault();
 
@@ -398,25 +393,22 @@ viewer.addEventListener("touchmove", e=>{
 
 }, {passive:false});
 
-
-
 viewer.addEventListener("touchend", e=>{
 
     initialDistance = null;
 
     const now = Date.now();
     const touch = e.changedTouches[0];
+    const dx = touch.clientX - touchStartX;
 
-    let dx = touch.clientX - touchStartX;
-
-    /* ===== 1. 滑動優先 ===== */
+    /* 滑動優先 */
     if(scale === 1 && Math.abs(dx) > 40){
         if(dx > 0) goPrev();
         else goNext();
         return;
     }
 
-    /* ===== 2. 雙擊 ===== */
+    /* 雙擊 */
     if(now - lastTapTime < 250){
 
         clearTimeout(tapTimer);
@@ -430,13 +422,7 @@ viewer.addEventListener("touchend", e=>{
         }
 
         clamp();
-
-        bigImage.style.transition = "transform 0.25s cubic-bezier(0.22,1,0.36,1)";
         updateTransform();
-
-        setTimeout(()=>{
-            bigImage.style.transition = "0.08s linear";
-        },250);
 
         lastTapTime = 0;
         return;
@@ -444,43 +430,20 @@ viewer.addEventListener("touchend", e=>{
 
     lastTapTime = now;
 
-    /* ===== 3. 單擊（延遲） ===== */
+    /* 單擊（延遲） */
     tapTimer = setTimeout(()=>{
 
         if(scale === 1){
-
             if(touch.clientX < window.innerWidth / 2){
                 goPrev();
             }else{
                 goNext();
             }
-
         }else{
             inertia();
         }
 
     }, 250);
-
-});
-
-
-    /* ===== 滑動切換 ===== */
-    if(scale===1 && !isMoved){
-
-        if(dx > 40) goPrev();
-        else if(dx < -40) goNext();
-        else{
-            /* 👉 點擊左右 */
-            if(touch.clientX < window.innerWidth/2){
-                goPrev();
-            }else{
-                goNext();
-            }
-        }
-
-    }else{
-        inertia();
-    }
 
 });
 
