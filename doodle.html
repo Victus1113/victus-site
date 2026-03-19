@@ -2,16 +2,11 @@
 <html lang="zh">
 
 <head>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    
 <meta charset="UTF-8">
 <title>Doodle</title>
-
 <link rel="stylesheet" href="style.css">
-
 </head>
-
 
 <body>
 
@@ -19,9 +14,7 @@
 
 <h1>插圖 DOODLE</h1>
 
-<p>
-角色塗鴉＆小漫畫。
-</p>
+<p>角色塗鴉＆小漫畫。</p>
 
 <h2>插圖</h2>
 
@@ -43,22 +36,13 @@
 
 </div>
 
-
-<!-- 圖片放大查看器 -->
 <div id="viewer">
-    
     <div id="close">✕</div>
-    
     <div id="prev">‹</div>
-
     <img id="bigImage">
-
     <div id="next">›</div>
-
     <div id="counter">1 / 1</div>
-
 </div>
-
 
 <script>
 
@@ -90,14 +74,14 @@ let startY = 0;
 let initialDistance = null;
 let isMoved = false;
 
-/* ===== 更新 transform ===== */
+/* ===== transform ===== */
 
 function updateTransform(){
     bigImage.style.transform =
         `translate(${posX}px, ${posY}px) scale(${scale})`;
 }
 
-/* ===== 邊界限制 ===== */
+/* ===== 邊界 ===== */
 
 function clampPosition(){
 
@@ -151,7 +135,7 @@ galleries.forEach(gallery => {
 
 });
 
-/* ===== 顯示圖片 ===== */
+/* ===== 顯示 ===== */
 
 function showImage(){
     bigImage.src = currentGallery[currentIndex].src;
@@ -169,42 +153,54 @@ function showImage(){
 
 /* ===== 關閉 ===== */
 
-closeBtn.onclick = function(e){
-    e.stopPropagation();
+function closeViewer(){
     viewer.style.display = "none";
     document.body.style.overflow = "";
 }
 
+closeBtn.onclick = e => {
+    e.stopPropagation();
+    closeViewer();
+}
+
 /* ===== 左右 ===== */
 
-prev.onclick = function(e){
+prev.onclick = e => {
     e.stopPropagation();
     currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
     showImage();
 }
 
-next.onclick = function(e){
+next.onclick = e => {
     e.stopPropagation();
     currentIndex = (currentIndex + 1) % currentGallery.length;
     showImage();
 }
 
-/* ===== 鍵盤 ===== */
+/* ===== 背景點擊（桌機） ===== */
 
-document.addEventListener("keydown", function(e){
+viewer.addEventListener("click", function(e){
 
-    if(viewer.style.display !== "flex") return;
+    if(e.target === bigImage) return;
+    if(e.target.id === "prev" || e.target.id === "next" || e.target.id === "close") return;
 
-    if(e.key === "ArrowLeft"){
+    /* ⭐ 點黑背景 → 關閉 */
+    if(e.target === viewer){
+        closeViewer();
+        return;
+    }
+
+    /* ⭐ 左右切換 */
+    const x = e.clientX;
+    const width = window.innerWidth;
+
+    if(x < width / 2){
         currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-        showImage();
-    }
-
-    if(e.key === "ArrowRight"){
+    }else{
         currentIndex = (currentIndex + 1) % currentGallery.length;
-        showImage();
     }
 
+    showImage();
 });
 
 /* ===== 滾輪縮放 ===== */
@@ -278,7 +274,7 @@ viewer.addEventListener("touchstart", e => {
 
 });
 
-/* ===== 手機移動 / 縮放 ===== */
+/* ===== 移動 / 縮放 ===== */
 
 viewer.addEventListener("touchmove", function(e){
 
@@ -332,24 +328,35 @@ viewer.addEventListener("touchmove", function(e){
 
 }, { passive:false });
 
-/* ===== 手機結束 ===== */
+/* ===== 手機點擊（修正版） ===== */
 
 viewer.addEventListener("touchend", function(e){
 
     initialDistance = null;
 
+    const touch = e.changedTouches[0];
+    const x = touch.clientX;
+    const y = touch.clientY;
+
+    /* ⭐ 判斷是否點在圖片內 */
+    const rect = bigImage.getBoundingClientRect();
+    const insideImage =
+        x >= rect.left && x <= rect.right &&
+        y >= rect.top && y <= rect.bottom;
+
     if(!isMoved){
 
-        const touch = e.changedTouches[0];
-        const x = touch.clientX;
-        const width = window.innerWidth;
+        /* ⭐ 點圖片 → 不動 */
+        if(insideImage) return;
 
-        const target = document.elementFromPoint(x, touch.clientY);
+        /* ⭐ 點黑背景 → 關閉 */
+        if(e.target === viewer){
+            closeViewer();
+            return;
+        }
 
-        if(target === bigImage) return;
-        if(target.id === "prev" || target.id === "next" || target.id === "close") return;
-
-        if(x < width / 2){
+        /* ⭐ 左右切換（不再依賴 target） */
+        if(x < window.innerWidth / 2){
             currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
         }else{
             currentIndex = (currentIndex + 1) % currentGallery.length;
