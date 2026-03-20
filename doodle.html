@@ -243,6 +243,7 @@ galleries.forEach(gallery=>{
 function showImage(){
     bigImage.src = currentGallery[currentIndex].src;
 
+    scale = 1; // ⭐ 加這行
     posX=0; posY=0;
     velocityX=0; velocityY=0;
 
@@ -336,7 +337,6 @@ window.addEventListener("mousemove", e=>{
 window.addEventListener("mouseup", ()=>{
     if(isDragging){
         isDragging=false;
-        inertia();
     }
 });
 
@@ -350,7 +350,6 @@ let swipeOffsetX = 0;
 viewer.addEventListener("touchstart", e=>{
 
     if(e.touches.length===1){
-        if(!initialDistance) return;
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
 
