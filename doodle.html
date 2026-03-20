@@ -341,14 +341,17 @@ window.addEventListener("mouseup", ()=>{
 });
 
 /* ======================================
-   手機觸控（穩定版 - 無卡頓）
+   手機觸控（Gesture Priority 穩定版）
 ====================================== */
 
+let tapTimer = null;
 let lastTapTime = 0;
+let isSwiping = false;
 
 viewer.addEventListener("touchstart", e=>{
 
     isTouchDevice = true;
+    isSwiping = false;
 
     if(e.touches.length===1){
         startX = e.touches[0].clientX;
@@ -369,7 +372,6 @@ viewer.addEventListener("touchstart", e=>{
 
 viewer.addEventListener("touchmove", e=>{
 
-    /* 雙指縮放 */
     if(e.touches.length===2){
         e.preventDefault();
 
@@ -386,30 +388,36 @@ viewer.addEventListener("touchmove", e=>{
         updateTransform();
     }
 
-    /* 拖曳（放大時） */
-    if(e.touches.length===1 && scale>1){
-        e.preventDefault();
+    if(e.touches.length===1){
 
         let touch = e.touches[0];
+        let dx = touch.clientX - touchStartX;
+        let dy = touch.clientY - touchStartY;
 
-        let dx = touch.clientX - startX;
-        let dy = touch.clientY - startY;
-
-        if(Math.abs(dx)>5 || Math.abs(dy)>5){
-            isMoved = true;
+        /* 判斷滑動 */
+        if(Math.abs(dx) > 30){
+            isSwiping = true;
         }
 
-        posX += dx;
-        posY += dy;
+        /* 放大拖曳 */
+        if(scale > 1){
+            e.preventDefault();
 
-        velocityX = dx;
-        velocityY = dy;
+            let moveX = touch.clientX - startX;
+            let moveY = touch.clientY - startY;
 
-        startX = touch.clientX;
-        startY = touch.clientY;
+            posX += moveX;
+            posY += moveY;
 
-        clamp();
-        updateTransform();
+            velocityX = moveX;
+            velocityY = moveY;
+
+            startX = touch.clientX;
+            startY = touch.clientY;
+
+            clamp();
+            updateTransform();
+        }
     }
 
 }, {passive:false});
@@ -422,15 +430,21 @@ viewer.addEventListener("touchend", e=>{
     const touch = e.changedTouches[0];
     const dx = touch.clientX - touchStartX;
 
-    /* 滑動 */
-    if(scale === 1 && Math.abs(dx) > 50){
-        if(dx > 0) goPrev();
-        else goNext();
+    /* =====================
+       1️⃣ 滑動（最高優先）
+    ===================== */
+    if(scale === 1 && isSwiping){
+        if(dx > 50) goPrev();
+        else if(dx < -50) goNext();
         return;
     }
 
-    /* 雙擊 */
+    /* =====================
+       2️⃣ 雙擊（取消單擊）
+    ===================== */
     if(now - lastTapTime < 250){
+
+        clearTimeout(tapTimer);
 
         if(scale === 1){
             scale = 2;
@@ -449,25 +463,24 @@ viewer.addEventListener("touchend", e=>{
 
     lastTapTime = now;
 
-    /* 單擊 */
-    if(scale === 1 && !isMoved){
-        if(touch.clientX < window.innerWidth/2){
-            goPrev();
-        }else{
-            goNext();
-        }
-    }else if(scale > 1){
-        inertia();
-    }
+    /* =====================
+       3️⃣ 單擊（延遲判斷）
+    ===================== */
+    tapTimer = setTimeout(()=>{
 
-    // ⭐⭐⭐ 加在這裡（最後一行）
-    justTouched = true;
-    setTimeout(()=>{
-        justTouched = false;
-    }, 300);
+        if(scale === 1){
+            if(touch.clientX < window.innerWidth/2){
+                goPrev();
+            }else{
+                goNext();
+            }
+        }else{
+            inertia();
+        }
+
+    }, 200);
 
 });
-
 /* ===== 點背景關閉（手機 + 桌機） ===== */
 viewer.addEventListener("click", e=>{
 
