@@ -177,6 +177,7 @@ let isMoved = false;
 
 let isTouchDevice = false;
 let justTouched = false; // ⭐ 防誤觸鎖
+let lastTapTime = 0; // ✅ 補這
 
 /* ===== 更新 ===== */
 function updateTransform(){
@@ -479,10 +480,12 @@ viewer.addEventListener("touchend", e=>{
 }, 200);
 
 /* ⭐ 加在這裡 */
-justTouched = true;
-setTimeout(()=>{
-    justTouched = false;
-}, 300);
+    justTouched = true;
+    setTimeout(()=>{
+        justTouched = false;
+    }, 300);
+    
+}); // ✅ 這行你剛剛少了！！
     
 /* ===== 點背景關閉（手機 + 桌機） ===== */
 viewer.addEventListener("click", e=>{
