@@ -370,6 +370,9 @@ viewer.addEventListener("touchmove", e=>{
 
     /* ===== 雙指縮放 ===== */
     if(e.touches.length===2){
+        
+        if(!initialDistance) return; // ⭐ 正確位置
+        
         e.preventDefault();
 
         let dx = e.touches[0].clientX - e.touches[1].clientX;
@@ -393,13 +396,16 @@ viewer.addEventListener("touchmove", e=>{
         let dy = touch.clientY - touchStartY;
 
         /* 👉 滑動（未放大時） */
-        if(scale === 1){
-            if(Math.abs(dx) > 10){
-                isSwiping = true;
-                swipeOffsetX = dx;
+            if(scale === 1){
+                if(Math.abs(dx) > 10){
+                    isSwiping = true;
+                    swipeOffsetX = dx;
 
-                // ⭐ 預覽效果（跟著手指動）
-                bigImage.style.transform = `translate(${dx}px, 0) scale(1)`;
+                // ⭐ 改成統一 transform 系統
+                posX = dx;
+                posY = 0;
+                scale = 1;
+                updateTransform();
             }
         }
 
@@ -488,6 +494,17 @@ viewer.addEventListener("touchend", e=>{
 
 });
 
+viewer.addEventListener("click", e=>{
+    if(
+        e.target === bigImage ||
+        e.target.id === "prev" ||
+        e.target.id === "next" ||
+        e.target.id === "close"
+    ) return;
+
+    closeViewer();
+});    
+    
 </script>
 
 </body>
