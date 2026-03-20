@@ -266,19 +266,19 @@ closeBtn.onclick = e=>{
 prev.onclick = e=>{ e.stopPropagation(); goPrev(); }
 next.onclick = e=>{ e.stopPropagation(); goNext(); }
 
-/* ===== 箭頭（手機專用） ===== */
-prev.addEventListener("touchstart", e=>{
-    isTouchDevice = true;
+/*===防止「手機點擊變成 click 觸發」 ===== */
+    
+prev.addEventListener("click", e=>{
+    if('ontouchstart' in window) return; // ⭐ 手機直接無效
     e.stopPropagation();
     goPrev();
-}, {passive:true});
+});
 
-next.addEventListener("touchstart", e=>{
-    isTouchDevice = true;
+next.addEventListener("click", e=>{
+    if('ontouchstart' in window) return; // ⭐ 手機直接無效
     e.stopPropagation();
     goNext();
-}, {passive:true});
-    
+});
 
 /* ===== 鍵盤 ===== */
 document.addEventListener("keydown", e=>{
