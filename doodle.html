@@ -177,6 +177,7 @@ let isMoved = false;
 
 let isTouchDevice = false;
 let lastTapTime = 0;
+let justTouched = false; // ⭐ 防誤觸鎖
 
 /* ===== 更新 ===== */
 function updateTransform(){
@@ -276,6 +277,7 @@ next.addEventListener("touchstart", e=>{
     e.stopPropagation();
     goNext();
 }, {passive:true});
+    
 
 /* ===== 鍵盤 ===== */
 document.addEventListener("keydown", e=>{
@@ -339,8 +341,10 @@ window.addEventListener("mouseup", ()=>{
 });
 
 /* ======================================
-   手機觸控（穩定版）
+   手機觸控（穩定版 - 無卡頓）
 ====================================== */
+
+let lastTapTime = 0;
 
 viewer.addEventListener("touchstart", e=>{
 
@@ -365,6 +369,7 @@ viewer.addEventListener("touchstart", e=>{
 
 viewer.addEventListener("touchmove", e=>{
 
+    /* 雙指縮放 */
     if(e.touches.length===2){
         e.preventDefault();
 
@@ -381,6 +386,7 @@ viewer.addEventListener("touchmove", e=>{
         updateTransform();
     }
 
+    /* 拖曳（放大時） */
     if(e.touches.length===1 && scale>1){
         e.preventDefault();
 
@@ -445,25 +451,35 @@ viewer.addEventListener("touchend", e=>{
 
     /* 單擊 */
     if(scale === 1 && !isMoved){
-
         if(touch.clientX < window.innerWidth/2){
             goPrev();
         }else{
             goNext();
         }
-
     }else if(scale > 1){
         inertia();
     }
 
+    // ⭐⭐⭐ 加在這裡（最後一行）
+    justTouched = true;
+    setTimeout(()=>{
+        justTouched = false;
+    }, 300);
+
 });
 
-/* ===== 點背景關閉（桌機 only） ===== */
+/* ===== 點背景關閉（手機 + 桌機） ===== */
 viewer.addEventListener("click", e=>{
 
-    if(isTouchDevice) return;
+    // ⭐ 防止手機 touch 後誤觸 click
+    if(justTouched) return;
 
-    if(e.target===bigImage || e.target.id==="prev" || e.target.id==="next" || e.target.id==="close") return;
+    if(
+        e.target === bigImage ||
+        e.target.id === "prev" ||
+        e.target.id === "next" ||
+        e.target.id === "close"
+    ) return;
 
     closeViewer();
 });
