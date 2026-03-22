@@ -325,6 +325,12 @@ nav a{
     cursor: grabbing;
 }
 
+/* ⭐ 手機滑動預覽用 */
+#viewer{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
 /* =========================
    手機畫廊
