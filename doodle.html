@@ -369,16 +369,46 @@ viewer.addEventListener("touchmove", e=>{
     }
 
     /* ===== 單指 ===== */
-    if(e.touches.length===1){
+if(e.touches.length===1){
 
-        let touch = e.touches[0];
-        let dx = touch.clientX - touchStartX;
+    let touch = e.touches[0];
+    let dx = touch.clientX - touchStartX;
 
-        if(scale === 1 && Math.abs(dx) > 10){
-            isSwiping = true;
-            posX = dx;
-            updateTransform();
+    if(scale === 1 && Math.abs(dx) > 10){
+        isSwiping = true;
+
+        posX = dx;
+
+        /* ⭐ 關鍵：背景顯示下一張 */
+        if(dx > 0){
+            viewer.style.backgroundImage = `url(${previewPrev.src})`;
+        }else{
+            viewer.style.backgroundImage = `url(${previewNext.src})`;
         }
+
+        /* ⭐ 主圖透明度（滑越多越淡） */
+        let opacity = 1 - Math.min(Math.abs(dx)/300, 0.7);
+        bigImage.style.opacity = opacity;
+
+        updateTransform();
+    }
+
+    if(scale > 1){
+        e.preventDefault();
+
+        let moveX = touch.clientX - startX;
+        let moveY = touch.clientY - startY;
+
+        posX += moveX;
+        posY += moveY;
+
+        startX = touch.clientX;
+        startY = touch.clientY;
+
+        clamp();
+        updateTransform();
+    }
+}
 
         if(scale > 1){
             e.preventDefault();
@@ -430,6 +460,11 @@ viewer.addEventListener("touchend", e=>{
 
     window.lastCenterX = null;
     window.lastCenterY = null;
+
+    /* ⭐ 還原畫面 */
+    viewer.style.backgroundImage = "";
+    bigImage.style.opacity = 1;
+    
 });
 
 /* ===== 點背景關閉（桌機） ===== */
