@@ -374,8 +374,7 @@ if(e.touches.length===2){
     let distance = Math.sqrt(dx*dx + dy*dy);
 
     let scaleFactor = distance / initialDistance;
-    let newScale = scaleFactor * scale;
-    initialDistance = distance;   // ⭐ 這行你其實有，但要確保在這裡
+    let newScale = scale * scaleFactor;
 
     /* ⭐ 平滑限制（避免突然卡） */
     if(newScale < 1){
@@ -407,9 +406,9 @@ if(e.touches.length===2){
 }
 
     if(e.touches.length===1){
-        
+
         const touch = e.touches[0];
-        
+
         let dx = touch.clientX - touchStartX;
         let dy = touch.clientY - startY;
 
@@ -518,11 +517,12 @@ viewer.addEventListener("touchend", e=>{
         return;
     }
 
-    /* ===== 還原 ===== */
+/* ===== 還原（只在未放大時）===== */
+if(scale === 1){
     posX = 0;
     bigImage.style.opacity = 1;
     updateTransform();
-});
+}
     
 /* ===== 點背景關閉（桌機） ===== */
 viewer.addEventListener("click", e=>{
