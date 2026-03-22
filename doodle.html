@@ -183,15 +183,18 @@ function updateTransform(){
 
 /* ===== 邊界 ===== */
 function clamp(){
-    const rect = bigImage.getBoundingClientRect();
+
+    const imgWidth = bigImage.naturalWidth * scale;
+    const imgHeight = bigImage.naturalHeight * scale;
+
     const vw = window.innerWidth;
     const vh = window.innerHeight;
 
-    const maxX = (rect.width - vw)/2;
-    const maxY = (rect.height - vh)/2;
+    const maxX = Math.max(0, (imgWidth - vw) / 2);
+    const maxY = Math.max(0, (imgHeight - vh) / 2);
 
-    posX = maxX > 0 ? Math.min(maxX, Math.max(-maxX, posX)) : 0;
-    posY = maxY > 0 ? Math.min(maxY, Math.max(-maxY, posY)) : 0;
+    posX = Math.min(maxX, Math.max(-maxX, posX));
+    posY = Math.min(maxY, Math.max(-maxY, posY));
 }
 
 /* ===== 切圖 ===== */
@@ -361,21 +364,39 @@ viewer.addEventListener("touchstart", e=>{
 
 viewer.addEventListener("touchmove", e=>{
 
-    if(e.touches.length===2){
-        e.preventDefault();
+if(e.touches.length===2){
+    e.preventDefault();
 
-        let dx = e.touches[0].clientX - e.touches[1].clientX;
-        let dy = e.touches[0].clientY - e.touches[1].clientY;
-        let distance = Math.sqrt(dx*dx + dy*dy);
+    let t1 = e.touches[0];
+    let t2 = e.touches[1];
 
-        let ratio = distance / initialDistance;
-        scale = Math.min(Math.max(1, scale * ratio), 4);
+    let dx = t1.clientX - t2.clientX;
+    let dy = t1.clientY - t2.clientY;
+    let distance = Math.sqrt(dx*dx + dy*dy);
 
-        initialDistance = distance;
+    let newScale = scale * (distance / initialDistance);
+    newScale = Math.min(Math.max(1, newScale), 4);
 
-        clamp();
-        updateTransform();
-    }
+    /* ⭐ 中心點 */
+    let centerX = (t1.clientX + t2.clientX) / 2;
+    let centerY = (t1.clientY + t2.clientY) / 2;
+
+    const rect = bigImage.getBoundingClientRect();
+
+    let offsetX = centerX - rect.left - rect.width / 2;
+    let offsetY = centerY - rect.top - rect.height / 2;
+
+    let scaleRatio = newScale / scale;
+
+    posX -= offsetX * (scaleRatio - 1);
+    posY -= offsetY * (scaleRatio - 1);
+
+    scale = newScale;
+    initialDistance = distance;
+
+    clamp();
+    updateTransform();
+}
 
     if(e.touches.length===1){
 
@@ -431,11 +452,30 @@ viewer.addEventListener("touchend", e=>{
 
     /* ===== 雙擊 ===== */
     if(now - lastTapTime < 250){
-        scale = scale === 1 ? 2 : 1;
-        posX = 0;
-        posY = 0;
 
+        if(scale === 1){
+            scale = 2;
+
+            const rect = bigImage.getBoundingClientRect();
+
+            let x = e.changedTouches[0].clientX;
+            let y = e.changedTouches[0].clientY;
+
+            let offsetX = x - rect.left - rect.width / 2;
+            let offsetY = y - rect.top - rect.height / 2;
+
+            posX -= offsetX;
+            posY -= offsetY;
+
+        }else{
+            scale = 1;
+            posX = 0;
+            posY = 0;
+        }
+
+        clamp();
         updateTransform();
+
         lastTapTime = 0;
         return;
     }
