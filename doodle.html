@@ -320,15 +320,17 @@ window.addEventListener("mouseup", ()=>{
     isDragging=false;
 });
 
-/* ===== 手機觸控（最終穩定版） ===== */
+/* ===== 手機觸控（最終穩定修正版） ===== */
 
 let isTap = false;
 
 viewer.addEventListener("touchstart", e=>{
 
     if(e.touches.length===1){
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
+        const touch = e.touches[0];
+
+        startX = touch.clientX;
+        startY = touch.clientY;
 
         touchStartX = startX;
 
@@ -347,7 +349,6 @@ viewer.addEventListener("touchstart", e=>{
 
 viewer.addEventListener("touchmove", e=>{
 
-    /* ===== 雙指縮放 ===== */
     if(e.touches.length===2){
         e.preventDefault();
 
@@ -364,25 +365,24 @@ viewer.addEventListener("touchmove", e=>{
         updateTransform();
     }
 
-    /* ===== 單指 ===== */
     if(e.touches.length===1){
 
-        let touch = e.touches[0];
+        const touch = e.touches[0];
+
         let dx = touch.clientX - touchStartX;
         let dy = touch.clientY - startY;
 
-        /* ⭐ 判定滑動（IG感） */
-        if(Math.abs(dx) > 10){
+        /* ⭐ 提高門檻，避免誤判 */
+        if(Math.abs(dx) > 30){
             isSwiping = true;
             isTap = false;
         }
 
-        /* ===== 左右滑（預覽感）===== */
+        /* ===== 滑動 ===== */
         if(scale === 1 && isSwiping){
 
             posX = dx;
 
-            /* ⭐ 重點：不用 background，用 translate */
             bigImage.style.transform =
                 `translate(${dx}px,0) scale(1)`;
 
@@ -390,7 +390,7 @@ viewer.addEventListener("touchmove", e=>{
                 1 - Math.min(Math.abs(dx)/300, 0.5);
         }
 
-        /* ===== 放大拖曳（修正卡頓）===== */
+        /* ===== 放大拖曳（修正）===== */
         if(scale > 1){
             e.preventDefault();
 
@@ -400,6 +400,7 @@ viewer.addEventListener("touchmove", e=>{
             posX += moveX;
             posY += moveY;
 
+            /* ⭐ 這兩行是關鍵（你原本問題在這） */
             startX = touch.clientX;
             startY = touch.clientY;
 
@@ -410,7 +411,7 @@ viewer.addEventListener("touchmove", e=>{
 
 }, {passive:false});
 
-/* ===== touchend（完全重寫） ===== */
+/* ===== touchend（最終穩定版） ===== */
 viewer.addEventListener("touchend", e=>{
 
     const now = Date.now();
@@ -429,7 +430,15 @@ viewer.addEventListener("touchend", e=>{
 
     lastTapTime = now;
 
-    /* ===== 滑動（優先）===== */
+    /* ⭐ 先判定「點擊」→ 防止誤滑 */
+    if(scale === 1 && isTap){
+        if(e.target === viewer){
+            closeViewer();
+        }
+        return;
+    }
+
+    /* ===== 滑動 ===== */
     if(scale === 1 && isSwiping){
 
         if(dx > 80){
@@ -439,7 +448,6 @@ viewer.addEventListener("touchend", e=>{
             goNext();
         }
         else{
-            /* 回彈 */
             posX = 0;
             bigImage.style.opacity = 1;
             updateTransform();
@@ -448,18 +456,12 @@ viewer.addEventListener("touchend", e=>{
         return;
     }
 
-    /* ===== 點擊背景關閉（關鍵修正）===== */
-    if(scale === 1 && isTap && e.target === viewer){
-        closeViewer();
-        return;
-    }
-
     /* ===== 還原 ===== */
     posX = 0;
     bigImage.style.opacity = 1;
     updateTransform();
 });
-
+    
 /* ===== 點背景關閉（桌機） ===== */
 viewer.addEventListener("click", e=>{
     if(
