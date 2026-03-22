@@ -374,7 +374,8 @@ if(e.touches.length===2){
     let distance = Math.sqrt(dx*dx + dy*dy);
 
     let scaleFactor = distance / initialDistance;
-    let newScale = scale * scaleFactor;
+    let newScale = scaleFactor * scale;
+    initialDistance = distance;   // ⭐ 這行你其實有，但要確保在這裡
 
     /* ⭐ 平滑限制（避免突然卡） */
     if(newScale < 1){
@@ -406,7 +407,9 @@ if(e.touches.length===2){
 }
 
     if(e.touches.length===1){
-
+        
+        const touch = e.touches[0];
+        
         let dx = touch.clientX - touchStartX;
         let dy = touch.clientY - startY;
 
