@@ -157,6 +157,7 @@ const galleries = document.querySelectorAll(".gallery");
 let currentIndex = 0;
 let currentGallery = [];
 
+let blockClick = false;
 let previewPrev = new Image();
 let previewNext = new Image();
 
@@ -208,7 +209,10 @@ galleries.forEach(gallery=>{
     const imgs = gallery.querySelectorAll("img");
 
     imgs.forEach((img,index)=>{
-        img.onclick = ()=>{
+        img.onclick = (e)=>{
+
+            if(blockClick) return; // ⭐ 防止穿透
+
             currentGallery = imgs;
             currentIndex = index;
 
@@ -241,11 +245,19 @@ function showImage(){
     counter.innerText = (currentIndex+1)+" / "+currentGallery.length;
 }
 
-/* ===== 關閉 ===== */
+/* ===== 關閉手機的圖片 ===== */
 function closeViewer(){
+
+    blockClick = true; // ⭐ 關鍵：開始擋 click
+
     viewer.style.display="none";
     document.body.style.overflow="";
     viewer.style.backgroundImage = "";
+
+    /* ⭐ 300ms 後恢復 */
+    setTimeout(()=>{
+        blockClick = false;
+    }, 300);
 }
 
 /* ===== 關閉按鈕 ===== */
