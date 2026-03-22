@@ -325,6 +325,10 @@ nav a{
     cursor: grabbing;
 }
 
+#viewer img{
+    touch-action: none;
+}
+
 /* ⭐ 手機滑動預覽用 */
 #viewer{
     background-size: cover;
