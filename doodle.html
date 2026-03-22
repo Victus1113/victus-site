@@ -184,14 +184,13 @@ function updateTransform(){
 /* ===== 邊界 ===== */
 function clamp(){
 
-    const imgWidth = bigImage.naturalWidth * scale;
-    const imgHeight = bigImage.naturalHeight * scale;
+    const rect = bigImage.getBoundingClientRect();
 
     const vw = window.innerWidth;
     const vh = window.innerHeight;
 
-    const maxX = Math.max(0, (imgWidth - vw) / 2);
-    const maxY = Math.max(0, (imgHeight - vh) / 2);
+    const maxX = Math.max(0, (rect.width - vw) / 2);
+    const maxY = Math.max(0, (rect.height - vh) / 2);
 
     posX = Math.min(maxX, Math.max(-maxX, posX));
     posY = Math.min(maxY, Math.max(-maxY, posY));
@@ -374,8 +373,16 @@ if(e.touches.length===2){
     let dy = t1.clientY - t2.clientY;
     let distance = Math.sqrt(dx*dx + dy*dy);
 
-    let newScale = scale * (distance / initialDistance);
-    newScale = Math.min(Math.max(1, newScale), 4);
+    let scaleFactor = distance / initialDistance;
+    let newScale = scale * scaleFactor;
+
+    /* ⭐ 平滑限制（避免突然卡） */
+    if(newScale < 1){
+        newScale = 1;
+    }
+    if(newScale > 4){
+        newScale = 4;
+    }
 
     /* ⭐ 中心點 */
     let centerX = (t1.clientX + t2.clientX) / 2;
@@ -399,8 +406,6 @@ if(e.touches.length===2){
 }
 
     if(e.touches.length===1){
-
-        const touch = e.touches[0];
 
         let dx = touch.clientX - touchStartX;
         let dy = touch.clientY - startY;
@@ -427,13 +432,15 @@ if(e.touches.length===2){
         if(scale > 1){
             e.preventDefault();
 
+            const touch = e.touches[0];
+
             let moveX = touch.clientX - startX;
             let moveY = touch.clientY - startY;
 
             posX += moveX;
             posY += moveY;
 
-            /* ⭐ 這兩行是關鍵（你原本問題在這） */
+            /* ⭐ 每次更新基準點（防止卡頓） */
             startX = touch.clientX;
             startY = touch.clientY;
 
