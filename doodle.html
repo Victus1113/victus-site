@@ -511,8 +511,21 @@ if(scale === 1 && isSwiping){
        3️⃣ 點背景關閉（手機）
     ===================== */
     if(scale === 1){
+
         if(touch.target === viewer){
+
+            // ⭐ 阻止後續 click（關鍵）
+            e.preventDefault();
+            e.stopPropagation();
+
             closeViewer();
+
+            // ⭐ 防止「點擊穿透到底層圖片」
+            document.body.style.pointerEvents = "none";
+
+            setTimeout(()=>{
+                document.body.style.pointerEvents = "";
+            }, 250);
         }
     }
 
