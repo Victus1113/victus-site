@@ -188,7 +188,8 @@ function updateTransform(){
 /* ===== 邊界 ===== */
 function clamp(){
 
-    const rect = bigImage.getBoundingClientRect();
+    const imgWidth = bigImage.naturalWidth * scale;
+    const imgHeight = bigImage.naturalHeight * scale;
 
     const vw = window.innerWidth;
     const vh = window.innerHeight;
@@ -383,8 +384,24 @@ bigImage.addEventListener("touchmove", e=>{
 
         // ⭐ 核心：用「起始 scale」算
         let newScale = pinchStartScale * scaleFactor;
-
         newScale = Math.min(Math.max(1, newScale), 4);
+
+        /* ⭐ 中心點補償（關鍵） */
+        let t1 = e.touches[0];
+        let t2 = e.touches[1];
+
+        let centerX = (t1.clientX + t2.clientX) / 2;
+        let centerY = (t1.clientY + t2.clientY) / 2;
+
+        const rect = bigImage.getBoundingClientRect();
+
+        let offsetX = centerX - rect.left - rect.width / 2;
+        let offsetY = centerY - rect.top - rect.height / 2;
+
+        let scaleRatio = newScale / scale;
+
+        posX -= offsetX * (scaleRatio - 1);
+        posY -= offsetY * (scaleRatio - 1);
 
         scale = newScale;
 
