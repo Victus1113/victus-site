@@ -378,40 +378,40 @@ bigImage.addEventListener("touchmove", e=>{
     if(e.touches.length === 2){
         e.preventDefault();
 
-        let t1 = e.touches[0];
-        let t2 = e.touches[1];
+        const t1 = e.touches[0];
+        const t2 = e.touches[1];
 
-        let dx = t1.clientX - t2.clientX;
-        let dy = t1.clientY - t2.clientY;
+        const dx = t1.clientX - t2.clientX;
+        const dy = t1.clientY - t2.clientY;
 
-        let distance = Math.sqrt(dx*dx + dy*dy);
+        const distance = Math.sqrt(dx*dx + dy*dy);
 
-        let scaleFactor = distance / initialDistance;
+        if(!initialDistance) return;
 
-        // ⭐ 核心：用「起始 scale」算
-        let newScale = pinchStartScale * scaleFactor;
+        // ⭐ 用「固定起點」算，不會漂
+        let newScale = pinchStartScale * (distance / initialDistance);
+
         newScale = Math.min(Math.max(1, newScale), 4);
-
-        /* ⭐ 補上這兩行（你缺的） */
-        let centerX = (t1.clientX + t2.clientX) / 2;
-        let centerY = (t1.clientY + t2.clientY) / 2;
-        
+    
         const rect = bigImage.getBoundingClientRect();
 
-        let offsetX = centerX - rect.left - rect.width / 2;
-        let offsetY = centerY - rect.top - rect.height / 2;
+        const centerX = (t1.clientX + t2.clientX) / 2;
+        const centerY = (t1.clientY + t2.clientY) / 2;
 
-        let scaleRatio = newScale / scale;
+        const offsetX = centerX - rect.left - rect.width / 2;
+        const offsetY = centerY - rect.top - rect.height / 2;
+    
+        const ratio = newScale / scale;
 
-        posX -= offsetX * (scaleRatio - 1);
-        posY -= offsetY * (scaleRatio - 1);
-
+        posX -= offsetX * (ratio - 1);
+        posY -= offsetY * (ratio - 1);
+    
         scale = newScale;
 
         clamp();
         updateTransform();
 
-        return; // ⭐ 阻止下面邏輯
+        return; // ❗ 超重要，避免進入單指邏輯
     }
 
     /* ===== 單指 ===== */
@@ -480,6 +480,8 @@ bigImage.addEventListener("touchend", e=>{
 
         lastTapTime = 0;
         return;
+        
+        initialDistance = null;
     }
 
     lastTapTime = now;
