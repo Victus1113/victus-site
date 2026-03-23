@@ -273,10 +273,7 @@ nav a{
 }
 
 
-/* =========================
-   圖片查看器
-========================= */
-
+/* ===== Viewer ===== */
 #viewer{
     position:fixed;
     top:0;
@@ -295,38 +292,30 @@ nav a{
 
     z-index:999;
 
-    cursor:pointer;
-
     touch-action: none;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
+/* ===== 圖片 ===== */
 #viewer img{
     max-width:95vw;
     max-height:90vh;
 
     object-fit:contain;
-
     border:1px solid #666;
 
-    /* ⭐ 關鍵：拖曳時更順，不會卡頓 */
     will-change: transform;
-
-    /* ⭐ 比較接近 IG 手感（不要太慢） */
-    transition: transform 0.08s linear;
 
     cursor: grab;
     user-select: none;
-
-    /* ⭐ 防止手機手勢干擾（非常重要） */
     touch-action: none;
 }
 
 #viewer img:active{
     cursor: grabbing;
-}
-
-#viewer img{
-    touch-action: none;
 }
 
 /* ⭐ 手機滑動預覽用 */
