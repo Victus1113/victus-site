@@ -312,6 +312,8 @@ nav a{
     cursor: grab;
     user-select: none;
     touch-action: none;
+   
+    transition: none !important; /* ⭐ 關鍵 */
 }
 
 #viewer img:active{
