@@ -188,8 +188,7 @@ function updateTransform(){
 /* ===== 邊界 ===== */
 function clamp(){
 
-    const imgWidth = bigImage.naturalWidth * scale;
-    const imgHeight = bigImage.naturalHeight * scale;
+    const rect = bigImage.getBoundingClientRect(); // ⭐ 少了這行！！
 
     const vw = window.innerWidth;
     const vh = window.innerHeight;
@@ -389,9 +388,6 @@ bigImage.addEventListener("touchmove", e=>{
         /* ⭐ 中心點補償（關鍵） */
         let t1 = e.touches[0];
         let t2 = e.touches[1];
-
-        let centerX = (t1.clientX + t2.clientX) / 2;
-        let centerY = (t1.clientY + t2.clientY) / 2;
 
         const rect = bigImage.getBoundingClientRect();
 
