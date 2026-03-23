@@ -385,14 +385,17 @@ bigImage.addEventListener("touchmove", e=>{
         let newScale = pinchStartScale * scaleFactor;
         newScale = Math.min(Math.max(1, newScale), 4);
 
-        /* ⭐ 中心點補償（關鍵） */
-        let t1 = e.touches[0];
-        let t2 = e.touches[1];
-
+        /* ⭐ 補上這兩行（你缺的） */
+        let centerX = (t1.clientX + t2.clientX) / 2;
+        let centerY = (t1.clientY + t2.clientY) / 2;
+        
         const rect = bigImage.getBoundingClientRect();
 
         let offsetX = centerX - rect.left - rect.width / 2;
         let offsetY = centerY - rect.top - rect.height / 2;
+
+        let centerX = (t1.clientX + t2.clientX) / 2;
+        let centerY = (t1.clientY + t2.clientY) / 2;
 
         let scaleRatio = newScale / scale;
 
