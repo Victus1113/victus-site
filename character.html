@@ -3,27 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>角色 - Backfire</title>
-<link rel="stylesheet" href="style.css">
+<title>Victus - 角色介紹</title>
+
+<style>
+
+body{
+    margin:0;
+    background:linear-gradient(180deg,#0f0f14,#1a1a22);
+    color:#ddd;
+    font-family:"Noto Sans TC", sans-serif;
+}
+
+/* ===== 主容器 ===== */
+.character{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    min-height:100vh;
+    padding:40px;
+    gap:60px;
+}
+
+/* ===== 左：立繪 ===== */
+.char-img{
+    flex:1;
+    text-align:center;
+}
+
+.char-img img{
+    max-height:85vh;
+    width:auto;
+
+    transition:0.5s;
+}
+
+/* 微動效果 */
+.char-img img:hover{
+    transform:scale(1.03) translateY(-5px);
+}
+
+/* ===== 右：資訊 ===== */
+.char-info{
+    flex:1;
+    max-width:500px;
+}
+
+.char-name{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.char-sub{
+    color:#888;
+    margin-bottom:25px;
+}
+
+.char-block{
+    margin-bottom:18px;
+}
+
+.char-title{
+    color:#aaa;
+    font-size:14px;
+    letter-spacing:2px;
+}
+
+.char-text{
+    line-height:1.8;
+}
+
+/* ===== 返回 ===== */
+.back{
+    position:fixed;
+    top:20px;
+    left:20px;
+    color:#aaa;
+    text-decoration:none;
+}
+
+/* ===== 手機 ===== */
+@media (max-width:768px){
+
+.character{
+    flex-direction:column;
+    padding:20px;
+}
+
+.char-img img{
+    max-height:60vh;
+}
+
+.char-info{
+    text-align:left;
+}
+
+}
+
+</style>
 </head>
 
 <body>
 
-<div class="container">
+<a class="back" href="characters.html">← 返回角色列表</a>
 
-<h1>角色列表</h1>
+<div class="character">
 
-<ul>
+    <!-- 左：立繪 -->
+    <div class="char-img">
+        <img src="img/victus.png">
+    </div>
 
-<li>Victus</li>
+    <!-- 右：資料 -->
+    <div class="char-info">
 
-<li>未來角色...</li>
+        <div class="char-name">維特 Victus</div>
+        <div class="char-sub">「有何貴幹？」</div>
 
-</ul>
+        <div class="char-block">
+            <div class="char-title">基本資料</div>
+            <div class="char-text">
+                16歲 / 174cm / 51kg<br>
+                生理男 / 同性戀（偏好年上）
+            </div>
+        </div>
 
-<hr>
+        <div class="char-block">
+            <div class="char-title">個性</div>
+            <div class="char-text">
+                笑面虎，習慣壓抑情緒。<br>
+                表面溫和，實則對人高度警戒。
+            </div>
+        </div>
 
-<a href="index.html">← 回到首頁</a>
+        <div class="char-block">
+            <div class="char-title">特質</div>
+            <div class="char-text">
+                高自我要求，對失敗極度敏感。<br>
+                長期承受壓力，傾向自我傷害。
+            </div>
+        </div>
+
+        <div class="char-block">
+            <div class="char-title">興趣</div>
+            <div class="char-text">
+                音樂、寫詩、睡覺。
+            </div>
+        </div>
+
+    </div>
 
 </div>
 
