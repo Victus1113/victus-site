@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>絕唱 Swan Song</title>
+
+<style>
+
+/* =========================
+   基本設定
+========================= */
+
+body{
+    margin:0;
+    min-height:100vh;
+
+    background:radial-gradient(
+        circle at top,
+        #3a3447,
+        #1a1822 70%
+    );
+
+    color:#f0f0f0;
+
+    font-family:
+    "Times New Roman",
+    "Yu Mincho",
+    "MS Mincho",
+    serif;
+}
+
+
+/* =========================
+   頁面
+========================= */
+
+.swan-page{
+    max-width:1000px;
+    margin:60px auto;
+    padding:0 24px;
+}
+
+
+/* =========================
+   標題
+========================= */
+
+.swan-page h1{
+    font-weight:normal;
+    letter-spacing:6px;
+    text-align:center;
+    margin-bottom:50px;
+}
+
+
+/* =========================
+   角色方格
+========================= */
+
+.character-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:30px;
+}
+
+
+/* =========================
+   角色卡片
+========================= */
+
+.character-card{
+    background:rgba(0,0,0,0.25);
+
+    border:1px solid #555;
+
+    padding:15px;
+
+    cursor:pointer;
+
+    text-align:center;
+
+    transition:0.3s;
+}
+
+
+.character-card:hover{
+    transform:translateY(-5px);
+
+    border-color:#aaa;
+
+    box-shadow:
+    0 0 20px rgba(255,255,255,0.12);
+}
+
+
+/* =========================
+   角色圖片
+========================= */
+
+.character-card img{
+    width:100%;
+    aspect-ratio:1 / 1;
+
+    object-fit:cover;
+
+    display:block;
+
+    margin-bottom:15px;
+}
+
+
+/* =========================
+   名字
+========================= */
+
+.character-name{
+    font-size:20px;
+
+    letter-spacing:3px;
+
+    margin-bottom:5px;
+}
+
+
+/* =========================
+   音樂提示
+========================= */
+
+.music-status{
+    font-size:14px;
+
+    color:#aaa;
+
+    letter-spacing:1px;
+}
+
+
+/* =========================
+   返回
+========================= */
+
+.back{
+    display:block;
+
+    margin-top:50px;
+
+    color:white;
+
+    text-decoration:none;
+
+    text-align:center;
+}
+
+.back:hover{
+    color:#ccc;
+}
+
+
+/* =========================
+   手機
+========================= */
+
+@media (max-width:768px){
+
+    .swan-page{
+        margin:30px auto;
+    }
+
+    .character-grid{
+        grid-template-columns:1fr 1fr;
+
+        gap:15px;
+    }
+
+    .character-card{
+        padding:10px;
+    }
+
+    .character-name{
+        font-size:17px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="swan-page">
+
+<h1>絕唱 Swan Song</h1>
+
+
+<!-- =========================
+     角色區
+========================= -->
+
+<div class="character-grid">
+
+
+    <!-- ===== 角色一 ===== -->
+
+    <div class="character-card"
+         onclick="playMusic('music-victus')">
+
+        <img src="img/victus.jpg">
+
+        <div class="character-name">
+            Victus
+        </div>
+
+        <div class="music-status">
+            ♪ 點擊播放
+        </div>
+
+    </div>
+
+
+    <!-- ===== 角色二 ===== -->
+
+    <div class="character-card"
+         onclick="playMusic('music-character2')">
+
+        <img src="img/character2.jpg">
+
+        <div class="character-name">
+            第二角色
+        </div>
+
+        <div class="music-status">
+            ♪ 點擊播放
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<a class="back" href="index.html">
+← 回到首頁
+</a>
+
+
+<!-- =========================
+     音樂
+========================= -->
+
+<audio id="music-victus"
+       src="music/victus.mp3"
+       loop>
+</audio>
+
+<audio id="music-character2"
+       src="music/character2.mp3"
+       loop>
+</audio>
+
+
+<script>
+
+/* =========================
+   音樂控制
+========================= */
+
+function playMusic(id){
+
+    const musics =
+        document.querySelectorAll("audio");
+
+    /* 先停止其他人的歌 */
+
+    musics.forEach(music=>{
+        music.pause();
+        music.currentTime = 0;
+    });
+
+
+    /* 播放目前角色的歌 */
+
+    const selectedMusic =
+        document.getElementById(id);
+
+    selectedMusic.play();
+
+}
+
+</script>
+
+</body>
+</html>
