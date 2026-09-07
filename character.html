@@ -17,7 +17,7 @@ body{
 /* ===== 主容器 ===== */
 .character{
     display:flex;
-    align-items:center;
+    align-items:flex-start;
     justify-content:center;
 
     min-height:100vh;
@@ -29,6 +29,12 @@ body{
 .char-img{
     flex:1;
     text-align:center;
+
+    /* ⭐ 立繪固定 */
+    position:sticky;
+    top:40px;
+
+    height:fit-content;
 }
 
 .char-img img{
@@ -82,12 +88,44 @@ body{
     text-decoration:none;
 }
 
+/* ===== 音樂按鈕 ===== */
+#music-toggle{
+    position:fixed;
+    top:20px;
+    right:20px;
+
+    background:none;
+    border:1px solid #555;
+    color:#aaa;
+
+    padding:6px 10px;
+
+    font-family:inherit;
+    font-size:13px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    z-index:1000;
+}
+
+#music-toggle:hover{
+    color:#fff;
+    border-color:#888;
+}
+
 /* ===== 手機 ===== */
 @media (max-width:768px){
 
 .character{
     flex-direction:column;
     padding:20px;
+}
+
+.char-img{
+    /* ⭐ 手機取消固定 */
+    position:static;
 }
 
 .char-img img{
@@ -105,34 +143,48 @@ body{
 
 <body>
 
+<!-- ===== 背景音樂 ===== -->
+<audio id="bgm" autoplay loop>
+    <source src="music/victus.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ===== 返回首頁 ===== -->
 <a class="back" href="index.html">← 返回首頁</a>
+
+<!-- ===== 音樂控制 ===== -->
+<button id="music-toggle">♫ ON</button>
+
 
 <div class="character">
 
     <!-- 左：立繪 -->
     <div class="char-img">
-        <img src="img/victus.png">
+        <img src="img/rip1.jpg">
     </div>
 
     <!-- 右：資料 -->
     <div class="char-info">
 
-        <div class="char-name">維特 Victus</div>
-        <div class="char-sub">「有何貴幹？」</div>
+        <div class="char-name">蔡瑀格 brocken NPC</div>
+        <div class="char-sub">瑀格、格喵、格格、defei/迪飛、格寶、優格、卷姐…
+…當然，還有飽嗝、bella嗝、神經病、不咋地、不明和沒有成員</div>
 
         <div class="char-block">
             <div class="char-title">基本資料</div>
             <div class="char-text">
-                16歲 / 174cm / 51kg<br>
-                生理男 / 同性戀（偏好年上）
+                24歲 / 處女座 / 無神論者<br>
+                生理女 / 從中產階級變成低收入戶<br>
+                有個虛擬伴侶叫「阿繭」
             </div>
         </div>
 
         <div class="char-block">
             <div class="char-title">個性</div>
             <div class="char-text">
-                笑面虎，習慣壓抑情緒。<br>
-                表面溫和，實則對人高度警戒。
+                有明確的界線和邊界感，但願意讓對的人走入內心。<br>
+                表面溫和，實則對人具有防備，但是該有的禮貌一定會有。<br>
+                一旦下定決心要做的事，就一定會做到。<br>
+                極度不看好自己。常自稱自己廢物、米蟲跟浪費資源的人。
             </div>
         </div>
 
@@ -140,20 +192,42 @@ body{
             <div class="char-title">特質</div>
             <div class="char-text">
                 高自我要求，對失敗極度敏感。<br>
-                長期承受壓力，傾向自我傷害。
+                傾向自我要求和自我傷害。
             </div>
         </div>
 
         <div class="char-block">
             <div class="char-title">興趣</div>
             <div class="char-text">
-                音樂、寫詩、睡覺。
+                聽歌、寫詩、睡覺、畫畫、看電影<br>
+                深度聊天、探討生死和存在主義
             </div>
         </div>
 
     </div>
 
 </div>
+
+
+<!-- ===== 音樂控制 ===== -->
+<script>
+
+const bgm = document.getElementById("bgm");
+const button = document.getElementById("music-toggle");
+
+button.addEventListener("click", function(){
+
+    if(bgm.paused){
+        bgm.play();
+        button.textContent = "♫ ON";
+    }else{
+        bgm.pause();
+        button.textContent = "♫ OFF";
+    }
+
+});
+
+</script>
 
 </body>
 </html>
