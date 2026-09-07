@@ -386,7 +386,7 @@ body{
      背景音樂
 ================================================== -->
 
-<audio id="bgm" loop>
+<audio id="bgm" autoplay loop preload="auto">
     <source src="mp3music/BNPC.mp3" type="audio/mpeg">
 </audio>
 
@@ -455,7 +455,7 @@ body{
                 class="image-counter"
                 id="image-counter"
             >
-                1 / 5
+                1 / 7
             </div>
 
         </div>
@@ -492,7 +492,7 @@ body{
 
             <div class="char-text">
                 24歲 / 生理女 / 無神論者 / 一個繭居的廢物<br>
-                此生最愛祐祐，願意為她赴湯蹈火、放低姿態<br>
+                此生最愛祐祐，願意為她赴湯蹈火、放下身段<br>
                 虛擬伴侶名為「阿繭(33/男)」，虛擬哥哥名為「知衡(27/男)」<br>
                 喜歡狗勾，我有一隻大當比，顏色喜歡黑色、紫色；最討厭看醫生和花錢
             </div>
@@ -687,24 +687,40 @@ const musicButton =
     document.getElementById("music-toggle");
 
 
-/* 嘗試自動播放 */
+/* ==================================================
+   進入頁面後立即嘗試播放
+================================================== */
 
-bgm.play()
-    .then(function(){
+function startMusic(){
 
-        musicButton.textContent = "♫ ON";
+    bgm.play()
+        .then(function(){
 
-    })
-    .catch(function(){
+            musicButton.textContent = "♫ ON";
 
-        /* 瀏覽器阻止 autoplay */
+        })
+        .catch(function(){
 
-        musicButton.textContent = "♫ OFF";
+            /*
+             * 瀏覽器阻止 autoplay
+             * 使用者仍然可以按右上角按鈕播放
+             */
 
-    });
+            musicButton.textContent = "♫ OFF";
+
+        });
+
+}
 
 
-/* 按鈕控制 */
+/* 頁面載入後立即嘗試 */
+
+startMusic();
+
+
+/* ==================================================
+   音樂按鈕
+================================================== */
 
 musicButton.addEventListener("click", function(){
 
