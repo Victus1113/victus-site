@@ -14,93 +14,254 @@ body{
     font-family:"Noto Sans TC", sans-serif;
 }
 
+
 /* ===== 主容器 ===== */
+
 .character{
     display:flex;
     align-items:flex-start;
     justify-content:center;
 
     min-height:100vh;
+
     padding:40px;
-    gap:60px;
+
+    /* ⭐ 圖片與資訊拉近 */
+    gap:30px;
 }
 
-/* ===== 左：立繪 ===== */
+
+/* ===== 左：圖片區 ===== */
+
 .char-img{
-    flex:1;
+
+    /* ⭐ 固定左側區域寬度 */
+    flex:0 0 520px;
+
     text-align:center;
 
-    /* ⭐ 立繪固定 */
+    /* ⭐ 桌機固定 */
     position:sticky;
     top:40px;
 
-    height:fit-content;
+    height:85vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.char-img img{
-    max-height:85vh;
+
+/* ===== 圖片框 ===== */
+
+.image-frame{
+
+    position:relative;
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+
+/* ===== 立繪 ===== */
+
+.image-frame img{
+
+    max-width:100%;
+    max-height:100%;
+
     width:auto;
+    height:auto;
 
-    transition:0.5s;
+    object-fit:contain;
+
+    transition:0.4s;
 }
+
 
 /* 微動效果 */
-.char-img img:hover{
+
+.image-frame img:hover{
     transform:scale(1.03) translateY(-5px);
 }
 
-/* ===== 右：資訊 ===== */
-.char-info{
-    flex:1;
-    max-width:500px;
+
+/* ===== 左右切換按鈕 ===== */
+
+.image-arrow{
+
+    position:absolute;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    background:rgba(0,0,0,0.35);
+
+    border:1px solid #555;
+
+    color:#aaa;
+
+    width:42px;
+    height:70px;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:0.3s;
+
+    z-index:10;
 }
 
+
+.image-arrow:hover{
+
+    color:#fff;
+
+    border-color:#888;
+
+    background:rgba(0,0,0,0.6);
+}
+
+
+#prev{
+    left:0;
+}
+
+
+#next{
+    right:0;
+}
+
+
+/* ===== 圖片編號 ===== */
+
+.image-counter{
+
+    position:absolute;
+
+    bottom:10px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    color:#888;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+    background:rgba(0,0,0,0.4);
+
+    padding:3px 8px;
+
+}
+
+
+/* ===== 右：資訊 ===== */
+
+.char-info{
+
+    /* ⭐ 讓資訊欄更寬 */
+    flex:0 1 600px;
+
+    max-width:600px;
+
+    padding-top:20px;
+}
+
+
 .char-name{
+
     font-size:40px;
+
     margin-bottom:10px;
 }
 
+
 .char-sub{
+
     color:#888;
+
     margin-bottom:25px;
-}
 
-.char-block{
-    margin-bottom:18px;
-}
-
-.char-title{
-    color:#aaa;
-    font-size:14px;
-    letter-spacing:2px;
-}
-
-.char-text{
     line-height:1.8;
 }
 
-/* ===== 返回 ===== */
-.back{
-    position:fixed;
-    top:20px;
-    left:20px;
-    color:#aaa;
-    text-decoration:none;
+
+.char-block{
+
+    margin-bottom:18px;
 }
 
-/* ===== 音樂按鈕 ===== */
-#music-toggle{
+
+.char-title{
+
+    color:#aaa;
+
+    font-size:14px;
+
+    letter-spacing:2px;
+}
+
+
+.char-text{
+
+    line-height:1.8;
+}
+
+
+/* ===== 返回 ===== */
+
+.back{
+
     position:fixed;
+
+    top:20px;
+    left:20px;
+
+    color:#aaa;
+
+    text-decoration:none;
+
+    z-index:1000;
+}
+
+
+.back:hover{
+
+    color:#fff;
+}
+
+
+/* ===== 音樂按鈕 ===== */
+
+#music-toggle{
+
+    position:fixed;
+
     top:20px;
     right:20px;
 
     background:none;
+
     border:1px solid #555;
+
     color:#aaa;
 
     padding:6px 10px;
 
     font-family:inherit;
+
     font-size:13px;
 
     cursor:pointer;
@@ -110,76 +271,240 @@ body{
     z-index:1000;
 }
 
+
 #music-toggle:hover{
+
     color:#fff;
+
     border-color:#888;
 }
 
-/* ===== 手機 ===== */
+
+/* ==================================================
+   手機
+================================================== */
+
 @media (max-width:768px){
 
-.character{
-    flex-direction:column;
-    padding:20px;
-}
+    .character{
 
-.char-img{
+        flex-direction:column;
+
+        padding:70px 20px 30px;
+
+        gap:30px;
+    }
+
+
     /* ⭐ 手機取消固定 */
-    position:static;
-}
 
-.char-img img{
-    max-height:60vh;
-}
+    .char-img{
 
-.char-info{
-    text-align:left;
-}
+        position:static;
+
+        flex:none;
+
+        width:100%;
+
+        height:60vh;
+
+        min-height:350px;
+    }
+
+
+    .image-frame{
+
+        width:100%;
+
+        height:100%;
+    }
+
+
+    .image-frame img{
+
+        max-width:100%;
+
+        max-height:100%;
+    }
+
+
+    /* 手機箭頭 */
+
+    .image-arrow{
+
+        width:38px;
+
+        height:60px;
+
+        font-size:24px;
+    }
+
+
+    .char-info{
+
+        width:100%;
+
+        max-width:none;
+
+        padding-top:0;
+
+        text-align:left;
+    }
+
+
+    .char-name{
+
+        font-size:32px;
+    }
+
+
+    .back{
+
+        top:15px;
+
+        left:15px;
+    }
+
+
+    #music-toggle{
+
+        top:15px;
+
+        right:15px;
+    }
 
 }
 
 </style>
 </head>
 
+
 <body>
 
-<!-- ===== 背景音樂 ===== -->
-<audio id="bgm" autoplay loop>
+
+<!-- ==================================================
+     背景音樂
+================================================== -->
+
+<audio id="bgm" loop>
     <source src="music/BNPC.mp3" type="audio/mpeg">
 </audio>
 
+
 <!-- ===== 返回首頁 ===== -->
-<a class="back" href="index.html">← 返回首頁</a>
+
+<a class="back" href="index.html">
+    ← 返回首頁
+</a>
+
 
 <!-- ===== 音樂控制 ===== -->
-<button id="music-toggle">♫ ON</button>
+
+<button id="music-toggle">
+    ♫ OFF
+</button>
+
 
 
 <div class="character">
 
-    <!-- 左：立繪 -->
+
+    <!-- ==================================================
+         左：圖片輪播
+    ================================================== -->
+
     <div class="char-img">
-        <img src="img/rip1.jpg">
+
+        <div class="image-frame">
+
+
+            <!-- 圖片 -->
+
+            <img
+                id="character-image"
+                src="img/rip1.jpg"
+                alt="角色圖片"
+            >
+
+
+            <!-- 上一張 -->
+
+            <button
+                id="prev"
+                class="image-arrow"
+                aria-label="上一張"
+            >
+                ‹
+            </button>
+
+
+            <!-- 下一張 -->
+
+            <button
+                id="next"
+                class="image-arrow"
+                aria-label="下一張"
+            >
+                ›
+            </button>
+
+
+            <!-- 圖片編號 -->
+
+            <div
+                class="image-counter"
+                id="image-counter"
+            >
+                1 / 5
+            </div>
+
+        </div>
+
     </div>
 
-    <!-- 右：資料 -->
+
+
+    <!-- ==================================================
+         右：資料
+    ================================================== -->
+
     <div class="char-info">
 
-        <div class="char-name">蔡瑀格 brocken NPC</div>
-        <div class="char-sub">瑀格、格喵、格格、defei/迪飛、格寶、優格、卷姐…<br>
-            …當然，還有飽嗝、bella嗝、神經病、不咋地、不明和沒有成員。</div>
+
+        <div class="char-name">
+            蔡瑀格 brocken NPC
+        </div>
+
+
+        <div class="char-sub">
+            瑀格、格喵、格格、defei/迪飛、格寶、優格、卷姐…<br>
+            …當然，還有飽嗝、bella嗝、神經病、不咋地、不明和沒有成員。
+        </div>
+
+
 
         <div class="char-block">
-            <div class="char-title">基本資料</div>
+
+            <div class="char-title">
+                基本資料
+            </div>
+
             <div class="char-text">
                 24歲 / 處女座 / 無神論者 / 生理女<br>
                 虛擬伴侶名為「阿繭(33/男)」<br>
                 最喜歡狗勾，黑色、紫色；最討厭看醫生和花錢
             </div>
+
         </div>
 
+
+
         <div class="char-block">
-            <div class="char-title">個性</div>
+
+            <div class="char-title">
+                個性
+            </div>
+
             <div class="char-text">
                 有明確的界線和邊界感，但願意讓對的人走入內心。<br>
                 表面溫和，實則會對人防備，該有的禮貌一定會有。<br>
@@ -187,10 +512,17 @@ body{
                 一旦下定決心要做的事，就一定會做到。<br>
                 極度不看好自己。喜歡自稱廢物、米蟲跟浪費資源的人。
             </div>
+
         </div>
 
+
+
         <div class="char-block">
-            <div class="char-title">特質</div>
+
+            <div class="char-title">
+                特質
+            </div>
+
             <div class="char-text">
                 高自我要求，對失敗極度敏感。<br>
                 不喊痛但是很怕痛；容易累但不喊累。<br>
@@ -199,52 +531,205 @@ body{
                 脾氣暴躁會吵架；但永遠吵不贏祐祐和小佑老師。<br>
                 人生最重要守則：絕對不要影響和牽連到家人、無辜或不相關的人。
             </div>
+
         </div>
 
+
+
         <div class="char-block">
-            <div class="char-title">興趣</div>
+
+            <div class="char-title">
+                興趣
+            </div>
+
             <div class="char-text">
                 聽歌、刮畫、寫詩、睡覺、畫畫(手繪/電繪)、看電影<br>
                 、嘗試新東西、深度聊天、探討生死和存在主義。
+
             </div>
+
         </div>
 
+
+
         <div class="char-block">
-            <div class="char-title">熱愛</div>
+
+            <div class="char-title">
+                熱愛
+            </div>
+
             <div class="char-text">
+
                 電影：《心靈捕手》（Good Will Hunting）、<br>
                 《媽的多重宇宙》（Everything Everywhere All at Once）、<br>
                 《靈魂急轉彎》（Soul)、《飆風雷哥》（Rango)、《楚門的世界》（The Truman Show)<br>
-                歌曲：《群像》&《物語》（美秀集團)、《》&《對不起我做不到答應了你的事》（康士坦的變化球)
-                專輯：《O My Heart》（Mother Mother/幻音之母)、
-                
+                歌曲：《群像》&《物語》（美秀集團)、《》&《對不起我做不到答應了你的事》（康士坦的變化球）<br>
+                專輯：《O My Heart》（Mother Mother/幻音之母)
+
             </div>
+
         </div>
+
 
     </div>
 
 </div>
 
 
-<!-- ===== 音樂控制 ===== -->
+
+<!-- ==================================================
+     JavaScript
+================================================== -->
+
 <script>
 
-const bgm = document.getElementById("bgm");
-const button = document.getElementById("music-toggle");
 
-button.addEventListener("click", function(){
+/* ==================================================
+   圖片輪播
+================================================== */
+
+
+const images = [
+
+    "img/rip1.jpg",
+
+    "img/rip2.jpg",
+
+    "img/rip3.jpg",
+
+    "img/rip4.jpg",
+
+    "img/rip5.jpg"
+
+];
+
+
+let currentIndex = 0;
+
+
+const characterImage =
+    document.getElementById("character-image");
+
+
+const counter =
+    document.getElementById("image-counter");
+
+
+function showImage(index){
+
+    currentIndex = index;
+
+
+    characterImage.src =
+        images[currentIndex];
+
+
+    counter.textContent =
+        (currentIndex + 1) + " / " + images.length;
+
+}
+
+
+/* 上一張 */
+
+document
+    .getElementById("prev")
+    .addEventListener("click", function(){
+
+        currentIndex--;
+
+        if(currentIndex < 0){
+
+            currentIndex = images.length - 1;
+
+        }
+
+        showImage(currentIndex);
+
+    });
+
+
+/* 下一張 */
+
+document
+    .getElementById("next")
+    .addEventListener("click", function(){
+
+        currentIndex++;
+
+        if(currentIndex >= images.length){
+
+            currentIndex = 0;
+
+        }
+
+        showImage(currentIndex);
+
+    });
+
+
+
+/* ==================================================
+   音樂
+================================================== */
+
+
+const bgm =
+    document.getElementById("bgm");
+
+
+const musicButton =
+    document.getElementById("music-toggle");
+
+
+/* 嘗試自動播放 */
+
+bgm.play()
+    .then(function(){
+
+        musicButton.textContent = "♫ ON";
+
+    })
+    .catch(function(){
+
+        /* 瀏覽器阻止 autoplay */
+
+        musicButton.textContent = "♫ OFF";
+
+    });
+
+
+/* 按鈕控制 */
+
+musicButton.addEventListener("click", function(){
 
     if(bgm.paused){
-        bgm.play();
-        button.textContent = "♫ ON";
+
+        bgm.play()
+            .then(function(){
+
+                musicButton.textContent = "♫ ON";
+
+            })
+            .catch(function(){
+
+                musicButton.textContent = "♫ OFF";
+
+            });
+
     }else{
+
         bgm.pause();
-        button.textContent = "♫ OFF";
+
+        musicButton.textContent = "♫ OFF";
+
     }
 
 });
 
+
 </script>
+
 
 </body>
 </html>
