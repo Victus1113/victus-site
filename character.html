@@ -128,9 +128,10 @@ body {
 
 /* ===== 右：資訊區 ===== */
 .char-info {
-    flex: 0 1 640px;
-    max-width: 640px;
+    flex: 0 1 540px; /* 收縮寬度，讓右界往內靠靠 */
+    max-width: 540px;
     padding-top: 20px;
+    padding-right: 20px; /* 右側保留內縮邊界，閱讀更舒適 */
 }
 
 .char-name {
@@ -158,14 +159,11 @@ body {
     display: inline-block;
     color: #85829C;
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 700; /* 粗體 */
     letter-spacing: 3px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid #2e2e3d;
-
-    /* ★ 修改：與小標題文字統一 */
     border-left: 4px solid #85829C;
-
     padding: 8px 18px;
     margin-bottom: 20px;
     text-transform: uppercase;
@@ -239,11 +237,11 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.35);
 }
 
-/* 卡片內標題 */
+/* 卡片內標題/副標籤 (全統一粗體) */
 .gothic-card strong {
     color: #d8d8e2;
     font-size: 26px;
-    font-weight: 600;
+    font-weight: 700; /* 粗體 */
     display: block;
     margin-bottom: 12px;
     letter-spacing: 0.8px;
@@ -256,16 +254,16 @@ body {
     color: #D6D6DC;
     line-height: 1.9;
     letter-spacing: 0.6px;
-    text-align: justify;
 }
 
-/* 歷史舊地層 */
+/* 歷史舊地層標籤 (統一粗體) */
 .gothic-card-sub {
     background: #0e0e14;
     border: 1px solid #1c1c28;
     padding: 12px 16px;
     border-radius: 3px;
     font-size: 20px;
+    font-weight: 700; /* 粗體 */
     color: #88889a;
     margin-top: 10px;
 }
@@ -278,6 +276,7 @@ body {
 
 .card-alert strong {
     color: #f0a0a0;
+    font-weight: 700; /* 粗體 */
 }
 
 .card-warning {
@@ -287,6 +286,7 @@ body {
 
 .card-warning strong {
     color: #b0c0d0;
+    font-weight: 700; /* 粗體 */
 }
 
 .card-accent {
@@ -308,7 +308,7 @@ body {
     text-align: left;
     color: #d0d0dc;
     font-size: 28px;
-    font-weight: 600;
+    font-weight: 700; /* 粗體 */
     letter-spacing: 3px;
     margin-bottom: 32px;
     padding-bottom: 14px;
@@ -322,17 +322,17 @@ body {
     position: relative;
 }
 
-/* ★ 修改：普通 Stage 標題統一使用 #85829C */
+/* Stage 標題 (統一粗體) */
 .stage-header {
     font-size: 20px;
     color: #85829C;
-    font-weight: bold;
+    font-weight: bold; /* 粗體 */
     letter-spacing: 2px;
     margin-bottom: 12px;
     display: block;
 }
 
-/* 特殊階段：保留原本語意顏色 */
+/* 特殊階段 */
 .stage-3 {
     border-left-color: #8e3d3d;
 }
@@ -357,7 +357,7 @@ body {
     color: #ffffff;
     padding: 16px;
     font-size: 22px;
-    font-weight: 600;
+    font-weight: 700; /* 粗體 */
     letter-spacing: 1px;
 }
 
@@ -385,6 +385,7 @@ body {
         width: 100%;
         max-width: none;
         padding-top: 0;
+        padding-right: 0;
     }
 
     .char-name {
@@ -416,8 +417,6 @@ body {
         font-size: 24px;
         line-height: 1.95;
         letter-spacing: 0.8px;
-
-        /* ★ 修改：手機也統一 */
         color: #D6D6DC;
     }
 
