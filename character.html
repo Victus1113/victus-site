@@ -26,7 +26,6 @@ body{
 
     padding:40px;
 
-    /* ⭐ 圖片與資訊拉近 */
     gap:30px;
 }
 
@@ -35,12 +34,10 @@ body{
 
 .char-img{
 
-    /* ⭐ 固定左側區域寬度 */
     flex:0 0 520px;
 
     text-align:center;
 
-    /* ⭐ 桌機固定 */
     position:sticky;
     top:40px;
 
@@ -171,7 +168,6 @@ body{
 
 .char-info{
 
-    /* ⭐ 讓資訊欄更寬 */
     flex:0 1 600px;
 
     max-width:600px;
@@ -204,32 +200,57 @@ body{
 }
 
 
+/* ===== 小標籤 ===== */
+
 .char-title{
 
     display:inline-block;
 
-    color:#d0d0d0;
+    color:#e0e0e0;
 
-    font-size:13px;
+    font-size:14px;
 
     letter-spacing:3px;
 
-    background:rgba(150,150,150,0.10);
+    background:rgba(170,170,170,0.14);
 
-    border:1px solid rgba(150,150,150,0.25);
+    border:1px solid rgba(180,180,180,0.38);
 
-    border-left:3px solid #888;
+    border-left:3px solid #aaa;
 
-    padding:5px 12px;
+    padding:6px 13px;
 
-    margin-bottom:10px;
+    margin-bottom:12px;
 
 }
 
 
+/* ===== 資訊文字 ===== */
+
 .char-text{
 
     line-height:1.8;
+}
+
+
+/* ===== 資訊欄圖片 ===== */
+
+.info-image{
+
+    display:block;
+
+    width:70%;
+
+    max-width:420px;
+
+    height:auto;
+
+    margin:28px auto 34px;
+
+    border:1px solid rgba(180,180,180,0.25);
+
+    opacity:0.9;
+
 }
 
 
@@ -294,6 +315,56 @@ body{
 
 
 /* ==================================================
+   電腦版閱讀優化
+================================================== */
+
+@media (min-width:769px){
+
+    /* 資訊文字放大 */
+    .char-text{
+
+        font-size:18px;
+
+        line-height:2;
+
+        text-align:justify;
+
+        text-justify:inter-ideograph;
+
+    }
+
+
+    /* 資訊區塊增加呼吸感 */
+    .char-block{
+
+        margin-bottom:32px;
+
+    }
+
+
+    /* 熱愛 */
+    .char-block.love-block{
+
+        margin-top:10px;
+
+        margin-bottom:42px;
+
+    }
+
+
+    /* 醫療、疾病史 */
+    .char-block.medical-block{
+
+        margin-top:10px;
+
+        margin-bottom:50px;
+
+    }
+
+}
+
+
+/* ==================================================
    手機
 ================================================== */
 
@@ -309,7 +380,7 @@ body{
     }
 
 
-    /* ⭐ 手機取消固定 */
+    /* 手機取消固定 */
 
     .char-img{
 
@@ -514,6 +585,7 @@ body{
         </div>
 
 
+
         <div class="char-block">
 
             <div class="char-title">
@@ -530,6 +602,16 @@ body{
             </div>
 
         </div>
+
+
+
+        <!-- ===== 資訊欄穿插圖片 ===== -->
+
+        <img
+            class="info-image"
+            src="img/rip2.jpg"
+            alt="角色插圖"
+        >
 
 
 
@@ -560,14 +642,13 @@ body{
 
             <div class="char-text">
                 聽歌、刮畫、寫詩、睡覺、畫畫(手繪/電繪)、看電影、閉目養神、嘗試新東西(打程式/正念/刮痧...)、花好幾小時甚至好幾天下載免費軟體(免費就是香)、打小說、創原創角色(OC)、深度聊天、探討生死和存在主義。
-
             </div>
 
         </div>
 
 
 
-        <div class="char-block">
+        <div class="char-block love-block">
 
             <div class="char-title">
                 熱愛
@@ -576,8 +657,11 @@ body{
             <div class="char-text">
 
                 電影：《心靈捕手》（Good Will Hunting）、《媽的多重宇宙》（Everything Everywhere All at Once）、《靈魂急轉彎》（Soul)、《飆風雷哥》（Rango)、《楚門的世界》（The Truman Show)<br>
+
                 歌曲：《群像》&《物語》（美秀集團)、《美好的事可不可以發生在我身上》&《對不起我做不到答應了你的事》（康士坦的變化球）、《快樂的形狀》&《春天有腳》(溫室雜草)、《Deep Breaths》&《I Deserve to Bleed》(Sushi Soucy)<br>
+
                 專輯：《The Black Parade》(MCR/我的另類羅曼史)、《醜奴兒》&《瓦合》(草東沒有派對)、《O My Heart》（Mother Mother/幻音之母)<br>
+
                 影視：《勇者動畫系列》、《死亡遊行》、《馬男波傑克》、《只有我不存在的城市》、《靈能百分百》、《午夜福音》、《奇巧計程車》、《東京喰種》
 
             </div>
@@ -586,7 +670,17 @@ body{
 
 
 
-        <div class="char-block">
+        <!-- ===== 第二張穿插圖片 ===== -->
+
+        <img
+            class="info-image"
+            src="img/rip5.jpg"
+            alt="角色插圖"
+        >
+
+
+
+        <div class="char-block medical-block">
 
             <div class="char-title">
                 醫療、疾病史
@@ -594,10 +688,15 @@ body{
 
             <div class="char-text">
                 牙醫(小六~大二)：整晚戴頭套(睡覺不能翻身，不然頭套會勾傷口腔)、打麻醉拔了四五顆牙、打骨釘、割牙肉...後來護士懶得幫我預約，我就沒再去了。<br>
+
                 皮膚科(國一～)：從急性汗皰疹，到了高中變成慢性乾癬。看了累積快10間西醫、中醫和大醫院，吃了各式各樣的藥和類固醇，某一間大姊推薦的台大診所醫生，因為皮膚依舊沒有好轉而放棄治療我，沒有幫我預約下一次看診更沒有配藥給我，導致後續身材走樣，也對醫療人員更失望。<br>
+
                 心理諮商（大三～）：心理系老師親自帶我到學輔中心，我因此開始接觸諮商。<br>
+
                 精神科(大三～)：被學輔中心轉介到菜寮的精神科，我因此認識了譚醫師－我的貴人之一。從最初的一天四顆藥，現在變成一天快十顆，藥物包含：<br>
+
                 自律神經失調：交感與副交感低下，<br>
+
                 自體免疫系統失調：
             </div>
 
