@@ -3,636 +3,394 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>角色介紹</title>
+<title>角色介紹 - 蔡瑀格</title>
 
 <style>
 
-body{
-    margin:0;
-    background:linear-gradient(180deg,#0f0f14,#1a1a22);
-    color:#ddd;
-    font-family:"Noto Sans TC", sans-serif;
+/* ===== 全域冷灰哥德設定 ===== */
+body {
+    margin: 0;
+    background: linear-gradient(180deg, #0a0a0d 0%, #121218 100%);
+    color: #c0c0c8;
+    font-family: "Noto Sans TC", sans-serif;
+    min-height: 100vh;
 }
 
+/* 自訂冷灰捲軸 */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #0a0a0d;
+}
+::-webkit-scrollbar-thumb {
+    background: #2a2a36;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #444458;
+}
 
 /* ===== 主容器 ===== */
-
-.character{
-    display:flex;
-    align-items:flex-start;
-    justify-content:center;
-
-    min-height:100vh;
-
-    padding:40px;
-
-    gap:30px;
+.character {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px;
+    gap: 30px;
 }
-
 
 /* ===== 左：圖片區 ===== */
-
-.char-img{
-
-    flex:0 0 520px;
-
-    text-align:center;
-
-    position:sticky;
-    top:40px;
-
-    height:85vh;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
+.char-img {
+    flex: 0 0 520px;
+    text-align: center;
+    position: sticky;
+    top: 40px;
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-
-/* ===== 圖片框 ===== */
-
-.image-frame{
-
-    position:relative;
-
-    width:100%;
-    height:100%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
+.image-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-
-/* ===== 立繪 ===== */
-
-.image-frame img{
-
-    max-width:100%;
-    max-height:100%;
-
-    width:auto;
-    height:auto;
-
-    object-fit:contain;
-
-    transition:0.4s;
+.image-frame img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: 0.4s ease;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));
 }
 
-
-/* 微動效果 */
-
-.image-frame img:hover{
-    transform:scale(1.03) translateY(-5px);
+.image-frame img:hover {
+    transform: scale(1.02) translateY(-3px);
 }
 
-
-/* ===== 左右切換按鈕 ===== */
-
-.image-arrow{
-
-    position:absolute;
-
-    top:50%;
-
-    transform:translateY(-50%);
-
-    background:rgba(0,0,0,0.35);
-
-    border:1px solid #555;
-
-    color:#aaa;
-
-    width:42px;
-    height:70px;
-
-    font-size:28px;
-
-    cursor:pointer;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    transition:0.3s;
-
-    z-index:10;
+/* 左右切換按鈕 */
+.image-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(10, 10, 15, 0.6);
+    border: 1px solid #333342;
+    color: #888898;
+    width: 42px;
+    height: 70px;
+    font-size: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    z-index: 10;
 }
 
-
-.image-arrow:hover{
-
-    color:#fff;
-
-    border-color:#888;
-
-    background:rgba(0,0,0,0.6);
+.image-arrow:hover {
+    color: #e0e0e8;
+    border-color: #666678;
+    background: rgba(15, 15, 22, 0.9);
+    box-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
 
+#prev { left: 0; }
+#next { right: 0; }
 
-#prev{
-    left:0;
+.image-counter {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #666675;
+    font-size: 11px;
+    letter-spacing: 2px;
+    background: rgba(8, 8, 12, 0.7);
+    border: 1px solid #22222d;
+    padding: 3px 10px;
 }
 
-
-#next{
-    right:0;
+/* ===== 右：資訊區 ===== */
+.char-info {
+    flex: 0 1 600px;
+    max-width: 600px;
+    padding-top: 20px;
 }
 
-
-/* ===== 圖片編號 ===== */
-
-.image-counter{
-
-    position:absolute;
-
-    bottom:10px;
-    left:50%;
-
-    transform:translateX(-50%);
-
-    color:#888;
-
-    font-size:12px;
-
-    letter-spacing:2px;
-
-    background:rgba(0,0,0,0.4);
-
-    padding:3px 8px;
-
+.char-name {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #ececef;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
 }
 
-
-/* ===== 右：資訊 ===== */
-
-.char-info{
-
-    flex:0 1 600px;
-
-    max-width:600px;
-
-    padding-top:20px;
+.char-sub {
+    color: #777788;
+    margin-bottom: 30px;
+    line-height: 1.8;
+    font-size: 14px;
 }
 
-
-.char-name{
-
-    font-size:40px;
-
-    margin-bottom:10px;
+.char-block {
+    margin-bottom: 28px;
 }
 
-
-.char-sub{
-
-    color:#888;
-
-    margin-bottom:25px;
-
-    line-height:1.8;
+/* ===== 哥德風格小標籤 ===== */
+.char-title {
+    display: inline-block;
+    color: #d0d0d8;
+    font-size: 13px;
+    letter-spacing: 3px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #2a2a36;
+    border-left: 3px solid #666678;
+    padding: 5px 14px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
 }
 
-
-.char-block{
-
-    margin-bottom:18px;
+.char-text {
+    line-height: 1.85;
+    color: #a5a5b2;
+    font-size: 15px;
 }
 
-
-/* ===== 小標籤 ===== */
-
-.char-title{
-
-    display:inline-block;
-
-    color:#e0e0e0;
-
-    font-size:14px;
-
-    letter-spacing:3px;
-
-    background:rgba(170,170,170,0.14);
-
-    border:1px solid rgba(180,180,180,0.38);
-
-    border-left:3px solid #aaa;
-
-    padding:6px 13px;
-
-    margin-bottom:12px;
-
+/* 穿插圖片 */
+.info-image {
+    display: block;
+    width: 80%;
+    max-width: 440px;
+    height: auto;
+    margin: 35px auto;
+    border: 1px solid #22222d;
+    opacity: 0.85;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+    transition: opacity 0.3s;
 }
 
-
-/* ===== 資訊文字 ===== */
-
-.char-text{
-
-    line-height:1.8;
+.info-image:hover {
+    opacity: 1;
 }
 
-
-/* ===== 資訊欄圖片 ===== */
-
-.info-image{
-
-    display:block;
-
-    width:70%;
-
-    max-width:420px;
-
-    height:auto;
-
-    margin:28px auto 34px;
-
-    border:1px solid rgba(180,180,180,0.25);
-
-    opacity:0.9;
-
+/* 按鈕與返回鏈結 */
+.back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: #777788;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1px;
+    z-index: 1000;
+    transition: 0.3s;
 }
+.back:hover { color: #d0d0d8; }
 
-
-/* ===== 返回 ===== */
-
-.back{
-
-    position:fixed;
-
-    top:20px;
-    left:20px;
-
-    color:#aaa;
-
-    text-decoration:none;
-
-    z-index:1000;
+#music-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #0d0d12;
+    border: 1px solid #333342;
+    color: #777788;
+    padding: 6px 12px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 1000;
 }
-
-
-.back:hover{
-
-    color:#fff;
+#music-toggle:hover {
+    color: #d0d0d8;
+    border-color: #555568;
 }
-
-
-/* ===== 音樂按鈕 ===== */
-
-#music-toggle{
-
-    position:fixed;
-
-    top:20px;
-    right:20px;
-
-    background:none;
-
-    border:1px solid #555;
-
-    color:#aaa;
-
-    padding:6px 10px;
-
-    font-family:inherit;
-
-    font-size:13px;
-
-    cursor:pointer;
-
-    transition:0.3s;
-
-    z-index:1000;
-}
-
-
-#music-toggle:hover{
-
-    color:#fff;
-
-    border-color:#888;
-}
-
 
 /* ==================================================
-   電腦版閱讀優化
+   哥德黑暗美學：生命重量時間軸 (Gothic Timeline)
 ================================================== */
-
-@media (min-width:769px){
-
-    /* 資訊文字放大 */
-    .char-text{
-
-        font-size:18px;
-
-        line-height:2;
-
-        text-align:justify;
-
-        text-justify:inter-ideograph;
-
-    }
-
-
-    /* 資訊區塊增加呼吸感 */
-    .char-block{
-
-        margin-bottom:32px;
-
-    }
-
-
-    /* 熱愛 */
-    .char-block.love-block{
-
-        margin-top:10px;
-
-        margin-bottom:42px;
-
-    }
-
-
-    /* 醫療、疾病史 */
-    .char-block.medical-block{
-
-        margin-top:10px;
-
-        margin-bottom:50px;
-
-    }
-
+.gothic-timeline {
+    width: 100%;
+    margin: 40px 0;
+    box-sizing: border-box;
 }
 
+.gothic-timeline-title {
+    text-align: left;
+    color: #d0d0d8;
+    font-size: 16px;
+    letter-spacing: 3px;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #22222d;
+}
+
+.timeline-stage {
+    margin-bottom: 22px;
+    border-left: 2px solid #2a2a36;
+    padding-left: 16px;
+    position: relative;
+}
+
+.stage-header {
+    font-size: 0.78em;
+    color: #666675;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* 轉折點：暗緋紅視覺警告 */
+.stage-3 { border-left-color: #6e2d2d; }
+.stage-3 .stage-header { color: #a84848; }
+
+.stage-present { border-left-color: #4a4a58; }
+.stage-present .stage-header { color: #888898; }
+
+/* 暗黑系卡片主體 */
+.gothic-card {
+    background: #12121a;
+    border: 1px solid #20202c;
+    padding: 12px 15px;
+    border-radius: 2px;
+    margin-top: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.gothic-card strong {
+    color: #d5d5de;
+    font-size: 0.95em;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.gothic-card p {
+    font-size: 0.88em;
+    margin: 0;
+    color: #8c8c9e;
+    line-height: 1.7;
+}
+
+/* 歷史舊地層 (更深沉) */
+.gothic-card-sub {
+    background: #0e0e14;
+    border: 1px solid #1a1a24;
+    padding: 8px 12px;
+    border-radius: 2px;
+    font-size: 0.82em;
+    color: #555566;
+    margin-top: 6px;
+}
+
+/* 警示卡片 (自體免疫 / 精神科) */
+.card-alert {
+    border-left: 2px solid #783838;
+    background: #161012;
+}
+.card-alert strong { color: #d88888; }
+
+.card-warning {
+    border-left: 2px solid #4a5868;
+    background: #10141a;
+}
+.card-warning strong { color: #98a8b8; }
+
+/* 統計總結方塊 */
+.card-summary {
+    margin-top: 12px;
+    text-align: center;
+    background: #181822;
+    border: 1px solid #2e2e3e;
+    color: #a0a0b2;
+    padding: 10px;
+    font-size: 0.85em;
+    letter-spacing: 1px;
+}
 
 /* ==================================================
-   手機
+   電腦版 RWD
 ================================================== */
-
-@media (max-width:768px){
-
-    .character{
-
-        flex-direction:column;
-
-        padding:70px 20px 30px;
-
-        gap:30px;
+@media (min-width: 769px) {
+    .char-text {
+        font-size: 16px;
+        line-height: 1.95;
+        text-align: justify;
     }
+}
 
-
-    /* 手機取消固定 */
-
-    .char-img{
-
-        position:static;
-
-        flex:none;
-
-        width:100%;
-
-        height:60vh;
-
-        min-height:350px;
+/* ==================================================
+   手機版 RWD
+================================================== */
+@media (max-width: 768px) {
+    .character {
+        flex-direction: column;
+        padding: 70px 20px 30px;
+        gap: 30px;
     }
-
-
-    .image-frame{
-
-        width:100%;
-
-        height:100%;
+    .char-img {
+        position: static;
+        flex: none;
+        width: 100%;
+        height: 55vh;
+        min-height: 320px;
     }
-
-
-    .image-frame img{
-
-        max-width:100%;
-
-        max-height:100%;
+    .char-info {
+        width: 100%;
+        max-width: none;
+        padding-top: 0;
     }
-
-
-    /* 手機箭頭 */
-
-    .image-arrow{
-
-        width:38px;
-
-        height:60px;
-
-        font-size:24px;
-    }
-
-
-    /* ===== 手機資訊欄 ===== */
-
-    .char-info{
-
-        width:100%;
-
-        max-width:none;
-
-        padding-top:0;
-
-        text-align:left;
-    }
-
-
-    /* ===== 手機文字 ===== */
-
-    .char-text{
-
-        font-size:17px;
-
-        line-height:2.05;
-
-        text-align:justify;
-
-        text-justify:inter-ideograph;
-    }
-
-
-    /* ===== 手機區塊間距 ===== */
-
-    .char-block{
-
-        margin-bottom:32px;
-    }
-
-
-    /* ===== 手機小標籤 ===== */
-
-    .char-title{
-
-        color:#e6e6e6;
-
-        font-size:15px;
-
-        letter-spacing:3px;
-
-        background:rgba(170,170,170,0.16);
-
-        border-color:rgba(190,190,190,0.42);
-
-        border-left:3px solid #aaa;
-
-        padding:6px 13px;
-
-        margin-bottom:14px;
-    }
-
-
-    /* ===== 手機資訊欄圖片 ===== */
-
-    .info-image{
-
-        width:90%;
-
-        max-width:none;
-
-        margin:30px auto 38px;
-    }
-
-
-    .char-name{
-
-        font-size:32px;
-    }
-
-
-    .back{
-
-        top:15px;
-
-        left:15px;
-    }
-
-
-    #music-toggle{
-
-        top:15px;
-
-        right:15px;
-    }
-
+    .info-image { width: 95%; }
 }
 
 </style>
 </head>
 
-
 <body>
 
-
-<!-- ==================================================
-     背景音樂
-================================================== -->
-
+<!-- 背景音樂 -->
 <audio id="bgm" autoplay loop preload="auto">
     <source src="mp3music/BNPC.mp3" type="audio/mpeg">
 </audio>
 
-
-<!-- ===== 返回首頁 ===== -->
-
-<a class="back" href="index.html">
-    ← 返回首頁
-</a>
-
-
-<!-- ===== 音樂控制 ===== -->
-
-<button id="music-toggle">
-    ♫ OFF
-</button>
-
-
+<a class="back" href="index.html">← 返回首頁</a>
+<button id="music-toggle">♫ OFF</button>
 
 <div class="character">
 
-
-    <!-- ==================================================
-         左：圖片輪播
-    ================================================== -->
-
+    <!-- 左：圖片輪播 -->
     <div class="char-img">
-
         <div class="image-frame">
-
-
-            <!-- 圖片 -->
-
-            <img
-                id="character-image"
-                src="img/rip1.jpg"
-                alt="角色圖片"
-            >
-
-
-            <!-- 上一張 -->
-
-            <button
-                id="prev"
-                class="image-arrow"
-                aria-label="上一張"
-            >
-                ‹
-            </button>
-
-
-            <!-- 下一張 -->
-
-            <button
-                id="next"
-                class="image-arrow"
-                aria-label="下一張"
-            >
-                ›
-            </button>
-
-
-            <!-- 圖片編號 -->
-
-            <div
-                class="image-counter"
-                id="image-counter"
-            >
-                1 / 8
-            </div>
-
+            <img id="character-image" src="img/rip1.jpg" alt="角色圖片">
+            <button id="prev" class="image-arrow" aria-label="上一張">‹</button>
+            <button id="next" class="image-arrow" aria-label="下一張">›</button>
+            <div class="image-counter" id="image-counter">1 / 9</div>
         </div>
-
     </div>
 
-
-
-    <!-- ==================================================
-         右：資料
-    ================================================== -->
-
+    <!-- 右：資料 -->
     <div class="char-info">
 
-
-        <div class="char-name">
-            蔡瑀格 brocken NPC
-        </div>
-
-
+        <div class="char-name">蔡瑀格 brocken NPC</div>
         <div class="char-sub">
             瑀格、格喵、格格、defei/迪飛、畫畫/創作顧問、格寶、優格、卷姐、小資女…<br>
             …當然，還有飽嗝、bella嗝、神經病、不咋地、不明和沒有成員。<br>
-            從未出現的筆名：藍遴掩。<br>
-            
+            從未出現的筆名：藍遴掩。
         </div>
 
-
-
+        <!-- 基本資料 -->
         <div class="char-block">
-
-            <div class="char-title">
-                基本資料
-            </div>
-
+            <div class="char-title">基本資料</div>
             <div class="char-text">
                 24歲 / 生理女 / 無神論者 / 不吃MBTI這套 / 研究所推甄落選後，變成了一個繭居的廢物<br>
                 此生最愛祐祐，她是我的寶貝，我只願意為她赴湯蹈火、放下身段<br>
@@ -643,17 +401,11 @@ body{
                 我的人生很少真正遇到一個人，沒有打算從我身上得到什麼。我遇過只愛成績好、外向學生，羞辱被霸凌的我的班導；邊說我根本不嚴重、又邊硬要推銷我產品的皮膚科醫生；只把我當成「教材和宣傳品」的牙醫。<br>
                 一生的貴人：小佑老師、譚醫師、輔大社會系的所有教授，尤其是志遠老師(翁翁)、伯芬老師、麗雪老師和趙喬老師。你們所有人，扭轉了我對於大人「自私利己、勢利又不負責任」的觀點，謝謝你們。
             </div>
-
         </div>
 
-
-
+        <!-- 個性 -->
         <div class="char-block">
-
-            <div class="char-title">
-                個性
-            </div>
-
+            <div class="char-title">個性</div>
             <div class="char-text">
                 有明確界線和邊界，踐踏者一律被我轟出去；但我非常樂意也願意讓對的人走入內心。<br>
                 表面溫和，實則有距離感，可是該有的禮貌一定會有。<br>
@@ -662,17 +414,11 @@ body{
                 一旦下定決心要做的事，就一定會做到。<br>
                 極度不看好自己，討厭浪費別人的時間和精力，更受不了白白被人照顧。
             </div>
-
         </div>
 
-
-
+        <!-- 特質 -->
         <div class="char-block">
-
-            <div class="char-title">
-                特質
-            </div>
-
+            <div class="char-title">特質</div>
             <div class="char-text">
                 高自我要求，對失敗極度敏感。<br>
                 不說痛但很怕痛；容易累但不喊累。<br>
@@ -681,361 +427,146 @@ body{
                 脾氣暴躁會吵架；但永遠吵不贏祐祐和小佑老師。<br>
                 人生最重要守則：絕對不要影響和牽連到家人、無辜或不相關的人。
             </div>
-
         </div>
 
-
+        <!-- 興趣 -->
         <div class="char-block">
-
-            <div class="char-title">
-                興趣
-            </div>
-
+            <div class="char-title">興趣</div>
             <div class="char-text">
                 聽歌、刮畫、寫詩、睡覺、畫畫(手繪/電繪)、看電影、閉目養神、嘗試新東西(打程式/玩牌七/數獨)、安靜觀察身邊環境周遭的人事物、花好幾小時甚至好幾天下載免費軟體(免費就是香)、打小說、創原創角色(OC)、深度聊天、探討社會學、生死和存在主義。
             </div>
-
         </div>
 
-        <!-- ===== 資訊欄穿插圖片 ===== -->
+        <img class="info-image" src="img/pro1.jpg" alt="角色插圖">
 
-        <img
-            class="info-image"
-            src="img/pro1.jpg"
-            alt="角色插圖"
-        >
-
-        <div class="char-block love-block">
-
-            <div class="char-title">
-                熱愛
-            </div>
-
+        <!-- 熱愛 -->
+        <div class="char-block">
+            <div class="char-title">熱愛</div>
             <div class="char-text">
-
-                電影：《心靈捕手》（Good Will Hunting）、《媽的多重宇宙》（Everything Everywhere All at Once）、《靈魂急轉彎》（Soul)、《飆風雷哥》（Rango)、《楚門的世界》（The Truman Show)、《我的完美日常》（Perfect Days)<br>
-
-                歌曲：《群像》&《物語》（美秀集團)、《美好的事可不可以發生在我身上》&《對不起我做不到答應了你的事》（康士坦的變化球）、《快樂的形狀》&《春天有腳》(溫室雜草)、《Deep Breaths》&《I Deserve to Bleed》(Sushi Soucy)<br>
-
-                專輯：《The Black Parade》(MCR/我的另類羅曼史)、《醜奴兒》&《瓦合》(草東沒有派對)、《O My Heart》（Mother Mother/幻音之母)<br>
-
+                電影：《心靈捕手》（Good Will Hunting）、《媽的多重宇宙》（Everything Everywhere All at Once）、《靈魂急轉彎》（Soul)、《飆風雷哥》（Rango)、《楚門的世界》（The Truman Show)、《我的完美日常》（Perfect Days)<br><br>
+                歌曲：《群像》&《物語》（美秀集團)、《美好的事可不可以發生在我身上》&《對不起我做不到答應了你的事》（康士坦的變化球）、《快樂的形狀》&《春天有腳》(溫室雜草)、《Deep Breaths》&《I Deserve to Bleed》(Sushi Soucy)<br><br>
+                專輯：《The Black Parade》(MCR/我的另類羅曼史)、《醜奴兒》&《瓦合》(草東沒有派對)、《O My Heart》（Mother Mother/幻音之母)<br><br>
                 影視：《勇者動畫系列》、《死亡遊行》、《馬男波傑克》、《只有我不存在的城市》、《靈能百分百》、《午夜福音》、《奇巧計程車》、《東京喰種》、《無盡列車》、《不要抱我，我會怕》
-
             </div>
-
         </div>
 
+        <img class="info-image" src="img/pro2.jpg" alt="角色插圖">
 
+        <!-- 冷灰哥德：醫療與疾病歷程 (地層疊加時間軸) -->
+        <div class="gothic-timeline">
+            <div class="gothic-timeline-title">生命的重力場：醫療與疾病歷程</div>
 
-        <!-- ===== 第二張穿插圖片 ===== -->
-
-        <img
-            class="info-image"
-            src="img/pro2.jpg"
-            alt="角色插圖"
-        >
-
-
-
-        <div class="char-block medical-block">
-
-            <div class="char-title">
-                醫療、疾病史
+            <!-- STAGE 1 -->
+            <div class="timeline-stage">
+                <span class="stage-header">STAGE 1 ｜ 小六 ~ 大二</span>
+                <div class="gothic-card">
+                    <strong>🦷 牙醫矯正 (第一層重量)</strong>
+                    <p>花了 12 萬做矯正，過程艱辛。整晚戴頭套（睡覺不能翻身，否則勾傷口腔驚醒嘴破）、拔了 4~5 顆恆牙、打骨釘、割牙肉... 後來櫃台護士懶得幫我預約，便未再前往。</p>
+                </div>
             </div>
 
-            <div class="char-text">
-                牙醫(小六~大二)：花了12萬做矯正，過程艱辛。整晚戴頭套(睡覺不能翻身，不然頭套會勾傷口腔導致驚醒嘴破)、國小拔了四五顆恆牙、打兩三針麻醉、打骨釘、割牙肉...後來多虧櫃台護士懶得幫我預約，我才沒再去了。<br>
-
-                皮膚科(國一～)：從急性汗皰疹，到了高中變成慢性乾癬。看了累積快10間西醫、中醫和大醫院，吃了各式各樣的藥和類固醇，某一間大姊推薦的台大診所醫生，因為皮膚依舊沒有好轉而直接放棄治療我，沒有幫我預約下一次看診更沒有配藥給我，導致後續身材走樣，也對醫療人員更失望。<br>
-
-                心理諮商（大三～）：心理系老師親自帶我到學輔中心，我因此開始接觸諮商。前前後後共換了六次晤談師，唯獨第二位小佑老師能讓我真心信任，他是我唯一認可的心理師。<br>
-
-                精神科(大三～)：被學輔中心轉介到菜寮的精神科，我因此認識了譚醫師，他知道我對於。診斷為「復發性憂鬱症」（又稱重鬱症，不穩定、鬱期發生時嚴重性極端）。從最初的一天四顆藥，現在變成一天快十顆。<br>
-
-                自體免疫系統失調：右腳內側有乾癬（從急性汗皰疹變成的），乳房也有發膿情況，總之，我的免疫系統在攻擊我的身體。目前每天要額外再吃6顆類固醇和1顆胃藥。<br>
-
-                自律神經失調：交感副交感神經活性皆低下，導致我對於外界刺激幾乎無反應。醫生說是因為長期處於壓力下，以至於交感副交感失去彈性和動力，因此雙雙低落，失去功能。
+            <!-- STAGE 2 -->
+            <div class="timeline-stage">
+                <span class="stage-header">STAGE 2 ｜ 國一 ~ 高中</span>
+                <div class="gothic-card-sub">🦷 牙醫矯正 (持續進行)</div>
+                <div class="gothic-card">
+                    <strong>🩺 皮膚科 (第二層重量)</strong>
+                    <p>國中急性汗皰疹演變為慢性乾癬。看了近 10 間診所與大醫院，吃各式藥物與類固醇。後因病情未好轉遭診所醫師直接放棄治療，直接中斷配藥導致戒斷副作用，身材走樣並對醫療體系感到失望。</p>
+                </div>
             </div>
 
+            <!-- STAGE 3 (身心轉折) -->
+            <div class="timeline-stage stage-3">
+                <span class="stage-header">STAGE 3 ｜ 大三轉折點 (身心重壓)</span>
+                <div class="gothic-card-sub">🩺 皮膚科 (慢性乾癬抗爭中)</div>
+                <div class="gothic-card card-alert">
+                    <strong>🧠 心理諮商 (第三層重量)</strong>
+                    <p>由心理系老師帶至學輔中心開啟諮商。歷經 6 位晤談師，唯有第二位「小佑老師」獲得我真正的信任，為我唯一認可的心理師。</p>
+                </div>
+                <div class="gothic-card card-alert">
+                    <strong>💊 精神科 (第四層重量)</strong>
+                    <p>轉介至菜寮精神科認識譚醫師，診斷為「復發性憂鬱症」。藥量從最初每日 4 顆，一路攀升至每日將近 10 顆。</p>
+                </div>
+            </div>
+
+            <!-- PRESENT -->
+            <div class="timeline-stage stage-present">
+                <span class="stage-header">PRESENT ｜ 現在 (極限承載狀態)</span>
+                <div class="gothic-card">
+                    <div class="gothic-card-sub" style="margin-top:0; margin-bottom:8px;">
+                        🤝 心理諮商 (小佑老師陪伴中) / 💊 精神科 (每日約 10 顆藥)
+                    </div>
+                    <div class="gothic-card card-alert" style="margin-top:0; margin-bottom:8px;">
+                        <strong>🛡️ 自體免疫系統失調</strong>
+                        <p>右腳乾癬、乳房發膿，免疫系統持續自我攻擊。每日需額外服用 <strong>6 顆類固醇 + 1 顆胃藥</strong>。</p>
+                    </div>
+                    <div class="gothic-card card-warning" style="margin-top:0;">
+                        <strong>⚡ 自律神經失調</strong>
+                        <p>交感與副交感神經活性皆低下，對外界刺激幾乎無反應。長期極限壓力導致神經失去彈性與動力，雙雙失能。</p>
+                    </div>
+                    <div class="card-summary">
+                        📊 每日藥物總承載量：將近 17 顆藥物
+                    </div>
+                </div>
+            </div>
         </div>
 
-            <img
-            class="info-image"
-            src="img/pro3.jpg"
-            alt="角色插圖"
-        >
-
-        <!-- 生命重量時間軸容器 -->
-<div style="max-width: 650px; margin: 40px auto; font-family: sans-serif; color: #333;">
-  
-  <h2 style="text-align: center; color: #4a4a4a; margin-bottom: 30px;">
-    生命的重力場：醫療與疾病歷程
-  </h2>
-
-  <!-- 階段一：小六 (第一層基礎) -->
-  <div style="margin-bottom: 25px; border-left: 4px solid #8c92ac; padding-left: 15px;">
-    <span style="font-size: 0.85em; color: #777; font-weight: bold;">STAGE 1 ｜ 小六 ~ 大二</span>
-    <div style="background: #e6e8ee; padding: 12px 15px; border-radius: 6px; margin-top: 8px;">
-      <strong style="color: #3b4252;">🦷 牙醫矯正 (第一層重量)</strong>
-      <p style="font-size: 0.9em; margin: 5px 0 0 0; color: #555;">
-        花了 12 萬做矯正，過程艱辛。整晚戴頭套（睡覺不能翻身，否則勾傷口腔驚醒嘴破）、國小拔了 4~5 顆恆牙、打骨釘、割牙肉...
-      </p>
-    </div>
-  </div>
-
-  <!-- 階段二：國一 (二層疊加) -->
-  <div style="margin-bottom: 25px; border-left: 4px solid #7b88a8; padding-left: 15px;">
-    <span style="font-size: 0.85em; color: #777; font-weight: bold;">STAGE 2 ｜ 國一 ~ 高中</span>
-    <!-- 地層 1 -->
-    <div style="background: #e6e8ee; padding: 8px 12px; border-radius: 4px; font-size: 0.85em; color: #666; margin-top: 8px;">
-      🦷 牙醫矯正 (持續中)
-    </div>
-    <!-- 地層 2 (新增) -->
-    <div style="background: #d1d6e6; padding: 12px 15px; border-radius: 6px; margin-top: 6px; border-left: 3px solid #5e81ac;">
-      <strong style="color: #2e3440;">🩺 皮膚科 (第二層重量)</strong>
-      <p style="font-size: 0.9em; margin: 5px 0 0 0; color: #444;">
-        國中的急性汗皰疹，到了高中變成慢性乾癬。看過近 10 間西醫、中醫和大醫院，吃各式藥物與類固醇。後因病情未好轉遭台大診所醫師直接放棄治療，沒有預約下次看診更沒有配藥，藥物直接斷掉產生戒斷副作用，導致身材走樣並且對醫療體系的失望。
-      </p>
-    </div>
-  </div>
-
-  <!-- 階段三：大三 (四層瞬間爆發) -->
-  <div style="margin-bottom: 25px; border-left: 4px solid #bf616a; padding-left: 15px;">
-    <span style="font-size: 0.85em; color: #bf616a; font-weight: bold;">STAGE 3 ｜ 大三轉折點 (身心重壓)</span>
-    <!-- 舊地層 -->
-    <div style="background: #d1d6e6; padding: 8px 12px; border-radius: 4px; font-size: 0.85em; color: #666; margin-top: 8px;">
-      🩺 皮膚科 (慢性乾癬抗爭中)
-    </div>
-    <!-- 地層 3 (新增) -->
-    <div style="background: #f4d7d9; padding: 12px 15px; border-radius: 6px; margin-top: 6px; border-left: 3px solid #bf616a;">
-      <strong style="color: #8f383f;">🧠 心理諮商 (第三層重量)</strong>
-      <p style="font-size: 0.9em; margin: 5px 0 0 0; color: #444;">
-        由心理系老師帶至學輔中心開啟諮商。前前後後換了 6 位晤談師，唯有第二位「小佑老師」獲得我真正的信任，他是我唯一認可的心理師。
-      </p>
-    </div>
-    <!-- 地層 4 (新增) -->
-    <div style="background: #ebd0d2; padding: 12px 15px; border-radius: 6px; margin-top: 6px; border-left: 3px solid #a3be8c;">
-      <strong style="color: #8f383f;">💊 精神科 (第四層重量)</strong>
-      <p style="font-size: 0.9em; margin: 5px 0 0 0; color: #444;">
-        被學輔中心轉介到菜寮的精神科，我因此認識了譚醫師，他知道我對於。診斷為「復發性憂鬱症」（又稱重鬱症，不穩定、鬱期發生時嚴重性極端）。藥量從最初每天 4 顆，一路增加至現在每天將近 10 顆。
-      </p>
-    </div>
-  </div>
-
-  <!-- 階段四：現在 (全地層載重 / 每日17顆藥) -->
-  <div style="margin-bottom: 25px; border-left: 4px solid #4c566a; padding-left: 15px;">
-    <span style="font-size: 0.85em; color: #4c566a; font-weight: bold;">PRESENT ｜ 現在 (極限承載狀態)</span>
-    <div style="background: #eceff4; border: 1px solid #d8dee9; padding: 15px; border-radius: 8px; margin-top: 8px;">
-      
-      <div style="margin-bottom: 10px; padding: 8px; background: #e5e9f0; border-radius: 4px; font-size: 0.85em;">
-        🤝 心理諮商 (小佑老師陪伴中) / 💊 精神科 (每日將近 10 顆藥)
-      </div>
-
-      <div style="margin-bottom: 10px; padding: 10px; background: #d8dee9; border-radius: 4px; border-left: 3px solid #d08f70;">
-        <strong>🛡️ 自體免疫系統失調</strong>
-        <p style="font-size: 0.85em; margin: 3px 0 0 0; color: #4c566a;">
-          右腳乾癬、乳房發膿，免疫系統持續攻擊自身。目前每日需額外服用 <strong>6 顆類固醇 + 1 顆胃藥</strong>。
-        </p>
-      </div>
-
-      <div style="padding: 10px; background: #c8d0e0; border-radius: 4px; border-left: 3px solid #5e81ac;">
-        <strong>⚡ 自律神經失調</strong>
-        <p style="font-size: 0.85em; margin: 3px 0 0 0; color: #2e3440;">
-          交感與副交感神經活性皆低下，對外界刺激幾乎無反應。長期極限壓力導致神經彈性與動力不再，雙雙失效，失去了功能。
-        </p>
-      </div>
-
-      <div style="margin-top: 15px; text-align: center; background: #4c566a; color: #fff; padding: 8px; border-radius: 4px; font-size: 0.85em;">
-        📊 每日藥物總承載量：將近 17 顆藥物
-      </div>
+        <img class="info-image" src="img/pro3.jpg" alt="角色插圖">
 
     </div>
-  </div>
-
 </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- ==================================================
-     JavaScript
-================================================== -->
 
 <script>
-
-
-/* ==================================================
-   圖片輪播
-================================================== */
-
-
+/* ===== 圖片輪播 ===== */
 const images = [
-
-    "img/rip1.jpg",
-
-    "img/rip2.jpg",
-
-    "img/rip3.jpg",
-
-    "img/rip4.jpg",
-
-    "img/rip6.jpg",
-
-    "img/rip8.jpg",
-
-    "img/rip9.jpg",
-
-    "img/rip5.jpg",
-
-    "img/rip7.jpg"
+    "img/rip1.jpg", "img/rip2.jpg", "img/rip3.jpg",
+    "img/rip4.jpg", "img/rip6.jpg", "img/rip8.jpg",
+    "img/rip9.jpg", "img/rip5.jpg", "img/rip7.jpg"
 ];
 
-
 let currentIndex = 0;
-
-
-const characterImage =
-    document.getElementById("character-image");
-
-
-const counter =
-    document.getElementById("image-counter");
-
+const characterImage = document.getElementById("character-image");
+const counter = document.getElementById("image-counter");
 
 function showImage(index){
-
     currentIndex = index;
-
-
-    characterImage.src =
-        images[currentIndex];
-
-
-    counter.textContent =
-        (currentIndex + 1) + " / " + images.length;
-
+    characterImage.src = images[currentIndex];
+    counter.textContent = (currentIndex + 1) + " / " + images.length;
 }
 
+document.getElementById("prev").addEventListener("click", function(){
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    showImage(currentIndex);
+});
 
-/* 上一張 */
+document.getElementById("next").addEventListener("click", function(){
+    currentIndex = (currentIndex + 1) % images.length;
+    showImage(currentIndex);
+});
 
-document
-    .getElementById("prev")
-    .addEventListener("click", function(){
-
-        currentIndex--;
-
-        if(currentIndex < 0){
-
-            currentIndex = images.length - 1;
-
-        }
-
-        showImage(currentIndex);
-
-    });
-
-
-/* 下一張 */
-
-document
-    .getElementById("next")
-    .addEventListener("click", function(){
-
-        currentIndex++;
-
-        if(currentIndex >= images.length){
-
-            currentIndex = 0;
-
-        }
-
-        showImage(currentIndex);
-
-    });
-
-
-
-/* ==================================================
-   音樂
-================================================== */
-
-
-const bgm =
-    document.getElementById("bgm");
-
-
-const musicButton =
-    document.getElementById("music-toggle");
-
-
-/* ==================================================
-   進入頁面後立即嘗試播放
-================================================== */
+/* ===== 背景音樂控制 ===== */
+const bgm = document.getElementById("bgm");
+const musicButton = document.getElementById("music-toggle");
 
 function startMusic(){
-
-    bgm.play()
-        .then(function(){
-
-            musicButton.textContent = "♫ ON";
-
-        })
-        .catch(function(){
-
-            /*
-             * 瀏覽器阻止 autoplay
-             * 使用者仍然可以按右上角按鈕播放
-             */
-
-            musicButton.textContent = "♫ OFF";
-
-        });
-
+    bgm.play().then(() => {
+        musicButton.textContent = "♫ ON";
+    }).catch(() => {
+        musicButton.textContent = "♫ OFF";
+    });
 }
-
-
-/* 頁面載入後立即嘗試 */
 
 startMusic();
 
-
-/* ==================================================
-   音樂按鈕
-================================================== */
-
 musicButton.addEventListener("click", function(){
-
     if(bgm.paused){
-
-        bgm.play()
-            .then(function(){
-
-                musicButton.textContent = "♫ ON";
-
-            })
-            .catch(function(){
-
-                musicButton.textContent = "♫ OFF";
-
-            });
-
-    }else{
-
+        bgm.play().then(() => { musicButton.textContent = "♫ ON"; });
+    } else {
         bgm.pause();
-
         musicButton.textContent = "♫ OFF";
-
     }
-
 });
-
-
 </script>
-
 
 </body>
 </html>
