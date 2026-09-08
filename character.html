@@ -126,7 +126,7 @@ body {
 }
 
 .char-name {
-    font-size: 46px; /* 放大標題 */
+    font-size: 46px; /* 不更動 */
     font-weight: 700;
     letter-spacing: 2px;
     color: #ececef;
@@ -138,7 +138,7 @@ body {
     color: #9898a8;
     margin-bottom: 40px;
     line-height: 1.9;
-    font-size: 19px; /* 放大副標題 */
+    font-size: 19px; /* 不更動 */
 }
 
 .char-block {
@@ -149,7 +149,7 @@ body {
 .char-title {
     display: inline-block;
     color: #e0e0e8;
-    font-size: 20px; /* 放大標籤字體 */
+    font-size: 24px; /* 再放大標籤字體 (原20px) */
     font-weight: 600;
     letter-spacing: 3px;
     background: rgba(255, 255, 255, 0.04);
@@ -184,7 +184,7 @@ body {
     left: 20px;
     color: #888899;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 18px; /* 微調加大 */
     letter-spacing: 1px;
     z-index: 1000;
     transition: 0.3s;
@@ -200,7 +200,7 @@ body {
     color: #888899;
     padding: 8px 16px;
     font-family: inherit;
-    font-size: 15px;
+    font-size: 16px; /* 微調加大 */
     letter-spacing: 1px;
     cursor: pointer;
     transition: 0.3s;
@@ -226,18 +226,18 @@ body {
 /* 卡片內標題 */
 .gothic-card strong {
     color: #ececef;
-    font-size: 24px; /* 放大卡片內標題 */
+    font-size: 26px; /* 再放大卡片內標題 (原24px) */
     font-weight: 600;
     display: block;
     margin-bottom: 12px;
     letter-spacing: 0.8px;
 }
 
-/* 卡片內文：大幅放大至 20px，舒適清晰 */
+/* 卡片內文：大幅放大並改為純白 */
 .gothic-card p {
-    font-size: 20px; /* 放大內文 */
+    font-size: 22px; /* 再放大內文 (原20px) */
     margin: 0;
-    color: #b8b8cb;
+    color: #ffffff; /* 修改為純白 */
     line-height: 1.9;
     letter-spacing: 0.6px;
 }
@@ -248,7 +248,7 @@ body {
     border: 1px solid #1c1c28;
     padding: 12px 16px;
     border-radius: 3px;
-    font-size: 18px; /* 放大附加說明 */
+    font-size: 20px; /* 再放大附加說明 (原18px) */
     color: #777788;
     margin-top: 10px;
 }
@@ -283,7 +283,7 @@ body {
 .gothic-timeline-title {
     text-align: left;
     color: #e0e0e8;
-    font-size: 24px; /* 放大時間軸主標題 */
+    font-size: 28px; /* 再放大時間軸主標題 (原24px) */
     font-weight: 600;
     letter-spacing: 3px;
     margin-bottom: 32px;
@@ -299,7 +299,7 @@ body {
 }
 
 .stage-header {
-    font-size: 18px; /* 放大階段標題 */
+    font-size: 20px; /* 再放大階段標題 (原18px) */
     color: #888898;
     font-weight: bold;
     letter-spacing: 2px;
@@ -320,7 +320,7 @@ body {
     border: 1px solid #2e2e3e;
     color: #c0c0d2;
     padding: 16px;
-    font-size: 20px; /* 放大總結文字 */
+    font-size: 22px; /* 再放大總結文字 (原20px) */
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -349,18 +349,18 @@ body {
         padding-top: 0;
     }
 
-    /* 手機大標題與導言放大 */
+    /* 手機大標題與導言維持原樣 */
     .char-name {
-        font-size: 36px; /* 手機版標題加大 */
+        font-size: 36px; /* 不更動 */
     }
 
     .char-sub {
-        font-size: 19px; /* 手機版副標加大 */
+        font-size: 19px; /* 不更動 */
         line-height: 1.9;
     }
 
     .char-title {
-        font-size: 19px; /* 手機版標籤加大 */
+        font-size: 22px; /* 手機版標籤再加大 (原19px) */
         padding: 8px 18px;
         margin-bottom: 16px;
     }
@@ -372,23 +372,23 @@ body {
     }
 
     .gothic-card strong {
-        font-size: 23px; /* 手機版卡片標題加大 */
+        font-size: 26px; /* 手機版卡片標題再加大 (原23px) */
         margin-bottom: 12px;
     }
 
     .gothic-card p {
-        font-size: 22px;        /* 超清晰放大的電子書字級 (由19加到22) */
+        font-size: 24px;        /* 超清晰放大的電子書字級 (原22px) */
         line-height: 1.95;       /* 寬鬆極致舒服的行高 */
         letter-spacing: 0.8px;
-        color: #cccccc;
+        color: #ffffff;         /* 手機版也確保是純白 */
     }
 
     .gothic-card-sub {
-        font-size: 18px; /* 手機版附加說明加大 */
+        font-size: 20px; /* 手機版附加說明再加大 (原18px) */
     }
 
     .stage-header {
-        font-size: 18px; /* 手機版階段標題加大 */
+        font-size: 20px; /* 手機版階段標題再加大 (原18px) */
     }
 
     .info-image { 
