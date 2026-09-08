@@ -70,22 +70,27 @@ hr{
 
 
 /* =========================
-   連結 hover 動畫
+   選單與連結 hover 動畫
 ========================= */
 
-a{
+nav a{
     color:white;
     text-decoration:none;
 
-    display:inline-block;
+    display:block; /* 改為區塊元素，方便精準控制上下間距 */
     position:relative;
+    width:fit-content; /* 讓底線動畫只跟隨文字長度 */
+
+    font-size:20px; /* 設定為與 .quote 相同的 20px */
+    margin-bottom:14px; /* 設定選單項目之間的間距 */
+    letter-spacing:1px;
 
     transition:0.3s;
 }
 
 /* 底線 */
 
-a::after{
+nav a::after{
     content:"";
     position:absolute;
 
@@ -103,13 +108,21 @@ a::after{
 
 /* hover */
 
-a:hover{
+nav a:hover{
     color:#dddddd;
     text-shadow:0 0 6px #aaaaaa;
 }
 
-a:hover::after{
+nav a:hover::after{
     width:100%;
+}
+
+
+/* 普通文章連結（通用） */
+
+a{
+    color:white;
+    text-decoration:none;
 }
 
 
@@ -227,9 +240,8 @@ h1{
 }
 
 nav a{
-    display:inline-block;
-    margin:12px 0;
     font-size:18px;
+    margin-bottom:12px;
 }
 
 }
