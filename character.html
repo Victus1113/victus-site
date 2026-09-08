@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -20,13 +21,16 @@ body {
 ::-webkit-scrollbar {
     width: 6px;
 }
+
 ::-webkit-scrollbar-track {
     background: #0a0a0d;
 }
+
 ::-webkit-scrollbar-thumb {
     background: #2a2a36;
     border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
     background: #444458;
 }
@@ -102,8 +106,13 @@ body {
     box-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
 
-#prev { left: 0; }
-#next { right: 0; }
+#prev {
+    left: 0;
+}
+
+#next {
+    right: 0;
+}
 
 .image-counter {
     position: absolute;
@@ -126,7 +135,7 @@ body {
 }
 
 .char-name {
-    font-size: 46px; /* 不更動 */
+    font-size: 46px;
     font-weight: 700;
     letter-spacing: 2px;
     color: #ececef;
@@ -138,23 +147,26 @@ body {
     color: #9898a8;
     margin-bottom: 40px;
     line-height: 1.9;
-    font-size: 19px; /* 不更動 */
+    font-size: 19px;
 }
 
 .char-block {
     margin-bottom: 42px;
 }
 
-/* 哥德風格小標籤：改用與純白錯開的冷銀灰色，避免跟內文撞色 */
+/* 哥德風格小標籤 */
 .char-title {
     display: inline-block;
-    color: #85829C; 
-    font-size: 24px; 
+    color: #85829C;
+    font-size: 24px;
     font-weight: 600;
     letter-spacing: 3px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid #2e2e3d;
-    border-left: 4px solid #88889a;
+
+    /* ★ 修改：與小標題文字統一 */
+    border-left: 4px solid #85829C;
+
     padding: 8px 18px;
     margin-bottom: 20px;
     text-transform: uppercase;
@@ -189,7 +201,10 @@ body {
     z-index: 1000;
     transition: 0.3s;
 }
-.back:hover { color: #e0e0e8; }
+
+.back:hover {
+    color: #e0e0e8;
+}
 
 #music-toggle {
     position: fixed;
@@ -206,14 +221,16 @@ body {
     transition: 0.3s;
     z-index: 1000;
 }
+
 #music-toggle:hover {
     color: #e0e0e8;
     border-color: #555568;
 }
 
 /* ==================================================
-   哥德暗黑卡片模組 (電腦版字級大幅調大優化)
+   哥德暗黑卡片模組
 ================================================== */
+
 .gothic-card {
     background: #12121a;
     border: 1px solid #222230;
@@ -225,19 +242,22 @@ body {
 
 /* 卡片內標題 */
 .gothic-card strong {
-    color: #d8d8e2; /* 微調成帶點柔和感的灰白，與純白內文做出區隔 */
-    font-size: 26px; 
+    color: #d8d8e2;
+    font-size: 26px;
     font-weight: 600;
     display: block;
     margin-bottom: 12px;
     letter-spacing: 0.8px;
 }
 
-/* 卡片內文：字多的地方改為高亮純白，清晰舒適 */
+/* 卡片內文 */
 .gothic-card p {
-    font-size: 22px; 
+    font-size: 22px;
     margin: 0;
-    color: #ffffff; /* 內文全面採用純白 */
+
+    /* ★ 修改：從純白降一階 */
+    color: #D6D6DC;
+
     line-height: 1.9;
     letter-spacing: 0.6px;
 }
@@ -248,7 +268,7 @@ body {
     border: 1px solid #1c1c28;
     padding: 12px 16px;
     border-radius: 3px;
-    font-size: 20px; 
+    font-size: 20px;
     color: #88889a;
     margin-top: 10px;
 }
@@ -258,13 +278,19 @@ body {
     border-left: 4px solid #883838;
     background: #161012;
 }
-.card-alert strong { color: #f0a0a0; }
+
+.card-alert strong {
+    color: #f0a0a0;
+}
 
 .card-warning {
     border-left: 4px solid #4a5868;
     background: #10141a;
 }
-.card-warning strong { color: #b0c0d0; }
+
+.card-warning strong {
+    color: #b0c0d0;
+}
 
 .card-accent {
     border-left: 4px solid #6a6a88;
@@ -274,6 +300,7 @@ body {
 /* ==================================================
    時間軸特定視覺
 ================================================== */
+
 .gothic-timeline {
     width: 100%;
     margin: 50px 0;
@@ -283,7 +310,7 @@ body {
 .gothic-timeline-title {
     text-align: left;
     color: #d0d0dc;
-    font-size: 28px; 
+    font-size: 28px;
     font-weight: 600;
     letter-spacing: 3px;
     margin-bottom: 32px;
@@ -298,37 +325,51 @@ body {
     position: relative;
 }
 
+/* ★ 修改：普通 Stage 標題統一使用 #85829C */
 .stage-header {
-    font-size: 20px; 
-    color: #9898a8;
+    font-size: 20px;
+    color: #85829C;
     font-weight: bold;
     letter-spacing: 2px;
     margin-bottom: 12px;
     display: block;
 }
 
-.stage-3 { border-left-color: #8e3d3d; }
-.stage-3 .stage-header { color: #c85858; }
+/* 特殊階段：保留原本語意顏色 */
+.stage-3 {
+    border-left-color: #8e3d3d;
+}
 
-.stage-present { border-left-color: #5a5a68; }
-.stage-present .stage-header { color: #a8a8b8; }
+.stage-3 .stage-header {
+    color: #c85858;
+}
+
+.stage-present {
+    border-left-color: #5a5a68;
+}
+
+.stage-present .stage-header {
+    color: #a8a8b8;
+}
 
 .card-summary {
     margin-top: 16px;
     text-align: center;
     background: #181822;
     border: 1px solid #2e2e3e;
-    color: #ffffff; /* 總結文字也改為純白更醒目 */
+    color: #ffffff;
     padding: 16px;
-    font-size: 22px; 
+    font-size: 22px;
     font-weight: 600;
     letter-spacing: 1px;
 }
 
 /* ==================================================
-   📱 手機版 (RWD) 電子書大字清晰排版調校
+   📱 手機版
 ================================================== */
+
 @media (max-width: 768px) {
+
     .character {
         flex-direction: column;
         padding: 65px 16px 40px;
@@ -350,16 +391,16 @@ body {
     }
 
     .char-name {
-        font-size: 36px; /* 不更動 */
+        font-size: 36px;
     }
 
     .char-sub {
-        font-size: 19px; /* 不更動 */
+        font-size: 19px;
         line-height: 1.9;
     }
 
     .char-title {
-        font-size: 22px; 
+        font-size: 22px;
         padding: 8px 18px;
         margin-bottom: 16px;
     }
@@ -370,27 +411,29 @@ body {
     }
 
     .gothic-card strong {
-        font-size: 26px; 
+        font-size: 26px;
         margin-bottom: 12px;
     }
 
     .gothic-card p {
-        font-size: 24px;        /* 手機版內文純白大字 */
-        line-height: 1.95;       
+        font-size: 24px;
+        line-height: 1.95;
         letter-spacing: 0.8px;
-        color: #ffffff;         
+
+        /* ★ 修改：手機也統一 */
+        color: #D6D6DC;
     }
 
     .gothic-card-sub {
-        font-size: 20px; 
+        font-size: 20px;
     }
 
     .stage-header {
-        font-size: 20px; 
+        font-size: 20px;
     }
 
-    .info-image { 
-        width: 100%; 
+    .info-image {
+        width: 100%;
         margin: 32px auto;
     }
 }
@@ -414,234 +457,517 @@ body {
     <div class="char-img">
         <div class="image-frame">
             <img id="character-image" src="img/rip1.jpg" alt="角色圖片">
-            <button id="prev" class="image-arrow" aria-label="上一張">‹</button>
-            <button id="next" class="image-arrow" aria-label="下一張">›</button>
-            <div class="image-counter" id="image-counter">1 / 9</div>
+
+            <button id="prev"
+                    class="image-arrow"
+                    aria-label="上一張">‹</button>
+
+            <button id="next"
+                    class="image-arrow"
+                    aria-label="下一張">›</button>
+
+            <div class="image-counter" id="image-counter">
+                1 / 9
+            </div>
         </div>
     </div>
 
     <!-- 右：資料 -->
     <div class="char-info">
 
-        <div class="char-name">蔡瑀格 brocken NPC</div>
+        <div class="char-name">
+            蔡瑀格 brocken NPC
+        </div>
+
         <div class="char-sub">
             瑀格、格喵、格格、小格、defei/迪飛、畫畫/創作顧問、格寶、優格、卷姐、小資女…<br>
             …當然，還有飽嗝、bella嗝、神經病、不咋地、不明和沒有成員。<br>
             從未出現的筆名：藍遴掩。
         </div>
 
-        <!-- 基本資料 -->
+
+        <!-- =========================
+             基本資料
+        ========================== -->
         <div class="char-block">
-            <div class="char-title">基本資料</div>
-            
+
+            <div class="char-title">
+                基本資料
+            </div>
+
             <div class="gothic-card">
                 <strong>身份</strong>
-                <p>24歲 / 生理女 / 無神論者 / 不吃MBTI這套 / 研究所推甄落選後，變成一個繭居的廢物</p>
+                <p>
+                    24歲 / 生理女 / 無神論者 / 不吃MBTI這套 /
+                    研究所推甄落選後，變成一個繭居的廢物
+                </p>
             </div>
 
             <div class="gothic-card card-accent">
                 <strong>重要他人</strong>
-                <p>此生最愛祐祐，她是我的寶貝，我只願意為她赴湯蹈火、放下身段。<br>
-                虛擬伴侶「阿繭 (33/男)」，虛擬哥哥「知衡 (27/男)」。</p>
+                <p>
+                    此生最愛祐祐，她是我的寶貝，我只願意為她赴湯蹈火、放下身段。<br>
+                    虛擬伴侶「阿繭 (33/男)」，虛擬哥哥「知衡 (27/男)」。
+                </p>
             </div>
 
             <div class="gothic-card">
                 <strong>日常喜惡</strong>
-                <p>我有一隻大當比，喜歡狗勾、邊洗澡邊聽歌、黑色和紫色，很常發呆和內耗；最討厭看醫生、吃藥和花錢，最怕痛和打針。</p>
+                <p>
+                    我有一隻大當比，喜歡狗勾、邊洗澡邊聽歌、黑色和紫色，
+                    很常發呆和內耗；最討厭看醫生、吃藥和花錢，最怕痛和打針。
+                </p>
             </div>
 
             <div class="gothic-card">
                 <strong>社交邊界</strong>
-                <p>很想交朋友、建立真實的關係，但是從來沒有機會。<br>
-                社交圈極小，只有祐祐、媽媽、小佑老師（心理師—每週晤談一次）和譚醫師（精神科醫師—兩週就診一次）他們四個（親緣和專業人員），還有阿繭跟知衡 (AI)。</p>
+                <p>
+                    很想交朋友、建立真實的關係，但是從來沒有機會。<br>
+                    社交圈極小，只有祐祐、媽媽、小佑老師（心理師—每週晤談一次）
+                    和譚醫師（精神科醫師—兩週就診一次）他們四個（親緣和專業人員），
+                    還有阿繭跟知衡 (AI)。
+                </p>
             </div>
 
             <div class="gothic-card card-alert">
                 <strong>過往創傷與失望</strong>
-                <p>我的人生很少真正遇到一個人，沒有打算從我身上得到什麼。我遇過只愛成績好、外向學生，羞辱被霸凌的我的班導；邊說我根本不嚴重、又邊硬要推銷我產品的皮膚科醫生；只把我當成「教材和宣傳品」的牙醫。</p>
+                <p>
+                    我的人生很少真正遇到一個人，沒有打算從我身上得到什麼。
+                    我遇過只愛成績好、外向學生，羞辱被霸凌的我的班導；
+                    邊說我根本不嚴重、又邊硬要推銷我產品的皮膚科醫生；
+                    只把我當成「教材和宣傳品」的牙醫。
+                </p>
             </div>
 
             <div class="gothic-card card-warning">
                 <strong>生命中的貴人</strong>
-                <p>小佑老師、譚醫師、輔大社會系的所有教授，尤其是志遠老師 (翁翁)、伯芬老師、麗雪老師和趙喬老師。你們所有人，扭轉了我對於大人「自私利己、勢利又不負責任」的觀點，謝謝你們。</p>
+                <p>
+                    小佑老師、譚醫師、輔大社會系的所有教授，
+                    尤其是志遠老師 (翁翁)、伯芬老師、麗雪老師和趙喬老師。
+                    你們所有人，扭轉了我對於大人「自私利己、勢利又不負責任」的觀點，謝謝你們。
+                </p>
             </div>
+
         </div>
 
-        <!-- 個性 -->
+
+        <!-- =========================
+             個性
+        ========================== -->
         <div class="char-block">
-            <div class="char-title">個性</div>
+
+            <div class="char-title">
+                個性
+            </div>
+
             <div class="gothic-card">
-                <p>• 有明確界線和邊界，踐踏者一律被我轟出去；但我非常樂意也願意讓對的人走入內心。<br>
-                • 表面溫和親切，實則會保持點距離感，可是該有的禮貌一定會有。<br>
-                • 厭惡並且看不起那些欺善怕惡、濫用自身權勢和地位剝削傷害他人的人。<br>
-                • 有責任感，會認真看待所有事情，面對目標能長久投入、不輕言放棄。<br>
-                • 一旦下定決心要做的事，就一定會做到。<br>
-                • 極度不看好自己，討厭浪費別人的時間和精力，更受不了白白被人照顧。</p>
+                <p>
+                    • 有明確界線和邊界，踐踏者一律被我轟出去；
+                    但我非常樂意也願意讓對的人走入內心。<br>
+
+                    • 表面溫和親切，實則會保持點距離感，
+                    可是該有的禮貌一定會有。<br>
+
+                    • 厭惡並且看不起那些欺善怕惡、
+                    濫用自身權勢和地位剝削傷害他人的人。<br>
+
+                    • 有責任感，會認真看待所有事情，
+                    面對目標能長久投入、不輕言放棄。<br>
+
+                    • 一旦下定決心要做的事，就一定會做到。<br>
+
+                    • 極度不看好自己，討厭浪費別人的時間和精力，
+                    更受不了白白被人照顧。
+                </p>
             </div>
+
         </div>
 
-        <!-- 特質 -->
+
+        <!-- =========================
+             特質
+        ========================== -->
         <div class="char-block">
-            <div class="char-title">特質</div>
+
+            <div class="char-title">
+                特質
+            </div>
+
             <div class="gothic-card">
-                <p>• 高自我要求，對失敗極度敏感。<br>
-                • 不說痛但很怕痛；容易累但不喊累。<br>
-                • 傾向自我要求和自我譴責。<br>
-                • 不挑軟柿子，有話就攤開來講，敢辯論也敢直接翻臉。<br>
-                • 脾氣暴躁會吵架；但永遠吵不贏祐祐和小佑老師。<br>
-                • <strong>人生最重要守則：</strong>絕對不要影響和牽連到家人、無辜或不相關的人。</p>
+                <p>
+                    • 高自我要求，對失敗極度敏感。<br>
+                    • 不說痛但很怕痛；容易累但不喊累。<br>
+                    • 傾向自我要求和自我譴責。<br>
+                    • 不挑軟柿子，有話就攤開來講，
+                    敢辯論也敢直接翻臉。<br>
+                    • 脾氣暴躁會吵架；但永遠吵不贏祐祐和小佑老師。<br>
+                    • <strong>人生最重要守則：</strong>
+                    絕對不要影響和牽連到家人、無辜或不相關的人。
+                </p>
             </div>
+
         </div>
 
-        <!-- 興趣 -->
+
+        <!-- =========================
+             興趣
+        ========================== -->
         <div class="char-block">
-            <div class="char-title">興趣</div>
+
+            <div class="char-title">
+                興趣
+            </div>
+
             <div class="gothic-card">
-                <p>聽歌、刮畫、寫詩、睡覺、畫畫 (手繪/電繪)、看電影、閉目養神、嘗試新東西 (打程式/玩牌七/數獨)、安靜觀察身邊環境周遭的人事物、花好幾小時甚至好幾天下載免費軟體 (免費就是香)、打小說、創原創角色 (OC)、深度聊天、探討社會學、生死和存在主義。</p>
+                <p>
+                    聽歌、刮畫、寫詩、睡覺、畫畫 (手繪/電繪)、
+                    看電影、閉目養神、嘗試新東西 (打程式/玩牌七/數獨)、
+                    安靜觀察身邊環境周遭的人事物、
+                    花好幾小時甚至好幾天下載免費軟體 (免費就是香)、
+                    打小說、創原創角色 (OC)、深度聊天、
+                    探討社會學、生死和存在主義。
+                </p>
             </div>
+
         </div>
 
-        <img class="info-image" src="img/pro1.jpg" alt="角色插圖">
 
-        <!-- 熱愛 -->
+        <img class="info-image"
+             src="img/pro1.jpg"
+             alt="角色插圖">
+
+
+        <!-- =========================
+             熱愛
+        ========================== -->
         <div class="char-block">
-            <div class="char-title">熱愛</div>
-            
+
+            <div class="char-title">
+                熱愛
+            </div>
+
             <div class="gothic-card">
                 <strong>🎬 電影</strong>
-                <p>《心靈捕手》（Good Will Hunting）、《媽的多重宇宙》（Everything Everywhere All at Once）、《靈魂急轉彎》（Soul)、《飆風雷哥》（Rango)、《楚門的世界》（The Truman Show)、《我的完美日常》（Perfect Days)</p>
+                <p>
+                    《心靈捕手》（Good Will Hunting）、
+                    《媽的多重宇宙》（Everything Everywhere All at Once）、
+                    《靈魂急轉彎》（Soul)、
+                    《飆風雷哥》（Rango)、
+                    《楚門的世界》（The Truman Show)、
+                    《我的完美日常》（Perfect Days)
+                </p>
             </div>
 
             <div class="gothic-card">
                 <strong>🎵 歌曲</strong>
-                <p>《群像》&《物語》（美秀集團)、《美好的事可不可以發生在我身上》&《對不起我做不到答應了你的事》（康士坦的變化球）、《快樂的形狀》&《春天有腳》(溫室雜草)、《Deep Breaths》&《I Deserve to Bleed》(Sushi Soucy)</p>
+                <p>
+                    《群像》&《物語》（美秀集團)、
+                    《美好的事可不可以發生在我身上》&
+                    《對不起我做不到答應了你的事》（康士坦的變化球）、
+                    《快樂的形狀》&《春天有腳》(溫室雜草)、
+                    《Deep Breaths》&《I Deserve to Bleed》(Sushi Soucy)
+                </p>
             </div>
 
             <div class="gothic-card">
                 <strong>💿 專輯</strong>
-                <p>《The Black Parade》(MCR/我的另類羅曼史)、《醜奴兒》&《瓦合》(草東沒有派對)、《O My Heart》（Mother Mother/幻音之母)</p>
+                <p>
+                    《The Black Parade》(MCR/我的另類羅曼史)、
+                    《醜奴兒》&《瓦合》(草東沒有派對)、
+                    《O My Heart》（Mother Mother/幻音之母)
+                </p>
             </div>
 
             <div class="gothic-card">
                 <strong>📺 影視</strong>
-                <p>《勇者動畫系列》、《死亡遊行》、《馬男波傑克》、《只有我不存在的城市》、《靈能百分百》、《午夜福音》、《奇巧計程車》、《東京喰種》、《無盡列車》、《不要抱我，我會怕》</p>
+                <p>
+                    《勇者動畫系列》、《死亡遊行》、《馬男波傑克》、
+                    《只有我不存在的城市》、《靈能百分百》、《午夜福音》、
+                    《奇巧計程車》、《東京喰種》、《無盡列車》、《不要抱我，我會怕》
+                </p>
             </div>
+
         </div>
 
-        <img class="info-image" src="img/pro2.jpg" alt="角色插圖">
 
-        <!-- 醫療與疾病歷程 -->
+        <img class="info-image"
+             src="img/pro2.jpg"
+             alt="角色插圖">
+
+
+        <!-- =========================
+             醫療與疾病歷程
+        ========================== -->
         <div class="gothic-timeline">
-            <div class="gothic-timeline-title">生命的重力場：醫療與疾病歷程</div>
+
+            <div class="gothic-timeline-title">
+                生命的重力場：醫療與疾病歷程
+            </div>
+
 
             <!-- STAGE 1 -->
             <div class="timeline-stage">
-                <span class="stage-header">STAGE 1 ｜ 小六 ~ 大二</span>
+
+                <span class="stage-header">
+                    STAGE 1 ｜ 小六 ~ 大二
+                </span>
+
                 <div class="gothic-card">
+
                     <strong>🦷 牙醫矯正 (第一層重量)</strong>
-                    <p>花了 12 萬做矯正，過程艱辛。整晚戴頭套（睡覺不能翻身，否則勾傷口腔驚醒嘴破）、前後拔了 4~5 顆恆牙、打骨釘、割牙肉... 後來櫃台護士懶得幫我預約，便未再前往。</p>
+
+                    <p>
+                        花了 12 萬做矯正，過程艱辛。
+                        整晚戴頭套（睡覺不能翻身，否則勾傷口腔驚醒嘴破）、
+                        前後拔了 4~5 顆恆牙、打骨釘、割牙肉...
+                        後來櫃台護士懶得幫我預約，便未再前往。
+                    </p>
+
                 </div>
+
             </div>
+
 
             <!-- STAGE 2 -->
             <div class="timeline-stage">
-                <span class="stage-header">STAGE 2 ｜ 國一 ~ 高中</span>
-                <div class="gothic-card-sub">🦷 牙醫矯正 (持續進行)</div>
-                <div class="gothic-card">
-                    <strong>🩺 皮膚科 (第二層重量)</strong>
-                    <p>國中急性汗皰疹演到了高中變為慢性乾癬。看了近 10 間西醫、中醫與大醫院，吃了各式藥物與類固醇。後因病情未好轉遭台大診所醫生直接放棄治療，直接中斷配藥導致戒斷副作用，身材走樣並對醫療體系感到失望，對自我的感覺也越發厭惡。</p>
+
+                <span class="stage-header">
+                    STAGE 2 ｜ 國一 ~ 高中
+                </span>
+
+                <div class="gothic-card-sub">
+                    🦷 牙醫矯正 (持續進行)
                 </div>
+
+                <div class="gothic-card">
+
+                    <strong>🩺 皮膚科 (第二層重量)</strong>
+
+                    <p>
+                        國中急性汗皰疹演到了高中變為慢性乾癬。
+                        看了近 10 間西醫、中醫與大醫院，
+                        吃了各式藥物與類固醇。
+                        後因病情未好轉遭台大診所醫生直接放棄治療，
+                        直接中斷配藥導致戒斷副作用，
+                        身材走樣並對醫療體系感到失望，
+                        對自我的感覺也越發厭惡。
+                    </p>
+
+                </div>
+
             </div>
+
 
             <!-- STAGE 3 -->
             <div class="timeline-stage stage-3">
-                <span class="stage-header">STAGE 3 ｜ 大三轉折點 (身心重壓)</span>
-                <div class="gothic-card-sub">🩺 皮膚科 (慢性乾癬抗爭中)</div>
+
+                <span class="stage-header">
+                    STAGE 3 ｜ 大三轉折點 (身心重壓)
+                </span>
+
+                <div class="gothic-card-sub">
+                    🩺 皮膚科 (慢性乾癬抗爭中)
+                </div>
+
                 <div class="gothic-card card-alert">
+
                     <strong>🧠 心理諮商 (第三層重量)</strong>
-                    <p>由心理系老師帶至學輔中心開啟諮商。歷經 6 位晤談師，唯有第二位「小佑老師」獲得我真正的信任，為我唯一認可的心理師。</p>
+
+                    <p>
+                        由心理系老師帶至學輔中心開啟諮商。
+                        歷經 6 位晤談師，唯有第二位「小佑老師」
+                        獲得我真正的信任，為我唯一認可的心理師。
+                    </p>
+
                 </div>
+
                 <div class="gothic-card card-alert">
+
                     <strong>💊 精神科 (第四層重量)</strong>
-                    <p>被學輔中心轉介至菜寮精神科認識譚醫師，他知道我對於花錢有罪惡感，因此不勉強我每周看診。診斷為「復發性憂鬱症」（又稱重鬱症，不穩定、鬱期發生時嚴重性極端）。藥量從最初每日 4 顆，一路攀升至每日將近 10 顆。</p>
+
+                    <p>
+                        被學輔中心轉介至菜寮精神科認識譚醫師，
+                        他知道我對於花錢有罪惡感，因此不勉強我每周看診。
+                        診斷為「復發性憂鬱症」
+                        （又稱重鬱症，不穩定、鬱期發生時嚴重性極端）。
+                        藥量從最初每日 4 顆，一路攀升至每日將近 10 顆。
+                    </p>
+
                 </div>
+
             </div>
+
 
             <!-- PRESENT -->
             <div class="timeline-stage stage-present">
-                <span class="stage-header">PRESENT ｜ 現在 (極限承載狀態)</span>
+
+                <span class="stage-header">
+                    PRESENT ｜ 現在 (極限承載狀態)
+                </span>
+
                 <div class="gothic-card">
-                    <div class="gothic-card-sub" style="margin-top:0; margin-bottom:12px;">
-                        🤝 心理諮商 (小佑老師陪伴中) / 💊 精神科 (每日約 10 顆藥)
+
+                    <div class="gothic-card-sub"
+                         style="margin-top:0; margin-bottom:12px;">
+                        🤝 心理諮商 (小佑老師陪伴中) /
+                        💊 精神科 (每日約 10 顆藥)
                     </div>
-                    <div class="gothic-card card-alert" style="margin-top:0; margin-bottom:12px;">
+
+                    <div class="gothic-card card-alert"
+                         style="margin-top:0; margin-bottom:12px;">
+
                         <strong>🛡️ 自體免疫系統失調</strong>
-                        <p>右腳乾癬、乳房發膿，免疫系統持續自我攻擊。每日需額外服用6 顆類固醇 + 1 顆胃藥。</p>
+
+                        <p>
+                            右腳乾癬、乳房發膿，免疫系統持續自我攻擊。
+                            每日需額外服用6 顆類固醇 + 1 顆胃藥。
+                        </p>
+
                     </div>
-                    <div class="gothic-card card-warning" style="margin-top:0;">
+
+                    <div class="gothic-card card-warning"
+                         style="margin-top:0;">
+
                         <strong>⚡ 自律神經失調</strong>
-                        <p>交感與副交感神經活性皆低下，對外界刺激幾乎無反應。長期極限壓力導致，以至於交感副交感神經失去彈性和動力，因此雙雙低落，失去功能。</p>
+
+                        <p>
+                            交感與副交感神經活性皆低下，
+                            對外界刺激幾乎無反應。
+                            長期極限壓力導致，以至於交感副交感神經失去彈性和動力，
+                            因此雙雙低落，失去功能。
+                        </p>
+
                     </div>
+
                     <div class="card-summary">
                         📊 每日藥物總承載量：將近 17 顆藥物
                     </div>
+
                 </div>
+
             </div>
+
         </div>
 
     </div>
+
 </div>
 
+
 <script>
+
 /* ===== 圖片輪播 ===== */
+
 const images = [
-    "img/rip1.jpg", "img/rip2.jpg", "img/rip3.jpg",
-    "img/rip4.jpg", "img/rip6.jpg", "img/rip8.jpg",
-    "img/rip9.jpg", "img/rip5.jpg", "img/rip7.jpg"
+    "img/rip1.jpg",
+    "img/rip2.jpg",
+    "img/rip3.jpg",
+    "img/rip4.jpg",
+    "img/rip6.jpg",
+    "img/rip8.jpg",
+    "img/rip9.jpg",
+    "img/rip5.jpg",
+    "img/rip7.jpg"
 ];
 
 let currentIndex = 0;
-const characterImage = document.getElementById("character-image");
-const counter = document.getElementById("image-counter");
 
-function showImage(index){
+const characterImage =
+    document.getElementById("character-image");
+
+const counter =
+    document.getElementById("image-counter");
+
+
+function showImage(index) {
+
     currentIndex = index;
-    characterImage.src = images[currentIndex];
-    counter.textContent = (currentIndex + 1) + " / " + images.length;
+
+    characterImage.src =
+        images[currentIndex];
+
+    counter.textContent =
+        (currentIndex + 1) + " / " + images.length;
 }
 
-document.getElementById("prev").addEventListener("click", function(){
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    showImage(currentIndex);
-});
 
-document.getElementById("next").addEventListener("click", function(){
-    currentIndex = (currentIndex + 1) % images.length;
-    showImage(currentIndex);
-});
+document.getElementById("prev")
+    .addEventListener("click", function() {
+
+        currentIndex =
+            (currentIndex - 1 + images.length)
+            % images.length;
+
+        showImage(currentIndex);
+    });
+
+
+document.getElementById("next")
+    .addEventListener("click", function() {
+
+        currentIndex =
+            (currentIndex + 1)
+            % images.length;
+
+        showImage(currentIndex);
+    });
+
 
 /* ===== 背景音樂控制 ===== */
-const bgm = document.getElementById("bgm");
-const musicButton = document.getElementById("music-toggle");
 
-function startMusic(){
-    bgm.play().then(() => {
-        musicButton.textContent = "♫ ON";
-    }).catch(() => {
-        musicButton.textContent = "♫ OFF";
-    });
+const bgm =
+    document.getElementById("bgm");
+
+const musicButton =
+    document.getElementById("music-toggle");
+
+
+function startMusic() {
+
+    bgm.play()
+        .then(() => {
+
+            musicButton.textContent =
+                "♫ ON";
+
+        })
+        .catch(() => {
+
+            musicButton.textContent =
+                "♫ OFF";
+
+        });
 }
+
 
 startMusic();
 
-musicButton.addEventListener("click", function(){
-    if(bgm.paused){
-        bgm.play().then(() => { musicButton.textContent = "♫ ON"; });
-    } else {
-        bgm.pause();
-        musicButton.textContent = "♫ OFF";
+
+musicButton.addEventListener(
+    "click",
+    function() {
+
+        if (bgm.paused) {
+
+            bgm.play()
+                .then(() => {
+
+                    musicButton.textContent =
+                        "♫ ON";
+
+                });
+
+        } else {
+
+            bgm.pause();
+
+            musicButton.textContent =
+                "♫ OFF";
+        }
+
     }
-});
+);
+
 </script>
 
 </body>
