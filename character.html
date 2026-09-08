@@ -38,7 +38,7 @@ body {
     justify-content: center;
     min-height: 100vh;
     padding: 40px;
-    gap: 30px;
+    gap: 35px;
 }
 
 /* ===== 左：圖片區 ===== */
@@ -111,7 +111,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     color: #666675;
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 2px;
     background: rgba(8, 8, 12, 0.7);
     border: 1px solid #22222d;
@@ -120,54 +120,55 @@ body {
 
 /* ===== 右：資訊區 ===== */
 .char-info {
-    flex: 0 1 600px;
-    max-width: 600px;
+    flex: 0 1 640px;
+    max-width: 640px;
     padding-top: 20px;
 }
 
 .char-name {
-    font-size: 36px;
+    font-size: 38px;
     font-weight: 700;
     letter-spacing: 2px;
     color: #ececef;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     text-shadow: 0 2px 10px rgba(0,0,0,0.7);
 }
 
 .char-sub {
-    color: #888898;
-    margin-bottom: 30px;
-    line-height: 1.8;
-    font-size: 15px;
+    color: #9898a8;
+    margin-bottom: 35px;
+    line-height: 1.85;
+    font-size: 16px;
 }
 
 .char-block {
-    margin-bottom: 32px;
+    margin-bottom: 36px;
 }
 
 /* 哥德風格小標籤 */
 .char-title {
     display: inline-block;
-    color: #d0d0d8;
-    font-size: 14px;
+    color: #e0e0e8;
+    font-size: 16px;
+    font-weight: 600;
     letter-spacing: 3px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid #2a2a36;
-    border-left: 3px solid #666678;
-    padding: 6px 14px;
-    margin-bottom: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid #2e2e3d;
+    border-left: 4px solid #777788;
+    padding: 7px 16px;
+    margin-bottom: 16px;
     text-transform: uppercase;
 }
 
 /* 穿插圖片 */
 .info-image {
     display: block;
-    width: 80%;
-    max-width: 440px;
+    width: 85%;
+    max-width: 480px;
     height: auto;
-    margin: 35px auto;
+    margin: 40px auto;
     border: 1px solid #22222d;
-    opacity: 0.85;
+    opacity: 0.88;
     box-shadow: 0 5px 15px rgba(0,0,0,0.6);
     transition: opacity 0.3s;
 }
@@ -181,14 +182,14 @@ body {
     position: fixed;
     top: 20px;
     left: 20px;
-    color: #777788;
+    color: #888899;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 1px;
     z-index: 1000;
     transition: 0.3s;
 }
-.back:hover { color: #d0d0d8; }
+.back:hover { color: #e0e0e8; }
 
 #music-toggle {
     position: fixed;
@@ -196,74 +197,77 @@ body {
     right: 20px;
     background: #0d0d12;
     border: 1px solid #333342;
-    color: #777788;
-    padding: 6px 12px;
+    color: #888899;
+    padding: 7px 14px;
     font-family: inherit;
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: 1px;
     cursor: pointer;
     transition: 0.3s;
     z-index: 1000;
 }
 #music-toggle:hover {
-    color: #d0d0d8;
+    color: #e0e0e8;
     border-color: #555568;
 }
 
 /* ==================================================
-   哥德暗黑卡片模組 (通用組件)
+   哥德暗黑卡片模組 (電腦版字級調大優化)
 ================================================== */
 .gothic-card {
     background: #12121a;
-    border: 1px solid #20202c;
-    padding: 14px 18px;
-    border-radius: 3px;
-    margin-top: 10px;
+    border: 1px solid #222230;
+    padding: 18px 22px;
+    border-radius: 4px;
+    margin-top: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.35);
 }
 
+/* 卡片內標題：介於 char-name (38px) 與原本小字之間 */
 .gothic-card strong {
-    color: #d8d8e2;
-    font-size: 0.98em;
+    color: #ececef;
+    font-size: 20px;
+    font-weight: 600;
     display: block;
-    margin-bottom: 6px;
-    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    letter-spacing: 0.6px;
 }
 
+/* 卡片內文：大幅放大至 17.5px，極為清晰易讀 */
 .gothic-card p {
-    font-size: 0.95em;
+    font-size: 17.5px;
     margin: 0;
-    color: #a5a5b8;
+    color: #b8b8cb;
     line-height: 1.85;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.4px;
 }
 
-/* 歷史舊地層 (更深沉) */
+/* 歷史舊地層 */
 .gothic-card-sub {
     background: #0e0e14;
-    border: 1px solid #1a1a24;
-    padding: 8px 12px;
-    border-radius: 2px;
-    font-size: 0.85em;
-    color: #666678;
-    margin-top: 6px;
+    border: 1px solid #1c1c28;
+    padding: 10px 14px;
+    border-radius: 3px;
+    font-size: 15px;
+    color: #777788;
+    margin-top: 8px;
 }
 
 /* 警示與主題卡片變體 */
 .card-alert {
-    border-left: 3px solid #783838;
+    border-left: 4px solid #883838;
     background: #161012;
 }
-.card-alert strong { color: #e09090; }
+.card-alert strong { color: #f0a0a0; }
 
 .card-warning {
-    border-left: 3px solid #4a5868;
+    border-left: 4px solid #4a5868;
     background: #10141a;
 }
-.card-warning strong { color: #a0b0c0; }
+.card-warning strong { color: #b0c0d0; }
 
 .card-accent {
-    border-left: 3px solid #5a5a78;
+    border-left: 4px solid #6a6a88;
     background: #13131e;
 }
 
@@ -272,60 +276,62 @@ body {
 ================================================== */
 .gothic-timeline {
     width: 100%;
-    margin: 40px 0;
+    margin: 45px 0;
     box-sizing: border-box;
 }
 
 .gothic-timeline-title {
     text-align: left;
-    color: #d0d0d8;
-    font-size: 16px;
+    color: #e0e0e8;
+    font-size: 18px;
+    font-weight: 600;
     letter-spacing: 3px;
-    margin-bottom: 25px;
-    padding-bottom: 10px;
+    margin-bottom: 28px;
+    padding-bottom: 12px;
     border-bottom: 1px solid #22222d;
 }
 
 .timeline-stage {
-    margin-bottom: 22px;
+    margin-bottom: 26px;
     border-left: 2px solid #2a2a36;
-    padding-left: 16px;
+    padding-left: 18px;
     position: relative;
 }
 
 .stage-header {
-    font-size: 0.82em;
-    color: #777788;
+    font-size: 14px;
+    color: #888898;
     font-weight: bold;
     letter-spacing: 2px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     display: block;
 }
 
-.stage-3 { border-left-color: #6e2d2d; }
-.stage-3 .stage-header { color: #a84848; }
+.stage-3 { border-left-color: #8e3d3d; }
+.stage-3 .stage-header { color: #c85858; }
 
-.stage-present { border-left-color: #4a4a58; }
-.stage-present .stage-header { color: #888898; }
+.stage-present { border-left-color: #5a5a68; }
+.stage-present .stage-header { color: #9898a8; }
 
 .card-summary {
-    margin-top: 12px;
+    margin-top: 14px;
     text-align: center;
     background: #181822;
     border: 1px solid #2e2e3e;
-    color: #b0b0c2;
-    padding: 12px;
-    font-size: 0.9em;
+    color: #c0c0d2;
+    padding: 14px;
+    font-size: 16.5px;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
 /* ==================================================
-   📱 手機版 (RWD) 電子書讀取體驗調校
+   📱 手機版 (RWD) 電子書大字清晰排版調校
 ================================================== */
 @media (max-width: 768px) {
     .character {
         flex-direction: column;
-        padding: 65px 18px 40px;
+        padding: 65px 16px 40px;
         gap: 25px;
     }
 
@@ -334,7 +340,7 @@ body {
         flex: none;
         width: 100%;
         height: 50vh;
-        min-height: 300px;
+        min-height: 320px;
     }
 
     .char-info {
@@ -343,43 +349,51 @@ body {
         padding-top: 0;
     }
 
-    /* 手機放大標題與導言 */
+    /* 手機大標題與導言放大 */
     .char-name {
-        font-size: 28px;
+        font-size: 30px;
     }
 
     .char-sub {
-        font-size: 15.5px;
+        font-size: 17px;
         line-height: 1.85;
     }
 
     .char-title {
-        font-size: 14px;
-        padding: 6px 14px;
-        margin-bottom: 12px;
+        font-size: 16px;
+        padding: 7px 16px;
+        margin-bottom: 14px;
     }
 
-    /* 放大卡片內容，打造舒適電子書排版 */
+    /* 手機端字級再次放大，完美電子書等級閱讀感 */
     .gothic-card {
-        padding: 16px 18px;
-        margin-top: 12px;
+        padding: 18px 20px;
+        margin-top: 14px;
     }
 
     .gothic-card strong {
-        font-size: 1.05em;
-        margin-bottom: 8px;
+        font-size: 20px;
+        margin-bottom: 10px;
     }
 
     .gothic-card p {
-        font-size: 16.5px; /* 電子書等級的清晰字級 */
-        line-height: 1.85;  /* 寬鬆易讀的行高 */
-        letter-spacing: 0.4px;
-        color: #b8b8c8;
+        font-size: 19px;        /* 超清晰放大的電子書字級 */
+        line-height: 1.95;       /* 寬鬆極致舒服的行高 */
+        letter-spacing: 0.5px;
+        color: #cccccc;
+    }
+
+    .gothic-card-sub {
+        font-size: 16px;
+    }
+
+    .stage-header {
+        font-size: 15px;
     }
 
     .info-image { 
         width: 100%; 
-        margin: 28px auto;
+        margin: 32px auto;
     }
 }
 
@@ -418,7 +432,7 @@ body {
             從未出現的筆名：藍遴掩。
         </div>
 
-        <!-- 基本資料 (改為模組化卡片) -->
+        <!-- 基本資料 -->
         <div class="char-block">
             <div class="char-title">基本資料</div>
             
@@ -541,7 +555,7 @@ body {
                 </div>
             </div>
 
-            <!-- STAGE 3 (身心轉折) -->
+            <!-- STAGE 3 -->
             <div class="timeline-stage stage-3">
                 <span class="stage-header">STAGE 3 ｜ 大三轉折點 (身心重壓)</span>
                 <div class="gothic-card-sub">🩺 皮膚科 (慢性乾癬抗爭中)</div>
