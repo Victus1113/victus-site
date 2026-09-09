@@ -237,14 +237,19 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.35);
 }
 
-/* 卡片內標題/副標籤 (全統一粗體) */
+/* 卡片內實體標籤 (全統一粗體，增加明顯背景與邊框) */
 .gothic-card strong {
-    color: #d8d8e2;
-    font-size: 26px;
-    font-weight: 700; /* 粗體 */
-    display: block;
-    margin-bottom: 12px;
-    letter-spacing: 0.8px;
+    color: #e2e2ec;
+    font-size: 24px;
+    font-weight: 700;
+    display: inline-block; /* 變成區塊標籤 */
+    background: #1a1a24;   /* 明顯的內文標籤背景色 */
+    padding: 6px 14px;
+    border-left: 4px solid #5a5a68; /* 標籤左側點綴線 */
+    border-radius: 3px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.4); /* 增加浮現感 */
 }
 
 /* 卡片內文 */
@@ -256,42 +261,48 @@ body {
     letter-spacing: 0.6px;
 }
 
-/* 歷史舊地層標籤 (統一粗體) */
+/* 歷史舊地層標籤 (統一粗體，稍微提亮背景) */
 .gothic-card-sub {
-    background: #0e0e14;
-    border: 1px solid #1c1c28;
+    background: #161622; /* 提亮一點點 */
+    border: 1px solid #2c2c3e; /* 邊框加強 */
     padding: 12px 16px;
     border-radius: 3px;
     font-size: 20px;
-    font-weight: 700; /* 粗體 */
-    color: #88889a;
+    font-weight: 700;
+    color: #9a9ab0;
     margin-top: 10px;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
 }
 
-/* 警示與主題卡片變體 */
+/* 警示與主題卡片變體 (連動裡面的標籤顏色) */
 .card-alert {
     border-left: 4px solid #883838;
     background: #161012;
 }
-
 .card-alert strong {
     color: #f0a0a0;
-    font-weight: 700; /* 粗體 */
+    background: #221515;
+    border-left-color: #883838;
 }
 
 .card-warning {
     border-left: 4px solid #4a5868;
     background: #10141a;
 }
-
 .card-warning strong {
     color: #b0c0d0;
-    font-weight: 700; /* 粗體 */
+    background: #181d24;
+    border-left-color: #4a5868;
 }
 
 .card-accent {
     border-left: 4px solid #6a6a88;
     background: #13131e;
+}
+.card-accent strong {
+    color: #d8d8e2;
+    background: #1a1a26;
+    border-left-color: #6a6a88;
 }
 
 /* ==================================================
@@ -670,7 +681,7 @@ body {
                 <p>
                     《The Black Parade》(MCR/我的另類羅曼史)、
                     《醜奴兒》&《瓦合》(草東沒有派對)、
-                    《O My Heart》（Mother Mother/幻音之母)
+                    《O My Heart》（Mother Mother/幻魅韻母)
                 </p>
             </div>
 
@@ -845,6 +856,53 @@ body {
 
         </div>
 
+
+   <!-- =========================
+             內在審判者
+        ========================== -->
+        <div class="char-block">
+
+            <div class="char-title">
+                三頭檢察官
+            </div>
+
+            <!-- 第一顆頭：強烈的壓迫與傷害 (紅色警戒) -->
+            <div class="gothic-card card-alert">
+                <strong>根深柢固：我爸</strong>
+                <p>
+                    他永遠是皺著眉頭，非常嚴苛的表情。<br>
+                    家有三個小孩，但幾乎只有我跟祐祐會被打，可能是用不求人或是衣架，水電的灰硬塑膠水管之類的。我具體忘記自己是做了什麼被打，但基本上都跟讀書有關。<br>
+                    九九乘法沒背好？打；暑假作業沒寫完？打；考試差8、90幾分？打。大姐幾乎不會被打，畢竟她是資優生，拿第一名基本上都不用太意外。<br>
+                    上了國中，爸爸才沒再打了；但是我們做事，爸爸永遠只會看到沒做好的地方（大姐基本上不做家事）。<br>
+                    「我們今天有掃地！」「怎麼沒拖地？」<br>
+                    「我洗好碗了！」「水槽怎麼沒擦？」<br>
+                    就算我大學有拿書卷獎，我說：「爸，你看！」「這次怎麼是第二，上次不是第一嗎？為什麼退步？」<br>
+                    我給我爸看過我的自傳，小佑老師問：「您看過格格大學的經歷，您應該覺得很不錯吧？」他很勉為其難的說「唔……是…還可以啦…」
+                </p>
+            </div>
+
+            <!-- 第二顆頭：冷漠與不公 (灰藍警告) -->
+            <div class="gothic-card card-warning">
+                <strong>陰魂不散：高二的班導</strong>
+                <p>
+                    永遠擺著一副不屑和嫌棄的表情。我跟另一個男同學被同一群人霸凌，她說我「開不起玩笑」、「想太多」、「一定做了什麼，不然為什麼欺負你」；而我在一旁哭，她跟同事聊天時知道了某個男同學也被他們欺負，她說：「真是可惡，那個同學怎麼這麼委屈，他是那麼的優秀…」
+                </p>
+            </div>
+
+            <!-- 第三顆頭：內耗與自我定罪 (深紫點綴) -->
+            <div class="gothic-card card-accent">
+                <strong>自我定罪：蔡瑀格</strong>
+                <p>
+                    她從不說話；但是，她的表情一直都很無奈，也無精打采的。她不會幫我講話，她的作用是什麼？就是負責記前面兩顆頭說過的話，然後反覆拿出來提醒我。
+                </p>
+            </div>
+
+        </div>
+
+             <img class="info-image"
+             src="img/pro3.jpg"
+             alt="角色插圖">
+        
     </div>
 
 </div>
