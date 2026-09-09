@@ -237,26 +237,30 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.35);
 }
 
-/* 卡片內實體標籤 (全統一粗體，增加明顯背景與邊框) */
+/* 卡片內實體標籤 (全統一粗體，增加明顯背景與邊框，讓標籤更明顯跳脫) */
 .gothic-card strong {
     color: #e2e2ec;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
-    display: inline-block; /* 變成區塊標籤 */
-    background: #1a1a24;   /* 明顯的內文標籤背景色 */
-    padding: 6px 14px;
-    border-left: 4px solid #5a5a68; /* 標籤左側點綴線 */
-    border-radius: 3px;
-    margin-bottom: 16px;
-    letter-spacing: 1px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.4); /* 增加浮現感 */
+    display: inline-block; 
+    
+    background: #2c2c3a; /* 🌟 背景稍微提亮，帶一點點優雅的灰紫調 */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* 🌟 增加淡淡的全包圍邊框 */
+    border-left: 5px solid #8a8a9f; /* 🌟 左側點綴線加粗並提亮 */
+    
+    padding: 8px 18px; /* 🌟 稍微撐大標籤的內距 */
+    border-radius: 4px;
+    margin-bottom: 18px;
+    letter-spacing: 2px;
+    
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* 🌟 加深陰影，讓標籤有浮出卡片的立體感 */
 }
 
 /* 卡片內文 */
 .gothic-card p {
     font-size: 22px;
     margin: 0;
-    color: #D6D6DC;
+    color: #ffffff; /* 🌟 字體改為純白，提高對比度 */
     line-height: 1.9;
     letter-spacing: 0.6px;
 }
