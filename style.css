@@ -240,8 +240,11 @@ h1{
 }
 
 nav a{
-    font-size:18px;
-    margin-bottom:12px;
+        font-size: 22px; /* 🌟 字體放大 (原本是18px) */
+        margin-bottom: 16px; /* 🌟 增加按鈕之間的上下距離 */
+        padding: 6px 0; /* 🌟 增加隱形的點擊範圍，讓手指更好按 */
+        letter-spacing: 2px; /* 字距稍微拉開，更好閱讀 */
+    }
 }
 
 }
