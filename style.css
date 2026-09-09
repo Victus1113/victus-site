@@ -16,6 +16,104 @@ body{
     line-height:2;
 }
 
+/* =========================
+   全站固定導航
+========================= */
+
+.site-nav{
+    position:fixed;
+    left:24px;
+    top:50%;
+    transform:translateY(-50%);
+
+    display:flex;
+    flex-direction:column;
+
+    gap:14px;
+
+    z-index:9000;
+}
+
+.site-nav a{
+    position:relative;
+
+    color:#aaa7b8;
+    text-decoration:none;
+
+    font-size:15px;
+    letter-spacing:1px;
+
+    padding:4px 0;
+
+    transition:0.3s;
+}
+
+.site-nav a::after{
+    content:"";
+
+    position:absolute;
+    left:0;
+    bottom:0;
+
+    width:0;
+    height:1px;
+
+    background:#d0cdd8;
+
+    transition:width 0.3s;
+}
+
+.site-nav a:hover{
+    color:#eeeef2;
+    text-shadow:0 0 8px rgba(255,255,255,0.25);
+}
+
+.site-nav a:hover::after{
+    width:100%;
+}
+
+
+/* =========================
+   手機版導航
+========================= */
+
+@media (max-width:768px){
+
+    .site-nav{
+        position:fixed;
+
+        top:12px;
+        left:50%;
+
+        transform:translateX(-50%);
+
+        width:calc(100% - 24px);
+
+        flex-direction:row;
+        justify-content:center;
+
+        gap:18px;
+
+        padding:8px 10px;
+
+        background:rgba(20,18,27,0.88);
+        border:1px solid rgba(255,255,255,0.08);
+
+        backdrop-filter:blur(8px);
+
+        overflow-x:auto;
+
+        white-space:nowrap;
+
+        -webkit-overflow-scrolling:touch;
+    }
+
+    .site-nav a{
+        font-size:14px;
+        flex-shrink:0;
+    }
+
+}
 
 /* =========================
    首頁版面
@@ -245,7 +343,6 @@ nav a{
         padding: 6px 0; /* 🌟 增加隱形的點擊範圍，讓手指更好按 */
         letter-spacing: 2px; /* 字距稍微拉開，更好閱讀 */
     }
-}
 
 }
 
@@ -254,28 +351,41 @@ nav a{
    插圖畫廊
 ========================= */
 
+/* =========================
+   Instagram 風格插圖畫廊
+========================= */
+
 .gallery{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
+    grid-template-columns:repeat(3, 1fr);
+    gap:8px;
     margin-top:30px;
 }
 
 .gallery img{
     width:100%;
-    height:auto;
+    aspect-ratio:1 / 1;
+    object-fit:cover;
 
-    border-radius:6px;
-    border:1px solid #555;
+    border-radius:2px;
+    border:1px solid #333;
 
-    transition:0.3s;
+    display:block;
     cursor:pointer;
 
-    box-shadow:0 0 15px rgba(0,0,0,0.4);
+    transition:0.25s;
+    box-shadow:none;
 
-    -webkit-tap-highlight-color: rgba(255,255,255,0.08);
+    -webkit-tap-highlight-color:rgba(255,255,255,0.08);
 }
 
+/* 桌機 hover */
+@media (hover:hover){
+    .gallery img:hover{
+        opacity:0.78;
+        transform:none;
+    }
+}
 /* 防拖曳 */
 .gallery img,
 #viewer img{
@@ -349,13 +459,18 @@ nav a{
 
 @media (max-width:768px){
 
-.gallery{
-    grid-template-columns:1fr;
-    gap:20px;
-}
+    .gallery{
+        grid-template-columns:repeat(3, 1fr);
+        gap:4px;
+        margin-top:24px;
+    }
 
-.gallery img{
-    width:100%;
+    .gallery img{
+        width:100%;
+        aspect-ratio:1 / 1;
+        object-fit:cover;
+    }
+
 }
 
 .back{
@@ -364,6 +479,7 @@ nav a{
 }
 
 }
+
 
 
 /* =========================
