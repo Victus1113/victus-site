@@ -81,6 +81,17 @@
     color:#ccc;
 }
 
+/* ===== 圖片名稱／註解 ===== */
+#caption{
+    position:absolute;
+    bottom:20px;
+    left:5vw;
+    color:#ccc;
+    font-size:14px;
+    letter-spacing:0.5px;
+    z-index:10;
+}
+
 /* ===== 手機優化 ===== */
 @media (max-width:768px){
 
@@ -131,39 +142,39 @@
 
 <h2>電繪</h2>
 <div class="gallery">
-    <img src="img/members.jpg">
-    <img src="img/OC1維特.jpg">
-    <img src="img/OC2大叔.jpg">
-    <img src="img/seenothing.jpg">
-    <img src="img/Unknown.jpg">
-    <img src="img/sh.jpg">
+    <img src="img/members.jpg" data-caption="少年維特的日常－成員陣容">
+    <img src="img/OC1維特.jpg" data-caption="維特">
+    <img src="img/OC2大叔.jpg" data-caption="大叔">
+    <img src="img/seenothing.jpg" data-caption="視而不見">
+    <img src="img/Unknown.jpg" data-caption="未知•未來">
+    <img src="img/sh.jpg" data-caption="沒什麼特別的">
 </div>
 
 <h2>手繪</h2>
 <div class="gallery">
-    <img src="img/sexy.jpg">
-    <img src="img/busted.jpg">
-    <img src="img/happiness.jpg">
-    <img src="img/justtord.jpg">
-    <img src="img/ohno.jpg">
-    <img src="img/tadc1.jpg">
-    <img src="img/tadc2.jpg">
-    <img src="img/knight.jpg">
-    <img src="img/waterbeauty.jpg">
-    <img src="img/comeback.jpg">
-    <img src="img/guilty.jpg">
-    <img src="img/hangman.jpg">
-    <img src="img/ai.jpg">
-    <img src="img/rip1.jpg">
+    <img src="img/sexy.jpg" data-caption="淋浴完的迪爾">
+    <img src="img/busted.jpg" data-caption="被抓包的迪爾">
+    <img src="img/happiness.jpg" data-caption="所剩不多的幸福">
+    <img src="img/justtord.jpg" data-caption="Tord">
+    <img src="img/ohno.jpg" data-caption="東京真中ドゥーマーfeat.重音テト">
+    <img src="img/tadc1.jpg" data-caption="tadc1－遐想">
+    <img src="img/tadc2.jpg" data-caption="tadc2－抽象化">
+    <img src="img/knight.jpg" data-caption="勇者動畫系列ー首席勇者">
+    <img src="img/waterbeauty.jpg" data-caption="勇者動畫系列ー水妖">
+    <img src="img/comeback.jpg" data-caption="背影">
+    <img src="img/guilty.jpg" data-caption="拉扯">
+    <img src="img/hangman.jpg" data-caption="日常狀態">
+    <img src="img/ai.jpg" data-caption="脫節">
+    <img src="img/rip1.jpg" data-caption="自畫像">
 </div>
 
 <h2>漫畫</h2>
 <div class="gallery">
-    <img src="img/humor.jpg">
-    <img src="img/s3x.jpg">
-    <img src="img/cure.jpg">
-    <img src="img/speachless.jpg">
-    <img src="img/talk.jpg">
+    <img src="img/humor.jpg" data-caption="袖手">
+    <img src="img/s3x.jpg" data-caption="捉愛">
+    <img src="img/cure.jpg" data-caption="解方">
+    <img src="img/speachless.jpg" data-caption="無言以對">
+    <img src="img/talk.jpg" data-caption="對話">
 </div>
 
 <a class="back" href="index.html">← 回到首頁</a>
@@ -181,6 +192,7 @@
 
     <div id="next">›</div>
 
+    <div id="caption"></div>
     <div id="counter">1 / 1</div>
 
 </div>
@@ -193,6 +205,7 @@ const prev = document.getElementById("prev");
 const next = document.getElementById("next");
 const closeBtn = document.getElementById("close");
 const counter = document.getElementById("counter");
+const caption = document.getElementById("caption");
 
 const galleries = document.querySelectorAll(".gallery");
 
@@ -298,6 +311,7 @@ function showImage(){
     });
 
     counter.innerText = (currentIndex+1)+" / "+currentGallery.length;
+    caption.innerText = currentGallery[currentIndex].dataset.caption || "";
 }
 
 /* ===== 關閉手機的圖片 ===== */
