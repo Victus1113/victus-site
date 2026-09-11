@@ -29,7 +29,7 @@
 
 </div>
 
-<!-- ① 臨記 Nobody Icon (下巴與下顎線強化版) -->
+<!-- ① 臨記 Nobody Icon (自然剪影 + 十字架圓環版) -->
 <div style="display: flex; justify-content: center; align-items: center; padding: 40px;">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="180" height="180">
     <defs>
@@ -43,34 +43,48 @@
       </filter>
     </defs>
 
-    <!-- 外圍虛線光環 (象徵殘缺的邊界) -->
-    <circle cx="50" cy="50" r="42" fill="none" stroke="#483a58" stroke-width="1.2" stroke-dasharray="3 5" />
-    <circle cx="50" cy="50" r="38" fill="none" stroke="#241a2e" stroke-width="0.5" />
+    <g filter="url(#gothic-glow)">
+      <!-- 外部破碎圓環 -->
+      <circle cx="50" cy="50" r="42" fill="none" stroke="#483a58" stroke-width="1.2" stroke-dasharray="25 6 12 4 40 8 15 5" />
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#241a2e" stroke-width="0.5" />
 
-    <!-- 側臉輪廓 (強化下巴與頸部線條) -->
-    <path d="M 52,18 
-             C 38,18 36,28 36,36 
-             C 36,41 39,42 32,47 
-             C 35,50 36,51 34,53 
-             C 36,54 37,56 33,59 
-             C 38,62 42,62 43,67 
-             C 44,73 45,79 46,85" 
-          fill="none" stroke="#d6cae8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="url(#gothic-glow)" />
+      <!-- 四方十字架 (上、下、左、右) -->
+      <!-- 上 -->
+      <path d="M 50,2 L 50,16 M 46,7 L 54,7" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
+      <!-- 下 -->
+      <path d="M 50,84 L 50,98 M 46,89 L 54,89" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
+      <!-- 左 -->
+      <path d="M 8,43 L 8,57 M 4,48 L 12,48" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
+      <!-- 右 -->
+      <path d="M 92,43 L 92,57 M 88,48 L 96,48" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
 
-    <!-- 側邊下顎骨緣線 (增加立體感與清冷感) -->
-    <path d="M 43,67 C 46,64 47,58 46,53" fill="none" stroke="#85759c" stroke-width="1.2" stroke-linecap="round" filter="url(#gothic-glow)" />
+      <!-- 自然真實的側臉輪廓 (參考剪影圖重塑) -->
+      <path d="M 52,15 
+               C 40,16 35,26 36,35 
+               C 36,38 38,39 38,40 
+               C 36,41 33,43 33,46 
+               C 34,48 37,48 37,48 
+               C 36,49 35,50 35,51 
+               C 36,52 37,52 37,52 
+               C 35,53 35,55 36,56 
+               C 38,57 39,58 39,60 
+               C 37,62 38,65 41,66 
+               C 45,68 45,74 46,82" 
+            fill="none" stroke="#d6cae8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
 
-    <!-- 穿透身體的主斜線 (象徵經歷的創傷與痕跡) -->
-    <line x1="25" y1="75" x2="75" y2="25" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" filter="url(#gothic-glow)"/>
-    <!-- 輔助細斜線 (增加層次感) -->
-    <line x1="30" y1="78" x2="72" y2="36" stroke="#85759c" stroke-width="0.6" stroke-linecap="round" />
+      <!-- 貫穿的斜線 (主線與破碎副線) -->
+      <!-- 主斜線 -->
+      <line x1="18" y1="82" x2="82" y2="18" stroke="#d6cae8" stroke-width="1.8" stroke-linecap="round" />
+      <!-- 增加筆觸破壞感的輔助斜線 -->
+      <line x1="28" y1="74" x2="40" y2="62" stroke="#e0d8f0" stroke-width="2.5" stroke-linecap="round" />
+      <line x1="62" y1="40" x2="72" y2="30" stroke="#e0d8f0" stroke-width="2.5" stroke-linecap="round" />
+      <line x1="22" y1="76" x2="78" y2="20" stroke="#85759c" stroke-width="0.8" stroke-linecap="round" />
 
-    <!-- 右上角的星芒 (象徵「我存在過」的微光) -->
-    <path d="M 75 15 L 76.5 22.5 L 84 24 L 76.5 25.5 L 75 33 L 73.5 25.5 L 66 24 L 73.5 22.5 Z" fill="#e0d8f0" filter="url(#gothic-glow)" />
-    
-    <!-- 散落的星塵點綴 -->
-    <circle cx="28" cy="35" r="1.2" fill="#85759c" filter="url(#gothic-glow)" />
-    <circle cx="65" cy="70" r="0.8" fill="#85759c" filter="url(#gothic-glow)" />
+      <!-- 散落的微小星塵點綴 (保留一點空靈感) -->
+      <circle cx="30" cy="28" r="1" fill="#85759c" />
+      <circle cx="70" cy="68" r="1" fill="#85759c" />
+      <circle cx="35" cy="72" r="0.8" fill="#85759c" />
+    </g>
   </svg>
 </div>
   
