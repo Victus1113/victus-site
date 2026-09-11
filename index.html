@@ -29,11 +29,11 @@
 
 </div>
 
-<!-- ① 臨記 Nobody Icon (完美人類剪影 + 絕對保留的撕裂斜線與十字圓環) -->
+<!-- ① 臨記 Nobody Icon (精確人類剪影 + 絕對保留的撕裂斜線與十字圓環) -->
 <div style="display: flex; justify-content: center; align-items: center; padding: 40px; background-color: #1a1523; border-radius: 8px;">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="180" height="180">
     <defs>
-      <!-- 哥德風微光濾鏡 -->
+      <!-- 哥德風微光濾鏡 (這是發光的靈魂) -->
       <filter id="gothic-glow" x="-20%" y="-20%" width="140%" height="140%">
         <feGaussianBlur stdDeviation="1.5" result="blur" />
         <feMerge>
@@ -44,40 +44,34 @@
     </defs>
 
     <g filter="url(#gothic-glow)">
-      <!-- 外部破碎圓環 -->
+      <!-- 外部破碎圓環 (保留，這是殘缺的邊界) -->
       <circle cx="50" cy="50" r="42" fill="none" stroke="#483a58" stroke-width="1.2" stroke-dasharray="25 6 12 4 40 8 15 5" />
-      <circle cx="50" cy="50" r="46" fill="none" stroke="#241a2e" stroke-width="0.5" />
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#241a2e" stroke-width="0.5" stroke-dasharray="5 15" />
 
-      <!-- 四方十字架 (上、下、左、右) -->
+      <!-- 四方十字架標記 (上、下、左、右) - 保留，象徵封印與悼念 -->
       <!-- 上 -->
       <path d="M 50,2 L 50,16 M 46,7 L 54,7" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
       <!-- 下 -->
       <path d="M 50,84 L 50,98 M 46,89 L 54,89" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
-      <!-- 左 -->
-      <path d="M 8,43 L 8,57 M 4,48 L 12,48" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
-      <!-- 右 -->
-      <path d="M 92,43 L 92,57 M 88,48 L 96,48" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
+      <!-- 左 (+, 斜向) -->
+      <path d="M 10,43 L 10,57 M 6,48 L 14,48" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" transform="rotate(45 10 50)"/>
+      <!-- 右 (+, 斜向) -->
+      <path d="M 90,43 L 90,57 M 86,48 L 94,48" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" transform="rotate(45 90 50)"/>
 
       <!-- 完美的真實人類剪影 (飽滿後腦勺、清晰下顎線與頸部) -->
-      <path d="M 56 82
-               C 56 68, 70 58, 68 40
-               C 66 22, 50 15, 40 18
-               C 34 20, 32 28, 32 35
-               C 31 37, 27 41, 28 44
-               C 30 45, 30 46, 30 47
-               C 29 48, 29 49, 31 51
-               C 32 55, 35 57, 37 58
-               C 42 60, 44 68, 44 82 Z" 
-            fill="rgba(214, 202, 232, 0.25)" stroke="#d6cae8" stroke-width="1.2" stroke-linejoin="round" />
+      <path d="M 52,18 C 38,18 36,28 36,36 C 36,41 39,42 32,47 C 35,50 36,51 34,53 C 36,54 37,56 33,59 C 38,62 42,62 43,67 C 44,73 45,79 46,85 Z" fill="rgba(214, 202, 232, 0.25)" stroke="#d6cae8" stroke-width="1.2" stroke-linejoin="round" />
 
-      <!-- 使用先前的路徑繪製人頭內部的撕裂斜線 (Dasharray、發光感 - 保留) -->
-      <line x1="12" y1="88" x2="92" y2="38" stroke="#ffffff" stroke-width="1.8" stroke-dasharray="2 12 18 8 5 25 10 5" stroke-linecap="round"/>
-      <line x1="12" y1="88" x2="92" y2="38" stroke="#d6cae8" stroke-width="1.8" stroke-linecap="round"/>
-      <line x1="22" y1="76" x2="78" y2="20" stroke="#85759c" stroke-width="0.8" stroke-dasharray="3 3" />
+      <!-- 貫穿畫面的斜線 (帶有破碎、不連續的撕裂發光感 - 保留) -->
+      <!-- 底層主線 -->
+      <line x1="12" y1="88" x2="92" y2="38" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
+      <!-- 破碎高光線 (模擬斷裂感) -->
+      <line x1="12" y1="88" x2="92" y2="38" stroke="#ffffff" stroke-width="3" stroke-dasharray="2 12 18 8 5 25 10 5" stroke-linecap="round" />
+      <!-- 軌跡殘影 -->
+      <path d="M 30 76 L 38 71 M 55 61 L 65 55 M 78 47 L 85 42" stroke="#e0d8f0" stroke-width="1" stroke-dasharray="3 3" />
       
-      <!-- 散落的星塵微光 -->
-      <circle cx="32" cy="28" r="0.8" fill="#e0d8f0" />
-      <circle cx="75" cy="65" r="1" fill="#85759c" />
+      <!-- 散落的星塵微光點綴 (保留) -->
+      <circle cx="28" cy="35" r="1" fill="#85759c" />
+      <circle cx="75" cy="65" r="1.2" fill="#85759c" />
       <circle cx="38" cy="74" r="0.6" fill="#d6cae8" />
     </g>
   </svg>
