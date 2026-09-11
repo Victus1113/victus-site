@@ -29,7 +29,7 @@
 
 </div>
 
-<!-- ① 臨記 Nobody Icon (自然剪影 + 十字架圓環版) -->
+<!-- ① 臨記 Nobody Icon (完整頸部剪影 + 撕裂斜線版) -->
 <div style="display: flex; justify-content: center; align-items: center; padding: 40px;">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="180" height="180">
     <defs>
@@ -44,46 +44,46 @@
     </defs>
 
     <g filter="url(#gothic-glow)">
-      <!-- 外部破碎圓環 -->
-      <circle cx="50" cy="50" r="42" fill="none" stroke="#483a58" stroke-width="1.2" stroke-dasharray="25 6 12 4 40 8 15 5" />
-      <circle cx="50" cy="50" r="46" fill="none" stroke="#241a2e" stroke-width="0.5" />
+      <!-- 外部斑駁破碎圓環 -->
+      <circle cx="50" cy="50" r="42" fill="none" stroke="#483a58" stroke-width="1.2" stroke-dasharray="18 5 8 4 35 6 12 7" />
+      <circle cx="50" cy="50" r="42" fill="none" stroke="#85759c" stroke-width="0.5" stroke-dasharray="5 15" />
 
-      <!-- 四方十字架 (上、下、左、右) -->
-      <!-- 上 -->
-      <path d="M 50,2 L 50,16 M 46,7 L 54,7" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
-      <!-- 下 -->
-      <path d="M 50,84 L 50,98 M 46,89 L 54,89" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
-      <!-- 左 -->
-      <path d="M 8,43 L 8,57 M 4,48 L 12,48" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
-      <!-- 右 -->
-      <path d="M 92,43 L 92,57 M 88,48 L 96,48" fill="none" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
+      <!-- 頂部十字四芒星 -->
+      <path d="M 50,-1 L 51.5,7 L 60,8.5 L 51.5,10 L 50,18 L 48.5,10 L 40,8.5 L 48.5,7 Z" fill="#e0d8f0" />
+      <!-- 左側十字四芒星 -->
+      <path d="M 16,59 L 17,64 L 22,65 L 17,66 L 16,71 L 15,66 L 10,65 L 15,64 Z" fill="#d6cae8" />
+      <!-- 底部微小十字四芒星 -->
+      <path d="M 50,90 L 50.8,94 L 55,94.8 L 50.8,95.6 L 50,100 L 49.2,95.6 L 45,94.8 L 49.2,94 Z" fill="#85759c" />
 
-      <!-- 自然真實的側臉輪廓 (參考剪影圖重塑) -->
-      <path d="M 52,15 
-               C 40,16 35,26 36,35 
-               C 36,38 38,39 38,40 
-               C 36,41 33,43 33,46 
-               C 34,48 37,48 37,48 
-               C 36,49 35,50 35,51 
-               C 36,52 37,52 37,52 
-               C 35,53 35,55 36,56 
-               C 38,57 39,58 39,60 
-               C 37,62 38,65 41,66 
-               C 45,68 45,74 46,82" 
-            fill="none" stroke="#d6cae8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+      <!-- 完整的實體剪影 (清晰鼻樑、嘴唇、完整頸部與胸線) -->
+      <path d="M 50 20
+               C 42 21, 40 27, 40 33
+               C 40 35, 42 36, 42 36
+               C 40 38, 36 41, 35 44
+               C 37 45, 39 45, 39 45
+               C 38 46, 37 47, 37 47.5
+               C 38 48, 39 48, 39 48
+               C 37 49, 37 50, 38 52
+               C 40 55, 42 56, 42 58
+               C 41 63, 40 68, 37 72
+               C 35 75, 34 77, 34 79
+               C 45 83, 56 83, 65 78
+               C 62 70, 59 63, 58 57
+               C 66 45, 64 28, 50 20 Z" 
+            fill="rgba(214, 202, 232, 0.25)" stroke="#d6cae8" stroke-width="1.2" stroke-linejoin="round" />
 
-      <!-- 貫穿的斜線 (主線與破碎副線) -->
-      <!-- 主斜線 -->
-      <line x1="18" y1="82" x2="82" y2="18" stroke="#d6cae8" stroke-width="1.8" stroke-linecap="round" />
-      <!-- 增加筆觸破壞感的輔助斜線 -->
-      <line x1="28" y1="74" x2="40" y2="62" stroke="#e0d8f0" stroke-width="2.5" stroke-linecap="round" />
-      <line x1="62" y1="40" x2="72" y2="30" stroke="#e0d8f0" stroke-width="2.5" stroke-linecap="round" />
-      <line x1="22" y1="76" x2="78" y2="20" stroke="#85759c" stroke-width="0.8" stroke-linecap="round" />
-
-      <!-- 散落的微小星塵點綴 (保留一點空靈感) -->
-      <circle cx="30" cy="28" r="1" fill="#85759c" />
-      <circle cx="70" cy="68" r="1" fill="#85759c" />
-      <circle cx="35" cy="72" r="0.8" fill="#85759c" />
+      <!-- 貫穿畫面的斜線 (帶有破碎、不連續的撕裂發光感) -->
+      <!-- 底層主線 -->
+      <line x1="12" y1="88" x2="92" y2="38" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" />
+      <!-- 破碎高光線 (模擬斷裂感) -->
+      <line x1="12" y1="88" x2="92" y2="38" stroke="#ffffff" stroke-width="3" stroke-dasharray="2 12 18 8 5 25 10 5" stroke-linecap="round" />
+      <!-- 軌跡殘影 -->
+      <path d="M 30 76 L 38 71 M 55 61 L 65 55 M 78 47 L 85 42" stroke="#e0d8f0" stroke-width="1" stroke-dasharray="3 3" />
+      
+      <!-- 散落的星塵微光 -->
+      <circle cx="32" cy="28" r="0.8" fill="#e0d8f0" />
+      <circle cx="75" cy="65" r="1" fill="#85759c" />
+      <circle cx="38" cy="74" r="0.6" fill="#d6cae8" />
     </g>
   </svg>
 </div>
