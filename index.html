@@ -29,50 +29,97 @@
 
 </div>
 
-<!-- ① 臨記 Nobody Icon (下巴與下顎線強化版) -->
-<div style="display: flex; justify-content: center; align-items: center; padding: 40px;">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="180" height="180">
-    <defs>
-      <!-- 哥德風微光濾鏡 -->
-      <filter id="gothic-glow" x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur stdDeviation="1.5" result="blur" />
-        <feMerge>
-          <feMergeNode in="blur" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
-    </defs>
+<svg
+    class="nav-icon icon-nobody"
+    viewBox="0 0 64 64"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+>
 
-    <!-- 外圍虛線光環 (象徵殘缺的邊界) -->
-    <circle cx="50" cy="50" r="42" fill="none" stroke="#483a58" stroke-width="1.2" stroke-dasharray="3 5" />
-    <circle cx="50" cy="50" r="38" fill="none" stroke="#241a2e" stroke-width="0.5" />
+    <!-- 上方十字 -->
+    <path
+        d="M32 5 L32 11
+           M29 8 L35 8"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.6"
+        stroke-linecap="round"
+    />
 
-    <!-- 側臉輪廓 (強化下巴與頸部線條) -->
-    <path d="M 52,18 
-             C 38,18 36,28 36,36 
-             C 36,41 39,42 32,47 
-             C 35,50 36,51 34,53 
-             C 36,54 37,56 33,59 
-             C 38,62 42,62 43,67 
-             C 44,73 45,79 46,85" 
-          fill="none" stroke="#d6cae8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="url(#gothic-glow)" />
+    <!-- 不完整外圓 -->
+    <path
+        d="M18 18
+           C24 12, 37 10, 45 15
+           C52 19, 54 29, 52 39"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3"
+        stroke-linecap="round"
+    />
 
-    <!-- 側邊下顎骨緣線 (增加立體感與清冷感) -->
-    <path d="M 43,67 C 46,64 47,58 46,53" fill="none" stroke="#85759c" stroke-width="1.2" stroke-linecap="round" filter="url(#gothic-glow)" />
+    <path
+        d="M17 47
+           C13 41, 13 28, 17 20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3"
+        stroke-linecap="round"
+    />
 
-    <!-- 穿透身體的主斜線 (象徵經歷的創傷與痕跡) -->
-    <line x1="25" y1="75" x2="75" y2="25" stroke="#d6cae8" stroke-width="1.5" stroke-linecap="round" filter="url(#gothic-glow)"/>
-    <!-- 輔助細斜線 (增加層次感) -->
-    <line x1="30" y1="78" x2="72" y2="36" stroke="#85759c" stroke-width="0.6" stroke-linecap="round" />
+    <!-- 左側臉：
+         額頭 → 鼻樑 → 鼻子 → 人中 → 嘴唇 → 下巴 → 下顎 -->
+    <path
+        d="M31 18
 
-    <!-- 右上角的星芒 (象徵「我存在過」的微光) -->
-    <path d="M 75 15 L 76.5 22.5 L 84 24 L 76.5 25.5 L 75 33 L 73.5 25.5 L 66 24 L 73.5 22.5 Z" fill="#e0d8f0" filter="url(#gothic-glow)" />
-    
-    <!-- 散落的星塵點綴 -->
-    <circle cx="28" cy="35" r="1.2" fill="#85759c" filter="url(#gothic-glow)" />
-    <circle cx="65" cy="70" r="0.8" fill="#85759c" filter="url(#gothic-glow)" />
-  </svg>
-</div>
+           C27 19, 24 22, 22 27
+           C21 31, 20 35, 17 38
+
+           <!-- 明確向左凸出的鼻子 -->
+           L11 41
+           C10 41.7, 10.5 43, 12 43.7
+
+           <!-- 鼻下 → 上唇 -->
+           L16 45
+
+           <!-- 嘴唇 -->
+           C15.5 46, 15.5 47, 16.5 47.5
+           L19 47.8
+
+           <!-- 下唇 → 下巴 -->
+           C18 49, 17.5 51, 18.5 53
+           C20 56, 24 57, 28 57
+
+           <!-- 下顎往右上收 -->
+           C33 57, 38 54, 42 51"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    />
+
+    <!-- 簡單閉眼 -->
+    <path
+        d="M23 31
+           C25 33, 27 33, 29 31"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.4"
+        stroke-linecap="round"
+    />
+
+    <!-- 穿過人物的斜線 -->
+    <path
+        d="M11 51
+           C19 43, 27 35, 35 28
+           C42 21.5, 48 16, 54 11"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3.2"
+        stroke-linecap="round"
+    />
+
+</svg>
   
 </body>
 </html>
