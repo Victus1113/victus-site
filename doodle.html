@@ -293,16 +293,30 @@ function updateTransform(){
 /* ===== 邊界 ===== */
 function clamp(){
 
-    const rect = bigImage.getBoundingClientRect(); // ⭐ 少了這行！！
+    const rect = bigImage.getBoundingClientRect();
 
     const vw = window.innerWidth;
     const vh = window.innerHeight;
 
-    const maxX = Math.max(0, (rect.width - vw) / 2);
-    const maxY = Math.max(0, (rect.height - vh) / 2);
+    const maxX = Math.max(
+        0,
+        (rect.width - vw) / 2
+    );
 
-    posX = Math.min(maxX, Math.max(-maxX, posX));
-    posY = Math.min(maxY, Math.max(-maxY, posY));
+    const maxY = Math.max(
+        0,
+        (rect.height - vh) / 2
+    );
+
+    posX = Math.min(
+        maxX,
+        Math.max(-maxX, posX)
+    );
+
+    posY = Math.min(
+        maxY,
+        Math.max(-maxY, posY)
+    );
 }
 
 /* ===== 切圖 ===== */
@@ -451,131 +465,266 @@ window.addEventListener("mouseup", ()=>{
     isDragging=false;
 });
 
-/* ===== 手機觸控（最終穩定修正版） ===== */
+/* ===== 手機觸控：雙指縮放 + 放大拖曳 + 滑頁 + 雙擊 ===== */
 
+let isTap = false;
+let lastTapTime = 0;
+
+let pinchStartDistance = 0;
+let pinchStartScale = 1;
+
+let pinchCenterStartX = 0;
+let pinchCenterStartY = 0;
+
+let lastTouchX = 0;
+let lastTouchY = 0;
+
+
+/* ===== 計算雙指距離 ===== */
+function getTouchDistance(t1, t2){
+    const dx = t1.clientX - t2.clientX;
+    const dy = t1.clientY - t2.clientY;
+
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+
+/* ===== 計算雙指中心 ===== */
+function getTouchCenter(t1, t2){
+    return {
+        x: (t1.clientX + t2.clientX) / 2,
+        y: (t1.clientY + t2.clientY) / 2
+    };
+}
+
+
+/* ===== Touch Start ===== */
 bigImage.addEventListener("touchstart", e=>{
 
-    if(e.touches.length === 1){
-        const t = e.touches[0];
-
-        startX = t.clientX;
-        startY = t.clientY;
-        touchStartX = t.clientX;
-
-        isSwiping = false;
-        isTap = true;
-    }
-
+    /* ===== 雙指：開始 Pinch ===== */
     if(e.touches.length === 2){
 
-        let dx = e.touches[0].clientX - e.touches[1].clientX;
-        let dy = e.touches[0].clientY - e.touches[1].clientY;
-
-        initialDistance = Math.sqrt(dx*dx + dy*dy);
-
-        pinchStartScale = scale; // ⭐ 記住起始縮放
-        isTap = false;
-    }
-});
-
-bigImage.addEventListener("touchmove", e=>{
-
-    /* ===== 雙指縮放 ===== */
-    if(e.touches.length === 2){
         e.preventDefault();
 
-        let t1 = e.touches[0];
-        let t2 = e.touches[1];
+        const t1 = e.touches[0];
+        const t2 = e.touches[1];
 
-        let dx = t1.clientX - t2.clientX;
-        let dy = t1.clientY - t2.clientY;
+        pinchStartDistance = getTouchDistance(t1, t2);
+        pinchStartScale = scale;
 
-        let distance = Math.sqrt(dx*dx + dy*dy);
+        const center = getTouchCenter(t1, t2);
 
-        let scaleFactor = distance / initialDistance;
+        pinchCenterStartX = center.x;
+        pinchCenterStartY = center.y;
 
-        // ⭐ 核心：用「起始 scale」算
-        let newScale = pinchStartScale * scaleFactor;
-        newScale = Math.min(Math.max(1, newScale), 4);
+        isTap = false;
+        isSwiping = false;
 
-        /* ⭐ 補上這兩行（你缺的） */
-        let centerX = (t1.clientX + t2.clientX) / 2;
-        let centerY = (t1.clientY + t2.clientY) / 2;
-        
-        const rect = bigImage.getBoundingClientRect();
-
-        let offsetX = centerX - rect.left - rect.width / 2;
-        let offsetY = centerY - rect.top - rect.height / 2;
-
-        let scaleRatio = newScale / scale;
-
-        posX -= offsetX * (scaleRatio - 1);
-        posY -= offsetY * (scaleRatio - 1);
-
-        scale = newScale;
-
-        clamp();
-        updateTransform();
-
-        return; // ⭐ 阻止下面邏輯
+        return;
     }
+
 
     /* ===== 單指 ===== */
     if(e.touches.length === 1){
 
         const t = e.touches[0];
 
-        let dx = t.clientX - touchStartX;
+        startX = t.clientX;
+        startY = t.clientY;
 
-        /* ===== 放大拖曳 ===== */
-        if(scale > 1){
-            e.preventDefault();
+        lastTouchX = t.clientX;
+        lastTouchY = t.clientY;
 
-            let moveX = t.clientX - startX;
-            let moveY = t.clientY - startY;
+        touchStartX = t.clientX;
 
-            posX += moveX;
-            posY += moveY;
-
-            startX = t.clientX;
-            startY = t.clientY;
-
-            clamp();
-            updateTransform();
-            return;
-        }
-
-        /* ===== 滑頁 ===== */
-        if(Math.abs(dx) > 30){
-            isSwiping = true;
-            isTap = false;
-        }
-
-        if(scale === 1 && isSwiping){
-            posX = dx;
-
-            bigImage.style.transform =
-                `translate(${dx}px,0) scale(1)`;
-
-            bigImage.style.opacity =
-                1 - Math.min(Math.abs(dx)/300, 0.5);
-        }
+        isSwiping = false;
+        isTap = true;
     }
 
 }, {passive:false});
 
-/* ===== touchend（最終穩定版） ===== */
+
+/* ===== Touch Move ===== */
+bigImage.addEventListener("touchmove", e=>{
+
+    /* =================================================
+       雙指縮放
+    ================================================= */
+
+    if(e.touches.length === 2){
+
+        e.preventDefault();
+
+        const t1 = e.touches[0];
+        const t2 = e.touches[1];
+
+        const distance = getTouchDistance(t1, t2);
+
+        if(!pinchStartDistance) return;
+
+        const scaleFactor =
+            distance / pinchStartDistance;
+
+        let newScale =
+            pinchStartScale * scaleFactor;
+
+        newScale =
+            Math.min(
+                Math.max(1, newScale),
+                4
+            );
+
+
+        /* ===== 雙指中心 ===== */
+
+        const center =
+            getTouchCenter(t1, t2);
+
+
+        /*
+         * 讓縮放以雙指中心為基準
+         */
+
+        const rect =
+            bigImage.getBoundingClientRect();
+
+
+        const imageCenterX =
+            rect.left + rect.width / 2;
+
+        const imageCenterY =
+            rect.top + rect.height / 2;
+
+
+        const offsetX =
+            center.x - imageCenterX;
+
+        const offsetY =
+            center.y - imageCenterY;
+
+
+        const scaleRatio =
+            newScale / scale;
+
+
+        posX -=
+            offsetX * (scaleRatio - 1);
+
+        posY -=
+            offsetY * (scaleRatio - 1);
+
+
+        scale = newScale;
+
+        clamp();
+        updateTransform();
+
+        isTap = false;
+
+        return;
+    }
+
+
+    /* =================================================
+       單指
+    ================================================= */
+
+    if(e.touches.length === 1){
+
+        const t = e.touches[0];
+
+        const dx =
+            t.clientX - touchStartX;
+
+
+        /* =============================================
+           放大後：單指拖曳
+        ============================================= */
+
+        if(scale > 1){
+
+            e.preventDefault();
+
+            const moveX =
+                t.clientX - lastTouchX;
+
+            const moveY =
+                t.clientY - lastTouchY;
+
+
+            posX += moveX;
+            posY += moveY;
+
+
+            lastTouchX = t.clientX;
+            lastTouchY = t.clientY;
+
+
+            clamp();
+            updateTransform();
+
+            isTap = false;
+
+            return;
+        }
+
+
+        /* =============================================
+           1x：左右滑頁
+        ============================================= */
+
+        if(Math.abs(dx) > 30){
+
+            isSwiping = true;
+            isTap = false;
+
+            e.preventDefault();
+
+            posX = dx;
+
+            bigImage.style.transform =
+                `translate(${dx}px, 0) scale(1)`;
+
+            bigImage.style.opacity =
+                1 -
+                Math.min(
+                    Math.abs(dx) / 300,
+                    0.5
+                );
+        }
+
+    }
+
+}, {passive:false});
+
+
+/* ===== Touch End ===== */
 bigImage.addEventListener("touchend", e=>{
 
     const now = Date.now();
-    const dx = e.changedTouches[0].clientX - touchStartX;
 
-    /* ===== 雙擊 ===== */
+    const changedTouch =
+        e.changedTouches[0];
+
+    const dx =
+        changedTouch.clientX -
+        touchStartX;
+
+
+    /* =================================================
+       雙擊
+    ================================================= */
+
     if(now - lastTapTime < 250){
 
+        e.preventDefault();
+
         if(scale === 1){
+
             scale = 2;
+
         }else{
+
             scale = 1;
             posX = 0;
             posY = 0;
@@ -585,34 +734,95 @@ bigImage.addEventListener("touchend", e=>{
         updateTransform();
 
         lastTapTime = 0;
+        isTap = false;
+
         return;
     }
+
 
     lastTapTime = now;
 
-    /* ===== 點擊關閉 ===== */
-    if(scale === 1 && isTap){
+
+    /* =================================================
+       點擊背景關閉
+    ================================================= */
+
+    if(
+        scale === 1 &&
+        isTap
+    ){
+
         if(e.target === viewer){
+
             closeViewer();
+
         }
+
         return;
     }
 
-    /* ===== 滑頁 ===== */
-    if(scale === 1 && isSwiping){
 
-        if(dx > 80) goPrev();
-        else if(dx < -80) goNext();
-        else{
+    /* =================================================
+       左右滑頁
+    ================================================= */
+
+    if(
+        scale === 1 &&
+        isSwiping
+    ){
+
+        if(dx > 80){
+
+            goPrev();
+
+        }else if(dx < -80){
+
+            goNext();
+
+        }else{
+
             posX = 0;
+
             bigImage.style.opacity = 1;
+
             updateTransform();
+
         }
 
         return;
     }
 
-    // ⭐ ⭐ ⭐ 關鍵：不要再重設 posX !!!
+
+    /* =================================================
+       放大狀態結束
+       不重設 posX / posY
+    ================================================= */
+
+    if(scale > 1){
+
+        clamp();
+        updateTransform();
+
+    }
+
+});
+
+
+/* ===== 第二根手指離開後，避免座標跳動 ===== */
+
+bigImage.addEventListener("touchend", e=>{
+
+    if(e.touches.length === 1){
+
+        const t = e.touches[0];
+
+        lastTouchX = t.clientX;
+        lastTouchY = t.clientY;
+
+        startX = t.clientX;
+        startY = t.clientY;
+    }
+
 });
     
 /* ===== 點背景關閉（桌機） ===== */
