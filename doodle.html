@@ -2,172 +2,343 @@
 <html lang="zh">
 
 <head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta charset="UTF-8">
+
 <title>Doodles</title>
+
 <link rel="stylesheet" href="style.css">
 
 <style>
 
-/* ===== Viewer 全螢幕 ===== */
+/* =========================================================
+   Viewer 全螢幕
+========================================================= */
+
 #viewer{
     position:fixed;
     top:0;
     left:0;
+
     width:100%;
     height:100%;
 
     background:rgba(0,0,0,0.95);
 
     display:none;
+
     align-items:center;
     justify-content:center;
 
-    /* ⭐ 留出圖片下方給文字與頁碼 */
     box-sizing:border-box;
-    padding:50px 20px 100px;
+
+    padding:50px 20px 80px;
 
     z-index:9999;
 }
 
-/* ===== 圖片完整顯示 ===== */
-#viewer img{
-    max-width:100%;
-    max-height:100%;
-    object-fit:contain;
 
-    transition:0.3s;
+/* =========================================================
+   圖片區
+========================================================= */
+
+#image-box{
+
+    display:inline-flex;
+
+    flex-direction:column;
+
+    align-items:stretch;
+
+    justify-content:center;
+
+    max-width:calc(100vw - 40px);
+
 }
 
-/* ===== 箭頭 ===== */
-#prev, #next{
+
+/* =========================================================
+   大圖
+========================================================= */
+
+#viewer img{
+
+    display:block;
+
+    max-width:calc(100vw - 40px);
+
+    max-height:calc(100vh - 150px);
+
+    width:auto;
+    height:auto;
+
+    object-fit:contain;
+
+    transition:transform 0.2s ease;
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+}
+
+
+/* =========================================================
+   圖片下方資訊
+   左：名稱
+   右：頁碼
+========================================================= */
+
+#viewer-info{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-sizing:border-box;
+
+    padding-top:8px;
+
+    gap:20px;
+}
+
+
+/* ===== 圖片名稱 ===== */
+
+#caption{
+
+    color:#fff;
+
+    font-size:19px;
+
+    letter-spacing:0.5px;
+
+    background:rgba(0,0,0,0.65);
+
+    padding:4px 10px;
+
+    box-sizing:border-box;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    text-align:left;
+
+    min-width:0;
+}
+
+
+/* ===== 頁碼 ===== */
+
+#counter{
+
+    color:#ccc;
+
+    font-size:16px;
+
+    letter-spacing:1px;
+
+    background:rgba(0,0,0,0.65);
+
+    padding:4px 10px;
+
+    box-sizing:border-box;
+
+    white-space:nowrap;
+
+    text-align:right;
+}
+
+
+/* =========================================================
+   左右箭頭
+========================================================= */
+
+#prev,
+#next{
+
     position:absolute;
+
     top:50%;
+
     transform:translateY(-50%);
 
-    font-size:56px;
+    font-size:72px;
+
+    line-height:1;
+
     color:white;
 
     padding:20px 28px;
+
     cursor:pointer;
 
     opacity:0.7;
+
     z-index:10;
+
+    user-select:none;
+
+    -webkit-tap-highlight-color:transparent;
+
 }
 
-#prev{ left:3vw; }
-#next{ right:3vw; }
 
-#prev:hover, #next:hover{
+#prev:hover,
+#next:hover{
+
     opacity:1;
+
 }
 
-/* ⭐ 關鍵：確保一定在畫面內 */
-#prev{ left:5vw; }
-#next{ right:5vw; }
 
-#prev:hover, #next:hover{
-    opacity:1;
+/* ===== 箭頭位置 ===== */
+
+#prev{
+    left:3vw;
 }
 
-/* ===== 關閉 ===== */
+#next{
+    right:3vw;
+}
+
+
+/* =========================================================
+   關閉
+========================================================= */
+
 #close{
+
     position:absolute;
+
     top:20px;
     right:20px;
 
     font-size:28px;
+
     color:white;
 
     cursor:pointer;
-}
-
-/* ===== 頁數 ===== */
-#counter{
-    position:absolute;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-
-    color:#ccc;
-    font-size:16px;
-    letter-spacing:1px;
 
     z-index:20;
 
-    background:rgba(0,0,0,0.65);
-    padding:4px 10px;
+    user-select:none;
+
 }
 
-/* ===== 圖片名稱／註解 ===== */
-#caption{
-    position:absolute;
 
-    bottom:20px;
-    left:5vw;
+/* =========================================================
+   手機
+========================================================= */
 
-    color:#fff;
-    font-size:19px;
-    letter-spacing:0.5px;
-
-    z-index:20;
-
-    background:rgba(0,0,0,0.65);
-    padding:4px 10px;
-
-    max-width:70vw;
-    box-sizing:border-box;
-}
-
-/* ===== 手機 ===== */
 @media (max-width:768px){
 
     #viewer{
-        padding-bottom:85px;
-        box-sizing:border-box;
+
+        padding:45px 15px 70px;
+
     }
+
+
+    #image-box{
+
+        max-width:calc(100vw - 30px);
+
+    }
+
 
     #viewer img{
-        max-width:100%;
+
+        max-width:calc(100vw - 30px);
+
         max-height:calc(75vh - 20px);
+
     }
+
+
+    /* ===== 下方資訊 ===== */
+
+    #viewer-info{
+
+        padding-top:7px;
+
+        gap:10px;
+
+    }
+
 
     #caption{
-        left:50%;
-        transform:translateX(-50%);
 
-        bottom:48px;
+        font-size:16px;
 
-        white-space:nowrap;
-        text-align:center;
+        padding:3px 8px;
 
-        max-width:90vw;
-        overflow:hidden;
-        text-overflow:ellipsis;
+        max-width:70%;
+
     }
+
 
     #counter{
-        bottom:16px;
-        left:50%;
-        transform:translateX(-50%);
+
+        font-size:14px;
+
+        padding:3px 8px;
+
     }
 
-    /* 箭頭 */
+
+    /* ===== 手機箭頭 ===== */
+
     #prev,
     #next{
-        font-size:44px;
-        padding:12px 16px;
+
+        font-size:60px;
+
+        padding:15px 18px;
+
     }
 
-    #prev{ left:5px; }
-    #next{ right:5px; }
+
+    #prev{
+        left:0;
+    }
+
+    #next{
+        right:0;
+    }
+
+
+    /* ===== 關閉 ===== */
+
+    #close{
+
+        top:15px;
+        right:15px;
+
+        font-size:26px;
+
+    }
 
 }
 
 </style>
+
 </head>
 
+
 <body>
+
+
+<!-- =========================================================
+     網站導覽
+========================================================= -->
 
 <nav class="site-nav">
 
@@ -185,16 +356,23 @@
 
     <a href="novel.html">自述</a>
 
-</nav>  
+</nav>
 
 
 <div class="page">
 
+
 <h1>插圖 DOODLES</h1>
-<p>角色設計、手繪草圖、電繪彩圖、短篇漫畫...隨手畫和認真畫的都有，歡迎隨意閱覽。</p>
+
+<p>
+角色設計、手繪草圖、電繪彩圖、短篇漫畫...隨手畫和認真畫的都有，歡迎隨意閱覽。
+</p>
+
 
 <h2>少年維特的日常</h2>
+
 <div class="gallery">
+
     <img src="img/members.jpg" data-caption="成員陣容">
     <img src="img/OC1維特.jpg" data-caption="維特">
     <img src="img/OC2大叔.jpg" data-caption="大叔">
@@ -204,10 +382,14 @@
     <img src="img/busted.jpg" data-caption="被抓包的迪爾">
     <img src="img/whisper.jpg" data-caption="耳語">
     <img src="img/hug.jpg" data-caption="抱抱">
+
 </div>
 
+
 <h2>手繪</h2>
+
 <div class="gallery">
+
     <img src="img/happiness.jpg" data-caption="為數不多的幸福">
     <img src="img/justtord.jpg" data-caption="Tord">
     <img src="img/ohno.jpg" data-caption="東京真中ドゥーマ－feat.重音テト">
@@ -219,29 +401,43 @@
     <img src="img/tiger.jpg" data-caption="Kantina">
     <img src="img/coffee.jpg" data-caption="遊戲角色重繪">
     <img src="img/siblings.jpg" data-caption="手足：雛菊、維特、迪飛">
+
 </div>
 
+
 <h2>電繪</h2>
+
 <div class="gallery">
+
     <img src="img/face.jpg" data-caption="側臉練習">
     <img src="img/expression.jpg" data-caption="狠腳色">
     <img src="img/915.jpg" data-caption="TordTom－祐祐生日賀圖">
 
 </div>
 
+
 <h2>漫畫</h2>
+
 <div class="gallery">
+
     <img src="img/humor.jpg" data-caption="袖手">
     <img src="img/s3x.jpg" data-caption="捉愛">
     <img src="img/cure.jpg" data-caption="解方">
     <img src="img/speachless.jpg" data-caption="無言以對">
     <img src="img/talk.jpg" data-caption="對話">
     <img src="img/dinner.jpg" data-caption="晚餐">
+
 </div>
 
+
 <h2>敏感內容＆我</h2>
-<p>！警告：此區塊辣眼睛，請慎入。內容包含令人不適、心理獵奇、自傷暴力、裸露情色、爭議與不道德等內容，介意者請速速迴避！</p>
+
+<p>
+！警告：此區塊辣眼睛，請慎入。內容包含令人不適、心理獵奇、自傷暴力、裸露情色、爭議與不道德等內容，介意者請速速迴避！
+</p>
+
 <div class="gallery">
+
     <img src="img/life.jpg" data-caption="退變">
     <img src="img/ai.jpg" data-caption="脫節">
     <img src="img/dontcry.jpg" data-caption="殘次品">
@@ -261,620 +457,1059 @@
     <img src="img/self2.jpg" data-caption="我">
     <img src="img/dead.jpg" data-caption="該死的">
     <img src="img/rip1.jpg" data-caption="自畫像">
+
 </div>
+
 
 <a class="back" href="index.html">← 回到首頁</a>
 
+
 </div>
 
-<!-- Viewer -->
+
+<!-- =========================================================
+     Viewer
+========================================================= -->
+
 <div id="viewer">
 
     <div id="close">✕</div>
 
     <div id="prev">‹</div>
 
-    <img id="bigImage">
+
+    <!-- 圖片＋下方資訊 -->
+
+    <div id="image-box">
+
+        <img id="bigImage">
+
+        <div id="viewer-info">
+
+            <div id="caption"></div>
+
+            <div id="counter">1 / 1</div>
+
+        </div>
+
+    </div>
+
 
     <div id="next">›</div>
 
-    <div id="caption"></div>
-    <div id="counter">1 / 1</div>
-
 </div>
+
 
 <script>
 
-const viewer = document.getElementById("viewer");
-const bigImage = document.getElementById("bigImage");
-const prev = document.getElementById("prev");
-const next = document.getElementById("next");
-const closeBtn = document.getElementById("close");
-const counter = document.getElementById("counter");
-const caption = document.getElementById("caption");
 
-const galleries = document.querySelectorAll(".gallery");
+/* =========================================================
+   DOM
+========================================================= */
 
-//手機縮放//
-let baseScale = 1;       // ⭐ 真正縮放基準
+const viewer =
+    document.getElementById("viewer");
+
+const bigImage =
+    document.getElementById("bigImage");
+
+const prev =
+    document.getElementById("prev");
+
+const next =
+    document.getElementById("next");
+
+const closeBtn =
+    document.getElementById("close");
+
+const counter =
+    document.getElementById("counter");
+
+const caption =
+    document.getElementById("caption");
+
+const galleries =
+    document.querySelectorAll(".gallery");
+
+
+/* =========================================================
+   狀態
+========================================================= */
 
 let currentIndex = 0;
+
 let currentGallery = [];
 
 let blockClick = false;
-let previewPrev = new Image();
-let previewNext = new Image();
 
-/* ===== 狀態 ===== */
+
+/* ===== 縮放 ===== */
+
 let scale = 1;
+
 let posX = 0;
+
 let posY = 0;
 
+
+/* ===== 滑鼠 ===== */
+
 let isDragging = false;
+
 let startX = 0;
+
 let startY = 0;
 
+
+/* ===== Touch ===== */
+
 let initialDistance = null;
+
 let touchStartX = 0;
 
 let isSwiping = false;
 
-/* ===== 更新 ===== */
-function updateTransform(){
-    bigImage.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
-}
-
-/* ===== 邊界 ===== */
-function clamp(){
-
-    const rect = bigImage.getBoundingClientRect();
-
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-
-    const maxX = Math.max(
-        0,
-        (rect.width - vw) / 2
-    );
-
-    const maxY = Math.max(
-        0,
-        (rect.height - vh) / 2
-    );
-
-    posX = Math.min(
-        maxX,
-        Math.max(-maxX, posX)
-    );
-
-    posY = Math.min(
-        maxY,
-        Math.max(-maxY, posY)
-    );
-}
-
-/* ===== 切圖 ===== */
-function goPrev(){
-    currentIndex = (currentIndex-1+currentGallery.length)%currentGallery.length;
-    showImage();
-}
-function goNext(){
-    currentIndex = (currentIndex+1)%currentGallery.length;
-    showImage();
-}
-
-/* ===== 開啟 ===== */
-galleries.forEach(gallery=>{
-    const imgs = gallery.querySelectorAll("img");
-
-    imgs.forEach((img,index)=>{
-        img.onclick = (e)=>{
-
-            if(blockClick) return; // ⭐ 防止穿透
-
-            currentGallery = imgs;
-            currentIndex = index;
-
-            showImage();
-            viewer.style.display="flex";
-            document.body.style.overflow="hidden";
-        }
-    });
-});
-
-/* ===== 顯示 ===== */
-function showImage(){
-
-    bigImage.style.transition = "none"; // ⭐ 先關掉
-
-    bigImage.src = currentGallery[currentIndex].src;
-
-    const prevIndex = (currentIndex-1+currentGallery.length)%currentGallery.length;
-    const nextIndex = (currentIndex+1)%currentGallery.length;
-
-    previewPrev.src = currentGallery[prevIndex].src;
-    previewNext.src = currentGallery[nextIndex].src;
-
-    scale = 1;
-    posX = 0;
-    posY = 0;
-
-    viewer.style.backgroundImage = "";
-    bigImage.style.opacity = 1;
-
-    updateTransform();
-    // ⭐ 下一幀再開動畫
-    requestAnimationFrame(()=>{
-        bigImage.style.transition = "transform 0.2s ease";
-    });
-
-    counter.innerText = (currentIndex+1)+" / "+currentGallery.length;
-    caption.innerText = currentGallery[currentIndex].dataset.caption || "";
-}
-
-/* ===== 關閉手機的圖片 ===== */
-function closeViewer(){
-
-    blockClick = true; // ⭐ 關鍵：開始擋 click
-
-    viewer.style.display="none";
-    document.body.style.overflow="";
-    viewer.style.backgroundImage = "";
-
-    /* ⭐ 300ms 後恢復 */
-    setTimeout(()=>{
-        blockClick = false;
-    }, 300);
-}
-
-/* ===== 關閉按鈕 ===== */
-closeBtn.onclick = e=>{
-    e.stopPropagation();
-    closeViewer();
-};
-
-/* ===== 電腦箭頭 ===== */
-prev.onclick = e=>{
-    e.stopPropagation();
-    if(scale === 1) goPrev();
-};
-
-next.onclick = e=>{
-    e.stopPropagation();
-    if(scale === 1) goNext();
-};
-
-/* ===== 鍵盤（修好） ===== */
-document.addEventListener("keydown", e=>{
-    if(viewer.style.display !== "flex") return;
-    if(scale > 1) return;
-
-    if(e.key === "ArrowLeft") goPrev();
-    if(e.key === "ArrowRight") goNext();
-});
-
-/* ===== 滾輪縮放 ===== */
-bigImage.addEventListener("wheel", e=>{
-    e.preventDefault();
-
-    let oldScale = scale;
-    scale += e.deltaY<0?0.15:-0.15;
-    scale = Math.min(Math.max(1,scale),4);
-
-    const rect = bigImage.getBoundingClientRect();
-    const ratio = scale/oldScale;
-
-    posX -= (e.clientX-rect.left-rect.width/2)*(ratio-1);
-    posY -= (e.clientY-rect.top-rect.height/2)*(ratio-1);
-
-    clamp();
-    updateTransform();
-});
-
-/* ===== 滑鼠拖曳 ===== */
-bigImage.addEventListener("mousedown", e=>{
-    if(scale<=1) return;
-    isDragging=true;
-    startX=e.clientX;
-    startY=e.clientY;
-});
-
-window.addEventListener("mousemove", e=>{
-    if(!isDragging) return;
-
-    let dx=e.clientX-startX;
-    let dy=e.clientY-startY;
-
-    posX+=dx;
-    posY+=dy;
-
-    startX=e.clientX;
-    startY=e.clientY;
-
-    clamp();
-    updateTransform();
-});
-
-window.addEventListener("mouseup", ()=>{
-    isDragging=false;
-});
-
-/* ===== 手機觸控：雙指縮放 + 放大拖曳 + 滑頁 + 雙擊 ===== */
-
 let isTap = false;
+
 let lastTapTime = 0;
 
+
+/* ===== Pinch ===== */
+
 let pinchStartDistance = 0;
+
 let pinchStartScale = 1;
 
-let pinchCenterStartX = 0;
-let pinchCenterStartY = 0;
+
+/* ===== Touch 拖曳 ===== */
 
 let lastTouchX = 0;
+
 let lastTouchY = 0;
 
 
-/* ===== 計算雙指距離 ===== */
-function getTouchDistance(t1, t2){
-    const dx = t1.clientX - t2.clientX;
-    const dy = t1.clientY - t2.clientY;
+/* ===== 預載下一張 ===== */
 
-    return Math.sqrt(dx * dx + dy * dy);
+let previewPrev = new Image();
+
+let previewNext = new Image();
+
+
+/* =========================================================
+   更新圖片位置
+========================================================= */
+
+function updateTransform(){
+
+    bigImage.style.transform =
+        `translate(${posX}px, ${posY}px) scale(${scale})`;
+
 }
 
 
-/* ===== 計算雙指中心 ===== */
-function getTouchCenter(t1, t2){
-    return {
-        x: (t1.clientX + t2.clientX) / 2,
-        y: (t1.clientY + t2.clientY) / 2
-    };
+/* =========================================================
+   邊界
+========================================================= */
+
+function clamp(){
+
+    const rect =
+        bigImage.getBoundingClientRect();
+
+
+    const vw =
+        window.innerWidth;
+
+    const vh =
+        window.innerHeight;
+
+
+    const maxX =
+        Math.max(
+            0,
+            (rect.width - vw) / 2
+        );
+
+
+    const maxY =
+        Math.max(
+            0,
+            (rect.height - vh) / 2
+        );
+
+
+    posX =
+        Math.min(
+            maxX,
+            Math.max(-maxX, posX)
+        );
+
+
+    posY =
+        Math.min(
+            maxY,
+            Math.max(-maxY, posY)
+        );
+
 }
 
 
-/* ===== Touch Start ===== */
-bigImage.addEventListener("touchstart", e=>{
+/* =========================================================
+   上一張
+========================================================= */
 
-    /* ===== 雙指：開始 Pinch ===== */
-    if(e.touches.length === 2){
+function goPrev(){
 
-        e.preventDefault();
+    currentIndex =
+        (currentIndex - 1 + currentGallery.length)
+        % currentGallery.length;
 
-        const t1 = e.touches[0];
-        const t2 = e.touches[1];
+    showImage();
 
-        pinchStartDistance = getTouchDistance(t1, t2);
-        pinchStartScale = scale;
+}
 
-        const center = getTouchCenter(t1, t2);
 
-        pinchCenterStartX = center.x;
-        pinchCenterStartY = center.y;
+/* =========================================================
+   下一張
+========================================================= */
 
-        isTap = false;
-        isSwiping = false;
+function goNext(){
 
+    currentIndex =
+        (currentIndex + 1)
+        % currentGallery.length;
+
+    showImage();
+
+}
+
+
+/* =========================================================
+   開啟圖片
+========================================================= */
+
+galleries.forEach(gallery=>{
+
+    const imgs =
+        gallery.querySelectorAll("img");
+
+
+    imgs.forEach((img,index)=>{
+
+        img.onclick = (e)=>{
+
+            if(blockClick) return;
+
+
+            currentGallery =
+                imgs;
+
+            currentIndex =
+                index;
+
+
+            showImage();
+
+
+            viewer.style.display =
+                "flex";
+
+
+            document.body.style.overflow =
+                "hidden";
+
+        };
+
+    });
+
+});
+
+
+/* =========================================================
+   顯示圖片
+========================================================= */
+
+function showImage(){
+
+    bigImage.style.transition =
+        "none";
+
+
+    bigImage.src =
+        currentGallery[currentIndex].src;
+
+
+    /* ===== 預載前後圖片 ===== */
+
+    const prevIndex =
+        (currentIndex - 1 + currentGallery.length)
+        % currentGallery.length;
+
+
+    const nextIndex =
+        (currentIndex + 1)
+        % currentGallery.length;
+
+
+    previewPrev.src =
+        currentGallery[prevIndex].src;
+
+
+    previewNext.src =
+        currentGallery[nextIndex].src;
+
+
+    /* ===== 重設縮放 ===== */
+
+    scale = 1;
+
+    posX = 0;
+
+    posY = 0;
+
+
+    bigImage.style.opacity = 1;
+
+
+    updateTransform();
+
+
+    /* ===== 更新文字 ===== */
+
+    counter.innerText =
+        (currentIndex + 1)
+        + " / "
+        + currentGallery.length;
+
+
+    caption.innerText =
+        currentGallery[currentIndex]
+        .dataset.caption || "";
+
+
+    /* ===== 下一幀恢復動畫 ===== */
+
+    requestAnimationFrame(()=>{
+
+        bigImage.style.transition =
+            "transform 0.2s ease";
+
+    });
+
+}
+
+
+/* =========================================================
+   關閉 Viewer
+========================================================= */
+
+function closeViewer(){
+
+    blockClick = true;
+
+
+    viewer.style.display =
+        "none";
+
+
+    document.body.style.overflow =
+        "";
+
+
+    viewer.style.backgroundImage =
+        "";
+
+
+    setTimeout(()=>{
+
+        blockClick = false;
+
+    },300);
+
+}
+
+
+/* =========================================================
+   關閉按鈕
+========================================================= */
+
+closeBtn.onclick = e=>{
+
+    e.stopPropagation();
+
+    closeViewer();
+
+};
+
+
+/* =========================================================
+   桌機箭頭
+========================================================= */
+
+prev.onclick = e=>{
+
+    e.stopPropagation();
+
+
+    if(scale === 1){
+
+        goPrev();
+
+    }
+
+};
+
+
+next.onclick = e=>{
+
+    e.stopPropagation();
+
+
+    if(scale === 1){
+
+        goNext();
+
+    }
+
+};
+
+
+/* =========================================================
+   鍵盤
+========================================================= */
+
+document.addEventListener("keydown",e=>{
+
+    if(viewer.style.display !== "flex")
         return;
-    }
 
 
-    /* ===== 單指 ===== */
-    if(e.touches.length === 1){
-
-        const t = e.touches[0];
-
-        startX = t.clientX;
-        startY = t.clientY;
-
-        lastTouchX = t.clientX;
-        lastTouchY = t.clientY;
-
-        touchStartX = t.clientX;
-
-        isSwiping = false;
-        isTap = true;
-    }
-
-}, {passive:false});
-
-
-/* ===== Touch Move ===== */
-bigImage.addEventListener("touchmove", e=>{
-
-    /* =================================================
-       雙指縮放
-    ================================================= */
-
-    if(e.touches.length === 2){
-
-        e.preventDefault();
-
-        const t1 = e.touches[0];
-        const t2 = e.touches[1];
-
-        const distance = getTouchDistance(t1, t2);
-
-        if(!pinchStartDistance) return;
-
-        const scaleFactor =
-            distance / pinchStartDistance;
-
-        let newScale =
-            pinchStartScale * scaleFactor;
-
-        newScale =
-            Math.min(
-                Math.max(1, newScale),
-                4
-            );
-
-
-        /* ===== 雙指中心 ===== */
-
-        const center =
-            getTouchCenter(t1, t2);
-
-
-        /*
-         * 讓縮放以雙指中心為基準
-         */
-
-        const rect =
-            bigImage.getBoundingClientRect();
-
-
-        const imageCenterX =
-            rect.left + rect.width / 2;
-
-        const imageCenterY =
-            rect.top + rect.height / 2;
-
-
-        const offsetX =
-            center.x - imageCenterX;
-
-        const offsetY =
-            center.y - imageCenterY;
-
-
-        const scaleRatio =
-            newScale / scale;
-
-
-        posX -=
-            offsetX * (scaleRatio - 1);
-
-        posY -=
-            offsetY * (scaleRatio - 1);
-
-
-        scale = newScale;
-
-        clamp();
-        updateTransform();
-
-        isTap = false;
-
+    if(scale > 1)
         return;
-    }
 
 
-    /* =================================================
-       單指
-    ================================================= */
-
-    if(e.touches.length === 1){
-
-        const t = e.touches[0];
-
-        const dx =
-            t.clientX - touchStartX;
+    if(e.key === "ArrowLeft")
+        goPrev();
 
 
-        /* =============================================
-           放大後：單指拖曳
-        ============================================= */
+    if(e.key === "ArrowRight")
+        goNext();
 
-        if(scale > 1){
+
+    if(e.key === "Escape")
+        closeViewer();
+
+});
+
+
+/* =========================================================
+   滾輪縮放
+========================================================= */
+
+bigImage.addEventListener("wheel",e=>{
+
+    e.preventDefault();
+
+
+    const oldScale =
+        scale;
+
+
+    scale +=
+        e.deltaY < 0
+        ? 0.15
+        : -0.15;
+
+
+    scale =
+        Math.min(
+            Math.max(1,scale),
+            4
+        );
+
+
+    const rect =
+        bigImage.getBoundingClientRect();
+
+
+    const ratio =
+        scale / oldScale;
+
+
+    posX -=
+        (
+            e.clientX
+            - rect.left
+            - rect.width / 2
+        )
+        * (ratio - 1);
+
+
+    posY -=
+        (
+            e.clientY
+            - rect.top
+            - rect.height / 2
+        )
+        * (ratio - 1);
+
+
+    clamp();
+
+    updateTransform();
+
+});
+
+
+/* =========================================================
+   滑鼠拖曳
+========================================================= */
+
+bigImage.addEventListener("mousedown",e=>{
+
+    if(scale <= 1)
+        return;
+
+
+    isDragging = true;
+
+
+    startX =
+        e.clientX;
+
+    startY =
+        e.clientY;
+
+});
+
+
+window.addEventListener("mousemove",e=>{
+
+    if(!isDragging)
+        return;
+
+
+    const dx =
+        e.clientX - startX;
+
+
+    const dy =
+        e.clientY - startY;
+
+
+    posX += dx;
+
+    posY += dy;
+
+
+    startX =
+        e.clientX;
+
+    startY =
+        e.clientY;
+
+
+    clamp();
+
+    updateTransform();
+
+});
+
+
+window.addEventListener("mouseup",()=>{
+
+    isDragging = false;
+
+});
+
+
+/* =========================================================
+   Touch：計算雙指距離
+========================================================= */
+
+function getTouchDistance(t1,t2){
+
+    const dx =
+        t1.clientX - t2.clientX;
+
+
+    const dy =
+        t1.clientY - t2.clientY;
+
+
+    return Math.sqrt(
+        dx * dx + dy * dy
+    );
+
+}
+
+
+/* =========================================================
+   Touch Start
+========================================================= */
+
+bigImage.addEventListener(
+    "touchstart",
+    e=>{
+
+
+        /* ===== 雙指 ===== */
+
+        if(e.touches.length === 2){
 
             e.preventDefault();
 
-            const moveX =
-                t.clientX - lastTouchX;
 
-            const moveY =
-                t.clientY - lastTouchY;
+            const t1 =
+                e.touches[0];
 
-
-            posX += moveX;
-            posY += moveY;
+            const t2 =
+                e.touches[1];
 
 
-            lastTouchX = t.clientX;
-            lastTouchY = t.clientY;
+            pinchStartDistance =
+                getTouchDistance(t1,t2);
+
+
+            pinchStartScale =
+                scale;
+
+
+            isTap = false;
+
+            isSwiping = false;
+
+
+            return;
+
+        }
+
+
+        /* ===== 單指 ===== */
+
+        if(e.touches.length === 1){
+
+            const t =
+                e.touches[0];
+
+
+            startX =
+                t.clientX;
+
+            startY =
+                t.clientY;
+
+
+            lastTouchX =
+                t.clientX;
+
+            lastTouchY =
+                t.clientY;
+
+
+            touchStartX =
+                t.clientX;
+
+
+            isSwiping = false;
+
+            isTap = true;
+
+        }
+
+    },
+    {passive:false}
+);
+
+
+/* =========================================================
+   Touch Move
+========================================================= */
+
+bigImage.addEventListener(
+    "touchmove",
+    e=>{
+
+
+        /* =================================================
+           雙指縮放
+        ================================================= */
+
+        if(e.touches.length === 2){
+
+            e.preventDefault();
+
+
+            const t1 =
+                e.touches[0];
+
+            const t2 =
+                e.touches[1];
+
+
+            const distance =
+                getTouchDistance(t1,t2);
+
+
+            if(!pinchStartDistance)
+                return;
+
+
+            const scaleFactor =
+                distance / pinchStartDistance;
+
+
+            let newScale =
+                pinchStartScale * scaleFactor;
+
+
+            newScale =
+                Math.min(
+                    Math.max(1,newScale),
+                    4
+                );
+
+
+            const rect =
+                bigImage.getBoundingClientRect();
+
+
+            const imageCenterX =
+                rect.left + rect.width / 2;
+
+
+            const imageCenterY =
+                rect.top + rect.height / 2;
+
+
+            const centerX =
+                (t1.clientX + t2.clientX) / 2;
+
+
+            const centerY =
+                (t1.clientY + t2.clientY) / 2;
+
+
+            const offsetX =
+                centerX - imageCenterX;
+
+
+            const offsetY =
+                centerY - imageCenterY;
+
+
+            const scaleRatio =
+                newScale / scale;
+
+
+            posX -=
+                offsetX * (scaleRatio - 1);
+
+
+            posY -=
+                offsetY * (scaleRatio - 1);
+
+
+            scale =
+                newScale;
 
 
             clamp();
+
             updateTransform();
+
 
             isTap = false;
 
+            isSwiping = false;
+
+
             return;
+
         }
 
 
-        /* =============================================
-           1x：左右滑頁
-        ============================================= */
+        /* =================================================
+           單指
+        ================================================= */
 
-        if(Math.abs(dx) > 30){
+        if(e.touches.length === 1){
 
-            isSwiping = true;
-            isTap = false;
+            const t =
+                e.touches[0];
+
+
+            const dx =
+                t.clientX - touchStartX;
+
+
+            /* ===== 放大後拖曳 ===== */
+
+            if(scale > 1){
+
+                e.preventDefault();
+
+
+                const moveX =
+                    t.clientX - lastTouchX;
+
+
+                const moveY =
+                    t.clientY - lastTouchY;
+
+
+                posX += moveX;
+
+                posY += moveY;
+
+
+                lastTouchX =
+                    t.clientX;
+
+                lastTouchY =
+                    t.clientY;
+
+
+                clamp();
+
+                updateTransform();
+
+
+                isTap = false;
+
+                return;
+
+            }
+
+
+            /* ===== 1x 滑頁 ===== */
+
+            if(Math.abs(dx) > 30){
+
+                isSwiping = true;
+
+                isTap = false;
+
+
+                e.preventDefault();
+
+
+                posX = dx;
+
+
+                bigImage.style.transform =
+                    `translate(${dx}px,0) scale(1)`;
+
+
+                bigImage.style.opacity =
+                    1 -
+                    Math.min(
+                        Math.abs(dx) / 300,
+                        0.5
+                    );
+
+            }
+
+        }
+
+    },
+    {passive:false}
+);
+
+
+/* =========================================================
+   Touch End
+========================================================= */
+
+bigImage.addEventListener(
+    "touchend",
+    e=>{
+
+
+        /*
+         * 如果還有手指留在畫面上，
+         * 代表剛結束的是雙指操作。
+         * 不要把它當成滑頁。
+         */
+
+        if(e.touches.length > 0){
+
+            if(e.touches.length === 1){
+
+                const t =
+                    e.touches[0];
+
+
+                lastTouchX =
+                    t.clientX;
+
+                lastTouchY =
+                    t.clientY;
+
+            }
+
+
+            return;
+
+        }
+
+
+        const now =
+            Date.now();
+
+
+        const changedTouch =
+            e.changedTouches[0];
+
+
+        const dx =
+            changedTouch.clientX
+            - touchStartX;
+
+
+        /* =================================================
+           雙擊
+        ================================================= */
+
+        if(now - lastTapTime < 250){
 
             e.preventDefault();
 
-            posX = dx;
 
-            bigImage.style.transform =
-                `translate(${dx}px, 0) scale(1)`;
+            if(scale === 1){
 
-            bigImage.style.opacity =
-                1 -
-                Math.min(
-                    Math.abs(dx) / 300,
-                    0.5
-                );
-        }
+                scale = 2;
 
-    }
+            }else{
 
-}, {passive:false});
+                scale = 1;
+
+                posX = 0;
+
+                posY = 0;
+
+            }
 
 
-/* ===== Touch End ===== */
-bigImage.addEventListener("touchend", e=>{
+            clamp();
 
-    const now = Date.now();
-
-    const changedTouch =
-        e.changedTouches[0];
-
-    const dx =
-        changedTouch.clientX -
-        touchStartX;
+            updateTransform();
 
 
-    /* =================================================
-       雙擊
-    ================================================= */
+            lastTapTime = 0;
 
-    if(now - lastTapTime < 250){
+            isTap = false;
 
-        e.preventDefault();
+            isSwiping = false;
 
-        if(scale === 1){
 
-            scale = 2;
-
-        }else{
-
-            scale = 1;
-            posX = 0;
-            posY = 0;
+            return;
 
         }
 
-        clamp();
-        updateTransform();
 
-        lastTapTime = 0;
-        isTap = false;
-
-        return;
-    }
+        lastTapTime =
+            now;
 
 
-    lastTapTime = now;
+        /* =================================================
+           背景關閉
+        ================================================= */
+
+        if(
+            scale === 1 &&
+            isTap
+        ){
+
+            if(e.target === viewer){
+
+                closeViewer();
+
+            }
 
 
-    /* =================================================
-       點擊背景關閉
-    ================================================= */
-
-    if(
-        scale === 1 &&
-        isTap
-    ){
-
-        if(e.target === viewer){
-
-            closeViewer();
+            return;
 
         }
 
-        return;
-    }
+
+        /* =================================================
+           左右滑頁
+        ================================================= */
+
+        if(
+            scale === 1 &&
+            isSwiping
+        ){
+
+            if(dx > 80){
+
+                goPrev();
+
+            }else if(dx < -80){
+
+                goNext();
+
+            }else{
+
+                posX = 0;
+
+                bigImage.style.opacity =
+                    1;
+
+                updateTransform();
+
+            }
 
 
-    /* =================================================
-       左右滑頁
-    ================================================= */
+            return;
 
-    if(
-        scale === 1 &&
-        isSwiping
-    ){
+        }
 
-        if(dx > 80){
 
-            goPrev();
+        /* =================================================
+           放大狀態
+        ================================================= */
 
-        }else if(dx < -80){
+        if(scale > 1){
 
-            goNext();
-
-        }else{
-
-            posX = 0;
-
-            bigImage.style.opacity = 1;
+            clamp();
 
             updateTransform();
 
         }
 
-        return;
     }
+);
 
 
-    /* =================================================
-       放大狀態結束
-       不重設 posX / posY
-    ================================================= */
+/* =========================================================
+   桌機背景關閉
+========================================================= */
 
-    if(scale > 1){
-
-        clamp();
-        updateTransform();
-
-    }
-
-});
-
-
-/* ===== 第二根手指離開後，避免座標跳動 ===== */
-
-bigImage.addEventListener("touchend", e=>{
-
-    if(e.touches.length === 1){
-
-        const t = e.touches[0];
-
-        lastTouchX = t.clientX;
-        lastTouchY = t.clientY;
-
-        startX = t.clientX;
-        startY = t.clientY;
-
-    }
-
-});
-
-/* ===== 點背景關閉（桌機） ===== */
-viewer.addEventListener("click", e=>{
+viewer.addEventListener("click",e=>{
 
     if(
         e.target === bigImage ||
         e.target.id === "prev" ||
         e.target.id === "next" ||
-        e.target.id === "close"
-    ) return;
+        e.target.id === "close" ||
+        e.target === caption ||
+        e.target === counter
+    ){
+
+        return;
+
+    }
+
 
     closeViewer();
 
 });
 
+
 </script>
+
 </body>
+
 </html>
