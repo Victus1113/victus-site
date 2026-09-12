@@ -90,72 +90,41 @@
 ========================================================= */
 
 #viewer-info{
-
     width:100%;
-
     display:flex;
-
-    justify-content:space-between;
-
+    justify-content:flex-start;
     align-items:center;
-
     box-sizing:border-box;
-
     padding-top:8px;
-
-    gap:20px;
 }
-
-
-/* ===== 圖片名稱 ===== */
 
 #caption{
-
     color:#fff;
-
     font-size:19px;
-
     letter-spacing:0.5px;
-
     background:rgba(0,0,0,0.65);
-
     padding:4px 10px;
-
     box-sizing:border-box;
-
     white-space:nowrap;
-
     overflow:hidden;
-
     text-overflow:ellipsis;
-
     text-align:left;
-
-    min-width:0;
 }
-
-
-/* ===== 頁碼 ===== */
 
 #counter{
-
+    position:absolute;
+    bottom:8px;
+    right:8px;
     color:#ccc;
-
     font-size:16px;
-
     letter-spacing:1px;
-
     background:rgba(0,0,0,0.65);
-
     padding:4px 10px;
-
     box-sizing:border-box;
-
     white-space:nowrap;
-
     text-align:right;
+    z-index:15;
 }
-
 
 /* =========================================================
    左右箭頭
@@ -265,33 +234,22 @@
 
     /* ===== 下方資訊 ===== */
 
-    #viewer-info{
+　#viewer-info{
+  　  padding-top:7px;
+　}
 
-        padding-top:7px;
+　#caption{
+    　font-size:16px;
+    　padding:3px 8px;
+  　  max-width:70%;
+　}
 
-        gap:10px;
-
-    }
-
-
-    #caption{
-
-        font-size:16px;
-
-        padding:3px 8px;
-
-        max-width:70%;
-
-    }
-
-
-    #counter{
-
-        font-size:14px;
-
-        padding:3px 8px;
-
-    }
+　#counter{
+    　bottom:7px;
+    　right:7px;
+    　font-size:14px;
+  　  padding:3px 8px;
+　}
 
 
     /* ===== 手機箭頭 ===== */
@@ -484,13 +442,11 @@
 
         <img id="bigImage">
 
-        <div id="viewer-info">
-
+         <div id="viewer-info">
             <div id="caption"></div>
+         </div>
 
-            <div id="counter">1 / 1</div>
-
-        </div>
+       <div id="counter">1 / 1</div>
 
     </div>
 
