@@ -12,6 +12,26 @@
 
 <style>
 
+#music-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #0d0d12;
+    border: 1px solid #333342;
+    color: #888899;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: 16px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 1000;
+}
+#music-toggle:hover { 
+    color: #e0e0e8; 
+    border-color: #555568; 
+}
+
 /* =========================================================
    Viewer 全螢幕
 ========================================================= */
@@ -278,6 +298,8 @@
 
 <button id="music-toggle">♫ OFF</button>
 
+
+
 <!-- =========================================================
      網站導覽
 ========================================================= -->
@@ -303,7 +325,7 @@
 
 <div class="page">
 
-
+   
 <h1>插圖 DOODLES</h1>
 
 <p>
@@ -1446,6 +1468,36 @@ viewer.addEventListener("click",e=>{
 
 });
 
+/* =========================================================
+   ↓↓↓ 請把音樂控制的 JavaScript 貼在這裡 ↓↓↓
+========================================================= */
+
+const bgm = document.getElementById("bgm");
+const musicButton = document.getElementById("music-toggle");
+
+function startMusic() {
+    bgm.play().then(() => {
+        musicButton.textContent = "♫ ON";
+    }).catch(() => {
+        musicButton.textContent = "♫ OFF";
+    });
+}
+startMusic();
+
+musicButton.addEventListener("click", function() {
+    if (bgm.paused) {
+        bgm.play().then(() => {
+            musicButton.textContent = "♫ ON";
+        });
+    } else {
+        bgm.pause();
+        musicButton.textContent = "♫ OFF";
+    }
+});
+
+/* =========================================================
+   ↑↑↑ 音樂控制程式碼結束 ↑↑↑
+========================================================= */
 
 </script>
 
