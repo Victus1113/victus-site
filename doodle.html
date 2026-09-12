@@ -9,7 +9,7 @@
 
 <style>
 
-/* ===== Viewer 改回全螢幕 ===== */
+/* ===== Viewer 全螢幕 ===== */
 #viewer{
     position:fixed;
     top:0;
@@ -23,13 +23,17 @@
     align-items:center;
     justify-content:center;
 
+    /* ⭐ 留出圖片下方給文字與頁碼 */
+    box-sizing:border-box;
+    padding:50px 20px 100px;
+
     z-index:9999;
 }
 
-/* 圖片完整顯示 */
+/* ===== 圖片完整顯示 ===== */
 #viewer img{
-    max-width:95vw;
-    max-height:90vh;
+    max-width:100%;
+    max-height:100%;
     object-fit:contain;
 
     transition:0.3s;
@@ -41,14 +45,21 @@
     top:50%;
     transform:translateY(-50%);
 
-    font-size:40px;
+    font-size:56px;
     color:white;
 
-    padding:20px;
+    padding:20px 28px;
     cursor:pointer;
 
-    opacity:0.6;
+    opacity:0.7;
     z-index:10;
+}
+
+#prev{ left:3vw; }
+#next{ right:3vw; }
+
+#prev:hover, #next:hover{
+    opacity:1;
 }
 
 /* ⭐ 關鍵：確保一定在畫面內 */
@@ -144,12 +155,12 @@
     /* 箭頭 */
     #prev,
     #next{
-        font-size:30px;
-        padding:10px;
+        font-size:44px;
+        padding:12px 16px;
     }
 
-    #prev{ left:10px; }
-    #next{ right:10px; }
+    #prev{ left:5px; }
+    #next{ right:5px; }
 
 }
 
