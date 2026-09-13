@@ -1474,9 +1474,63 @@ musicButton.addEventListener("click", function() {
 });
 
 /* =========================================================
-   ↑↑↑ 音樂控制程式碼結束 ↑↑↑
+   內容警語
 ========================================================= */
 
+const warningSections = document.querySelectorAll(
+    ".content-warning-section"
+);
+
+warningSections.forEach(section => {
+
+    const warning = document.createElement("div");
+
+    if (section.classList.contains("sensitive-section")) {
+
+        warning.className =
+            "content-warning sensitive-warning";
+
+        warning.innerHTML =
+            "<strong>⚠ CONTENT WARNING</strong>" +
+            "此區包含令人不適、心理獵奇、自傷暴力、裸露情色、爭議與不道德等內容。介意者請略過。";
+
+    } else {
+
+        warning.className =
+            "content-warning";
+
+        warning.innerHTML =
+            "<strong>CONTENT NOTE</strong>" +
+            "此區包含較刺激、成人向或黑色幽默內容。若介意，請略過。";
+    }
+
+    document.body.appendChild(warning);
+
+    const observer =
+        new IntersectionObserver(entries => {
+
+            entries.forEach(entry => {
+
+                if(entry.isIntersecting){
+
+                    warning.classList.add("show");
+
+                }else{
+
+                    warning.classList.remove("show");
+
+                }
+
+            });
+
+        },{
+            threshold:0.15
+        });
+
+    observer.observe(section);
+
+});
+    
 </script>
 
 </body>
