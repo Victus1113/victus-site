@@ -214,54 +214,40 @@
 
 @media (max-width:768px){
 
-　　#viewer{
-    　　padding:20px 15px;
-　　}
-
-
-    #image-box{
-
-        max-width:calc(100vw - 30px);
-
+    #viewer{
+        padding:20px 15px;
     }
 
+    #image-box{
+        max-width:calc(100vw - 30px);
+    }
 
-　　#viewer img{
-   　　 max-width:calc(100vw - 30px);
-   　　 max-height:calc(100vh - 75px);
-　　}
+    #viewer img{
+        max-width:calc(100vw - 30px);
+        max-height:calc(100vh - 75px);
+    }
 
+    #viewer-info{
+        padding-top:7px;
+        gap:10px;
+    }
 
-    /* ===== 下方資訊 ===== */
+    #caption{
+        font-size:16px;
+        padding:3px 8px;
+        max-width:70%;
+    }
 
-#viewer-info{
-    padding-top:7px;
-    gap:10px;
-}
-
-#caption{
-    font-size:16px;
-    padding:3px 8px;
-    max-width:70%;
-}
-
-#counter{
-    font-size:14px;
-    padding:3px 8px;
-}
-
-
-    /* ===== 手機箭頭 ===== */
+    #counter{
+        font-size:14px;
+        padding:3px 8px;
+    }
 
     #prev,
     #next{
-
         font-size:60px;
-
         padding:15px 18px;
-
     }
-
 
     #prev{
         left:0;
@@ -271,16 +257,17 @@
         right:0;
     }
 
-
-    /* ===== 關閉 ===== */
-
     #close{
-
         top:15px;
         right:15px;
-
         font-size:26px;
+    }
 
+    /* 手機版音樂按鈕 */
+    #music-toggle{
+        top:15px;
+        right:15px;
+        z-index:2000;
     }
 
 }
