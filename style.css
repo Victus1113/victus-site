@@ -550,3 +550,98 @@ nav a{
 *{
     -webkit-tap-highlight-color: transparent;
 }
+
+/* =========================
+   內容警語
+========================= */
+
+.content-warning-section{
+    position:relative;
+}
+
+.content-warning{
+    position:fixed;
+
+    left:50%;
+    bottom:calc(75px + env(safe-area-inset-bottom));
+
+    transform:translateX(-50%);
+
+    width:calc(100% - 32px);
+    max-width:560px;
+
+    box-sizing:border-box;
+
+    padding:16px 20px;
+
+    background:rgba(18,18,26,0.96);
+    border:1px solid #3a3948;
+    border-left:4px solid #85829C;
+
+    color:#d8d8df;
+
+    font-size:16px;
+    line-height:1.7;
+    letter-spacing:0.5px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.55);
+    backdrop-filter:blur(8px);
+
+    z-index:8500;
+
+    opacity:0;
+    pointer-events:none;
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+
+.content-warning.show{
+    opacity:1;
+
+    transform:
+        translateX(-50%)
+        translateY(-6px);
+}
+
+.content-warning strong{
+    display:block;
+
+    margin-bottom:4px;
+
+    color:#eeeeF2;
+
+    font-size:17px;
+    letter-spacing:1px;
+}
+
+.sensitive-warning{
+    border-left-color:#8e3d3d;
+}
+
+.sensitive-warning strong{
+    color:#e0a0a0;
+}
+
+
+/* 手機警語 */
+
+@media (max-width:768px){
+
+    .content-warning{
+        bottom:calc(72px + env(safe-area-inset-bottom));
+
+        width:calc(100% - 24px);
+
+        padding:14px 16px;
+
+        font-size:15px;
+        line-height:1.7;
+    }
+
+    .content-warning strong{
+        font-size:16px;
+    }
+
+}
