@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>囈語詩篇</title>
+<title>囈語</title>
 <style>
     /* =========================
        全局設定：暗夜深淵背景
@@ -12,12 +12,13 @@
         background-color: #0d0c11;
         background-image: radial-gradient(circle at 50% 50%, #171520 0%, #0d0c11 80%);
         color: #726880;
-        font-family: "Times New Roman", "PMingLiU", "MingLiU", serif;
+        font-family: "Yu Mincho", "游明朝", serif;
         margin: 0;
         padding: 0;
         min-height: 100vh;
         overflow-x: hidden;
-        cursor: crosshair; /* 游標變成十字準心 */
+        /* 客製化十字架游標 */
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="32" viewBox="0 0 24 32"><path d="M11 0h2v8h8v2h-8v20h-2v-20H3v-2h8z" fill="%238c839c"/></svg>') 12 12, auto;
     }
 
     /* 背景的微弱雜訊與血霧感 */
@@ -43,137 +44,82 @@
     ========================= */
     .poem {
         position: relative;
-        margin-bottom: 120px;
-        letter-spacing: 3px;
+        margin-bottom: 150px;
+        letter-spacing: 4px;
         line-height: 2.5;
-        font-size: 17px;
+        font-size: 20px; /* 字體放大 */
         opacity: 0.65;
         transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         text-shadow: 0 0 5px rgba(0,0,0,0.8);
     }
 
-    /* 靈魂迴響：滑鼠觸碰時的特效 */
     .poem:hover {
         opacity: 1;
         color: #d6cae8;
         transform: scale(1.02);
     }
 
+    /* 提亮並置中的標題 */
     .poem-title {
-        font-size: 14px;
-        color: #42364d;
-        margin-bottom: 20px;
+        font-size: 16px;
+        color: #b3a7c4; /* 提亮顏色 */
+        margin: 0 auto 25px auto;
         letter-spacing: 5px;
-        border-bottom: 1px solid #231d2b;
-        display: inline-block;
+        border-bottom: 1px solid #42364d;
+        display: block; /* 獨立一行 */
+        width: fit-content;
+        text-align: center;
         padding-bottom: 5px;
     }
 
     /* =========================
-       解構式錯落排版（為每首詩量身打造）
+       解構式錯落排版
     ========================= */
 
-    /* <空> 漂浮不定的泡影 */
-    .p-kong {
-        text-align: left;
-        margin-left: 5%;
-        transform: rotate(-1.5deg);
-    }
-    .p-kong:hover {
-        text-shadow: 0 0 12px rgba(214, 202, 232, 0.3);
-    }
+    .p-kong { text-align: left; margin-left: 5%; transform: rotate(-1.5deg); }
+    .p-kong:hover { text-shadow: 0 0 12px rgba(214, 202, 232, 0.3); }
 
-    /* <鬱> 無限下沉的深淵 */
-    .p-yu {
-        text-align: right;
-        margin-right: 5%;
-        margin-top: 150px;
-        color: #554f61; /* 更暗淡 */
-    }
-    .p-yu:hover {
-        color: #8c839c;
-        transform: translateY(5px); /* 模擬下沉感 */
-    }
+    .p-yu { text-align: right; margin-right: 5%; color: #554f61; }
+    .p-yu:hover { color: #8c839c; transform: translateY(5px); }
 
-    /* <ㄟ> 精神解離的呢喃 */
-    .p-ei {
+    .p-ei { text-align: center; margin-left: -15%; transform: rotate(3deg); letter-spacing: 6px; line-height: 1.8; }
+    .p-ei:hover { color: #c9bccc; text-shadow: 0 0 8px rgba(255, 255, 255, 0.2); }
+
+    .p-one { text-align: left; margin-left: 45%; border-left: 1px solid #3d2121; padding-left: 25px; }
+    .p-one:hover { border-left-color: #9c2727; color: #e3d1d1; text-shadow: -2px 0 10px rgba(156, 39, 39, 0.5); }
+
+    .p-suizui { text-align: justify; width: 320px; margin: 100px auto; font-size: 18px; line-height: 2.2; padding: 30px; border: 1px dashed #42364d; }
+    .p-suizui:hover { border-color: #726880; background: rgba(20, 15, 25, 0.5); }
+
+    /* <ㄨ> 藥物暈眩特效 */
+    .p-wu {
         text-align: center;
-        margin-left: -15%;
-        transform: rotate(3deg);
-        letter-spacing: 6px;
-        line-height: 1.8;
+        margin-left: 10%;
+        filter: blur(2px); /* 預設模糊暈眩 */
+        opacity: 0.5;
+        color: #6a5a73;
+        transition: all 0.6s ease-in-out;
     }
-    .p-ei:hover {
-        color: #c9bccc;
-        text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
-    }
-
-    /* <1> 帶有血痕的割裂感 */
-    .p-one {
-        text-align: left;
-        margin-left: 45%;
-        border-left: 1px solid #3d2121; /* 暗紅色的割痕 */
-        padding-left: 25px;
-    }
-    .p-one:hover {
-        border-left-color: #9c2727; /* 鮮明的血色 */
-        color: #e3d1d1;
-        text-shadow: -2px 0 10px rgba(156, 39, 39, 0.5);
+    .p-wu:hover {
+        filter: blur(0); /* 聚焦清醒 */
+        opacity: 1;
+        color: #d1c5d6;
+        transform: scale(0.98); /* 微微下墜縮小的壓迫感 */
     }
 
-    /* <碎嘴> 壓抑的方塊 */
-    .p-suizui {
-        text-align: justify;
-        width: 280px;
-        margin: 100px auto;
-        font-size: 15px;
-        line-height: 2;
-        padding: 20px;
-        border: 1px dashed #231d2b;
-    }
-    .p-suizui:hover {
-        border-color: #42364d;
-        background: rgba(20, 15, 25, 0.5);
-    }
+    .p-wo { text-align: center; margin-top: 200px; color: #857896; }
+    .p-wo .intense { color: #9c2727; transition: 0.5s; }
+    .p-wo:hover { text-shadow: 0 0 20px rgba(156, 39, 39, 0.4); color: #f2e6e6; }
+    .p-wo:hover .intense { color: #d13030; text-shadow: 0 0 15px rgba(209, 48, 48, 0.8); }
 
-    /* <我> 最終的祭壇 */
-    .p-wo {
-        text-align: center;
-        margin-top: 200px;
-        font-size: 18px;
-        color: #857896;
-    }
-    .p-wo .intense {
-        color: #9c2727; /* 隱隱透出的血字 */
-        transition: 0.5s;
-    }
-    .p-wo:hover {
-        text-shadow: 0 0 20px rgba(156, 39, 39, 0.4);
-        color: #f2e6e6;
-    }
-    .p-wo:hover .intense {
-        color: #d13030;
-        text-shadow: 0 0 15px rgba(209, 48, 48, 0.8);
-    }
+    .cross-divider { text-align: center; color: #352a42; font-size: 28px; margin: 40px 0 100px 0; }
 
-    /* 哥德式十字架分隔符號 */
-    .cross-divider {
-        text-align: center;
-        color: #2a2233;
-        font-size: 24px;
-        margin: -50px 0 80px 0;
-    }
-
-    /* 手機版自適應微調 */
+    /* 手機版自適應 */
     @media (max-width: 768px) {
-        .p-kong, .p-yu, .p-ei, .p-one {
-            margin-left: 0;
-            margin-right: 0;
-            text-align: center;
-            transform: none;
-        }
-        .p-one { border-left: none; border-top: 1px solid #3d2121; padding-top: 20px; }
-        .p-suizui { width: 90%; text-align: center; }
+        .poem { font-size: 18px; margin-bottom: 100px; }
+        .p-kong, .p-yu, .p-ei, .p-one, .p-wu { margin-left: 0; margin-right: 0; text-align: center; transform: none; }
+        .p-one { border-left: none; border-top: 1px solid #3d2121; padding-top: 20px; padding-left: 0; margin-left: 0; }
+        .p-suizui { width: 85%; }
     }
 </style>
 </head>
@@ -183,7 +129,7 @@
 
     <!-- 第一首：空 -->
     <div class="poem p-kong">
-        <div class="poem-title">一</div><br>
+        <div class="poem-title">〈一〉</div>
         數不清的泡影<br>
         嘗試握在手裡<br>
         指腹輕觸瞬息<br>
@@ -198,12 +144,11 @@
         就是命中註定
     </div>
 
-    <!-- 分隔裝飾 -->
     <div class="cross-divider">†</div>
 
     <!-- 第二首：鬱 -->
     <div class="poem p-yu">
-        <div class="poem-title">鬱</div><br>
+        <div class="poem-title">〈鬱〉</div>
         身在海底無限下沉<br>
         鬱期面帶冷笑得逞<br>
         不再賣力划水生存<br>
@@ -220,7 +165,7 @@
 
     <!-- 第三首：ㄟ -->
     <div class="poem p-ei">
-        <div class="poem-title">ㄟ</div><br>
+        <div class="poem-title">〈ㄟ〉</div>
         窗外很黑  昨晚沒睡<br>
         眼神憔悴  過得很廢<br>
         還敢說累  我用繩勒<br>
@@ -231,7 +176,7 @@
 
     <!-- 第四首：1 -->
     <div class="poem p-one">
-        <div class="poem-title">1</div><br>
+        <div class="poem-title">〈1〉</div>
         勒緊脖子向後倚<br>
         長直傷痕的血液<br>
         我在生死間游移<br>
@@ -246,9 +191,32 @@
         珍重再見別介意
     </div>
 
-    <!-- 第五首：碎嘴 -->
+    <div class="cross-divider">†</div>
+
+    <!-- 第五首：ㄨ (暈眩特效) -->
+    <div class="poem p-wu">
+        <div class="poem-title">〈ㄨ〉</div>
+        本質性的痛苦<br>
+        潛伏體內反覆<br>
+        看診無非下賭<br>
+        某日必定康復<br><br>
+        吃藥吃到想吐<br>
+        花錢花到躊躇<br>
+        付出一切全部<br>
+        我仍是個廢物<br><br>
+        身心狼狽無助<br>
+        渴望獲得救贖<br>
+        自述誰願頌讀<br>
+        故事誰能領悟<br><br>
+        不想過度贅述<br>
+        無聊瑣碎世故<br>
+        只問這些重負<br>
+        何時才能結束
+    </div>
+
+    <!-- 第六首：碎嘴 -->
     <div class="poem p-suizui">
-        <div class="poem-title">碎嘴</div><br>
+        <div class="poem-title">〈碎嘴〉</div>
         投注我的青春歲月<br>
         妄想將不屬於我的<br>
         那些亮眼頭銜成就<br>
@@ -267,11 +235,11 @@
         只盼苦難終將了結
     </div>
 
-    <div class="cross-divider" style="margin-top: 50px;">‡</div>
+    <div class="cross-divider">‡</div>
 
-    <!-- 第六首：我 -->
+    <!-- 第七首：我 -->
     <div class="poem p-wo">
-        <div class="poem-title">我</div><br>
+        <div class="poem-title">〈我〉</div>
         在他人傷害我之前<br>
         我早已將自己擊敗<br>
         在他人拯救我之際<br>
@@ -291,7 +259,7 @@
         我的肉身 將與大地、海洋合而為一<br>
         我的存在 將於宇宙、銀河消失殆盡<br>
         我的魂魄 將在地獄、深淵無盡徘徊<br><br>
-        <div style="margin-top: 40px; font-weight: bold; letter-spacing: 5px;">
+        <div style="margin-top: 50px; font-weight: bold; letter-spacing: 5px;">
             <span class="intense">不要幫我</span> 羞辱我<br>
             <span class="intense">不要救我</span> 放棄我<br>
             <span class="intense">不要愛我</span> 憎恨我<br>
