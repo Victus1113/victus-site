@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>囈語詩篇</title>
+<title>囈語</title>
 <style>
     /* =========================
        全局設定：暗夜深淵背景
@@ -44,13 +44,15 @@
     ========================= */
     .poem {
         position: relative;
-        margin-bottom: 150px;
+        margin: 0 auto 150px auto;
         letter-spacing: 4px;
         line-height: 2.5;
-        font-size: 20px; /* 字體放大 */
+        font-size: 20px; 
         opacity: 0.65;
         transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         text-shadow: 0 0 5px rgba(0,0,0,0.8);
+        width: fit-content; /* 讓容器寬度貼合文字，標題才能對齊內文正上方 */
+        box-sizing: border-box;
     }
 
     .poem:hover {
@@ -59,14 +61,14 @@
         transform: scale(1.02);
     }
 
-    /* 提亮並置中的標題 */
+    /* 提亮並置中的標題 (大小與內文同步) */
     .poem-title {
-        font-size: 16px;
-        color: #b3a7c4; /* 提亮顏色 */
+        font-size: 1em; /* 繼承外層的字體大小 */
+        color: #b3a7c4; 
         margin: 0 auto 25px auto;
         letter-spacing: 5px;
         border-bottom: 1px solid #42364d;
-        display: block; /* 獨立一行 */
+        display: block; 
         width: fit-content;
         text-align: center;
         padding-bottom: 5px;
@@ -76,35 +78,36 @@
        解構式錯落排版
     ========================= */
 
-    .p-kong { text-align: left; margin-left: 5%; transform: rotate(-1.5deg); }
+    .p-kong { margin-left: 15%; transform: rotate(-1.5deg); }
     .p-kong:hover { text-shadow: 0 0 12px rgba(214, 202, 232, 0.3); }
 
-    .p-yu { text-align: right; margin-right: 5%; color: #554f61; }
+    .p-yu { margin-left: auto; margin-right: 15%; text-align: right; color: #554f61; }
     .p-yu:hover { color: #8c839c; transform: translateY(5px); }
 
-    .p-ei { text-align: center; margin-left: -15%; transform: rotate(3deg); letter-spacing: 6px; line-height: 1.8; }
+    .p-ei { margin-left: 20%; text-align: center; transform: rotate(3deg); letter-spacing: 6px; line-height: 1.8; }
     .p-ei:hover { color: #c9bccc; text-shadow: 0 0 8px rgba(255, 255, 255, 0.2); }
 
-    .p-one { text-align: left; margin-left: 45%; border-left: 1px solid #3d2121; padding-left: 25px; }
+    .p-one { margin-left: 55%; border-left: 1px solid #3d2121; padding-left: 25px; }
     .p-one:hover { border-left-color: #9c2727; color: #e3d1d1; text-shadow: -2px 0 10px rgba(156, 39, 39, 0.5); }
 
-    .p-suizui { text-align: justify; width: 320px; margin: 100px auto; font-size: 18px; line-height: 2.2; padding: 30px; border: 1px dashed #42364d; }
+    /* 碎嘴移除寫死的 font-size，讓它與大家統一 */
+    .p-suizui { text-align: justify; width: 320px; margin: 100px auto; line-height: 2.2; padding: 30px; border: 1px dashed #42364d; }
     .p-suizui:hover { border-color: #726880; background: rgba(20, 15, 25, 0.5); }
 
     /* <ㄨ> 藥物暈眩特效 */
     .p-wu {
         text-align: center;
-        margin-left: 10%;
-        filter: blur(2px); /* 預設模糊暈眩 */
+        margin: 0 auto;
+        filter: blur(2px); 
         opacity: 0.5;
         color: #6a5a73;
         transition: all 0.6s ease-in-out;
     }
     .p-wu:hover {
-        filter: blur(0); /* 聚焦清醒 */
+        filter: blur(0); 
         opacity: 1;
         color: #d1c5d6;
-        transform: scale(0.98); /* 微微下墜縮小的壓迫感 */
+        transform: scale(0.98); 
     }
 
     .p-wo { text-align: center; margin-top: 200px; color: #857896; }
@@ -116,10 +119,21 @@
 
     /* 手機版自適應 */
     @media (max-width: 768px) {
+        /* 手機版字體全面統一為 18px */
         .poem { font-size: 18px; margin-bottom: 100px; }
-        .p-kong, .p-yu, .p-ei, .p-one, .p-wu { margin-left: 0; margin-right: 0; text-align: center; transform: none; }
-        .p-one { border-left: none; border-top: 1px solid #3d2121; padding-top: 20px; padding-left: 0; margin-left: 0; }
-        .p-suizui { width: 85%; }
+        
+        .p-kong, .p-yu, .p-ei, .p-one, .p-wu, .p-wo { 
+            margin-left: auto; 
+            margin-right: auto; 
+            text-align: center; 
+            transform: none; 
+            width: fit-content;
+        }
+        
+        .p-one { border-left: none; border-top: 1px solid #3d2121; padding-top: 20px; padding-left: 0; }
+        
+        /* 修復碎嘴在手機版的標題置中問題 */
+        .p-suizui { width: 85%; padding: 25px; }
     }
 </style>
 </head>
