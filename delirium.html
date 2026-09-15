@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>囈語</title>
+<title>囈語詩篇</title>
 <style>
     /* =========================
        全局設定：暗夜深淵背景
@@ -47,11 +47,11 @@
         margin: 0 auto 150px auto;
         letter-spacing: 4px;
         line-height: 2.5;
-        font-size: 20px; 
+        font-size: 22px; /* 電腦版大字號 */
         opacity: 0.65;
         transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         text-shadow: 0 0 5px rgba(0,0,0,0.8);
-        width: fit-content; /* 讓容器寬度貼合文字，標題才能對齊內文正上方 */
+        width: fit-content; 
         box-sizing: border-box;
     }
 
@@ -63,7 +63,7 @@
 
     /* 提亮並置中的標題 (大小與內文同步) */
     .poem-title {
-        font-size: 1em; /* 繼承外層的字體大小 */
+        font-size: 1em; 
         color: #b3a7c4; 
         margin: 0 auto 25px auto;
         letter-spacing: 5px;
@@ -75,11 +75,35 @@
     }
 
     /* =========================
-       解構式錯落排版
+       解構式錯落排版與專屬特效
     ========================= */
 
-    .p-kong { margin-left: 15%; transform: rotate(-1.5deg); }
-    .p-kong:hover { text-shadow: 0 0 12px rgba(214, 202, 232, 0.3); }
+    /* <唉> 自我封閉退縮特效 */
+    .p-ai { 
+        margin-left: 15%; 
+        text-align: center; 
+        transition: all 0.6s ease-out; 
+    }
+    .p-ai:hover { 
+        transform: scale(0.92); 
+        opacity: 0.35; 
+        letter-spacing: 1px; 
+        color: #554f61; 
+        text-shadow: none; 
+    }
+
+    /* <漠> 冷漠泡影懸浮特效 */
+    .p-mo { 
+        margin-left: 25%; 
+        transform: rotate(-1.5deg); 
+        color: #626a78; /* 冰冷死水灰色調 */
+        transition: all 0.8s ease;
+    }
+    .p-mo:hover { 
+        color: #a8b8d0; /* 淡藍冰冷微光 */
+        transform: rotate(-1.5deg) translateY(-6px); /* 像泡影般無依飄浮 */
+        text-shadow: 0 0 12px rgba(168, 184, 208, 0.35); 
+    }
 
     .p-yu { margin-left: auto; margin-right: 15%; text-align: right; color: #554f61; }
     .p-yu:hover { color: #8c839c; transform: translateY(5px); }
@@ -89,10 +113,6 @@
 
     .p-one { margin-left: 55%; border-left: 1px solid #3d2121; padding-left: 25px; }
     .p-one:hover { border-left-color: #9c2727; color: #e3d1d1; text-shadow: -2px 0 10px rgba(156, 39, 39, 0.5); }
-
-    /* 碎嘴移除寫死的 font-size，讓它與大家統一 */
-    .p-suizui { text-align: justify; width: 320px; margin: 100px auto; line-height: 2.2; padding: 30px; border: 1px dashed #42364d; }
-    .p-suizui:hover { border-color: #726880; background: rgba(20, 15, 25, 0.5); }
 
     /* <ㄨ> 藥物暈眩特效 */
     .p-wu {
@@ -110,6 +130,16 @@
         transform: scale(0.98); 
     }
 
+    /* <絮> 排版完美置中 */
+    .p-xu { 
+        text-align: center; 
+        margin: 100px auto; 
+        line-height: 2.2; 
+        padding: 30px 40px; 
+        border: 1px dashed #42364d; 
+    }
+    .p-xu:hover { border-color: #726880; background: rgba(20, 15, 25, 0.5); }
+
     .p-wo { text-align: center; margin-top: 200px; color: #857896; }
     .p-wo .intense { color: #9c2727; transition: 0.5s; }
     .p-wo:hover { text-shadow: 0 0 20px rgba(156, 39, 39, 0.4); color: #f2e6e6; }
@@ -119,10 +149,10 @@
 
     /* 手機版自適應 */
     @media (max-width: 768px) {
-        /* 手機版字體全面統一為 18px */
-        .poem { font-size: 18px; margin-bottom: 100px; }
+        /* 手機版字體放大為 20px */
+        .poem { font-size: 20px; margin-bottom: 100px; }
         
-        .p-kong, .p-yu, .p-ei, .p-one, .p-wu, .p-wo { 
+        .p-ai, .p-mo, .p-yu, .p-ei, .p-one, .p-wu, .p-wo { 
             margin-left: auto; 
             margin-right: auto; 
             text-align: center; 
@@ -132,8 +162,7 @@
         
         .p-one { border-left: none; border-top: 1px solid #3d2121; padding-top: 20px; padding-left: 0; }
         
-        /* 修復碎嘴在手機版的標題置中問題 */
-        .p-suizui { width: 85%; padding: 25px; }
+        .p-xu { width: 85%; padding: 25px; }
     }
 </style>
 </head>
@@ -141,9 +170,30 @@
 
 <div class="container">
 
-    <!-- 第一首：空 -->
-    <div class="poem p-kong">
-        <div class="poem-title">〈一〉</div>
+    <!-- 第一首：唉 -->
+    <div class="poem p-ai">
+        <div class="poem-title">〈唉〉</div>
+        我只想要被人愛<br>
+        下場卻都很悲哀<br>
+        常被物化受傷害<br>
+        卻難以輕易釋懷<br><br>
+        成天妄想談性愛<br>
+        理所當然這不該<br>
+        但我依舊沒學乖<br>
+        到頭自己又失態<br><br>
+        難道是我人很壞<br>
+        大家才不願久待<br>
+        但我依舊不明白<br>
+        為何唯我沒人愛<br><br>
+        現在我只好耍賴<br>
+        招認是自己奇怪<br>
+        再把所有人推開<br>
+        鎖緊心房不出來
+    </div>
+
+    <!-- 第二首：漠 -->
+    <div class="poem p-mo">
+        <div class="poem-title">〈漠〉</div>
         數不清的泡影<br>
         嘗試握在手裡<br>
         指腹輕觸瞬息<br>
@@ -160,7 +210,7 @@
 
     <div class="cross-divider">†</div>
 
-    <!-- 第二首：鬱 -->
+    <!-- 第三首：鬱 -->
     <div class="poem p-yu">
         <div class="poem-title">〈鬱〉</div>
         身在海底無限下沉<br>
@@ -177,7 +227,7 @@
         終會伴隨我的一生
     </div>
 
-    <!-- 第三首：ㄟ -->
+    <!-- 第四首：ㄟ -->
     <div class="poem p-ei">
         <div class="poem-title">〈ㄟ〉</div>
         窗外很黑  昨晚沒睡<br>
@@ -188,9 +238,9 @@
         我不後悔  也別再會
     </div>
 
-    <!-- 第四首：1 -->
+    <!-- 第五首：一 -->
     <div class="poem p-one">
-        <div class="poem-title">〈1〉</div>
+        <div class="poem-title">〈一〉</div>
         勒緊脖子向後倚<br>
         長直傷痕的血液<br>
         我在生死間游移<br>
@@ -207,7 +257,7 @@
 
     <div class="cross-divider">†</div>
 
-    <!-- 第五首：ㄨ (暈眩特效) -->
+    <!-- 第六首：ㄨ -->
     <div class="poem p-wu">
         <div class="poem-title">〈ㄨ〉</div>
         本質性的痛苦<br>
@@ -228,9 +278,9 @@
         何時才能結束
     </div>
 
-    <!-- 第六首：碎嘴 -->
-    <div class="poem p-suizui">
-        <div class="poem-title">〈碎嘴〉</div>
+    <!-- 第七首：絮 -->
+    <div class="poem p-xu">
+        <div class="poem-title">〈絮〉</div>
         投注我的青春歲月<br>
         妄想將不屬於我的<br>
         那些亮眼頭銜成就<br>
@@ -251,7 +301,7 @@
 
     <div class="cross-divider">‡</div>
 
-    <!-- 第七首：我 -->
+    <!-- 第八首：我 -->
     <div class="poem p-wo">
         <div class="poem-title">〈我〉</div>
         在他人傷害我之前<br>
