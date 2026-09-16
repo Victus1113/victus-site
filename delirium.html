@@ -40,7 +40,7 @@
     }
 
     /* =========================
-       詩篇共用設定 (基礎設定)
+       詩篇共用設定 (基礎排版)
     ========================= */
     .poem {
         position: relative;
@@ -55,7 +55,6 @@
         box-sizing: border-box;
     }
 
-    /* 提亮並置中的標題 */
     .poem-title {
         font-size: 1em; 
         color: #b3a7c4; 
@@ -68,97 +67,73 @@
         padding-bottom: 5px;
     }
 
-    /* 十字架分隔符號 */
-    .cross-divider { 
-        text-align: center; 
-        color: #352a42; 
-        font-size: 28px; 
-        margin: 40px 0 100px 0; 
-    }
+    .cross-divider { text-align: center; color: #352a42; font-size: 28px; margin: 40px 0 100px 0; }
 
     /* =========================
-       各篇詩的靜態基礎排版與色調
+       基礎結構 (預設為電腦版排版)
     ========================= */
     .p-ai { margin-left: 15%; text-align: center; }
     .p-mo { margin-left: 25%; transform: rotate(-1.5deg); color: #626a78; }
     .p-yu { margin-left: auto; margin-right: 15%; text-align: right; color: #8a8298; }
     .p-ei { margin-left: 20%; text-align: center; transform: rotate(3deg); letter-spacing: 6px; line-height: 1.8; }
     .p-one { margin-left: 55%; border-left: 1px solid #3d2121; padding-left: 25px; }
-    .p-wu { text-align: center; margin: 0 auto; color: #6a5a73; }
+    .p-wu { text-align: center; margin: 0 auto; filter: blur(2px); opacity: 0.5; color: #6a5a73; }
     .p-xu { text-align: center; margin: 100px auto; line-height: 2.2; padding: 30px 40px; border: 1px dashed #42364d; }
     .p-wo { text-align: center; margin-top: 200px; color: #857896; }
     .p-wo .intense { color: #9c2727; transition: 0.5s; }
 
     /* =========================
-       【電腦版專屬】：動態 Hover 特效
-       (將特效隔離在此，防止手機觸控時頻繁閃爍)
+       【電腦版專屬特效】 (完全保留)
     ========================= */
-    @media (min-width: 769px) {
+    @media (hover: hover) {
         .poem:hover { opacity: 1; color: #d6cae8; transform: scale(1.02); }
-        
-        .p-ai { transition: all 0.6s ease-out; }
         .p-ai:hover { transform: scale(0.97); opacity: 0.95; letter-spacing: 2px; color: #d6cae8; }
-        
-        .p-mo { transition: all 0.8s ease; }
         .p-mo:hover { color: #a8b8d0; transform: rotate(-1.5deg) translateY(-6px); text-shadow: 0 0 12px rgba(168, 184, 208, 0.35); }
-        
         .p-yu:hover { color: #baaed1; transform: translateY(5px); }
-        
         .p-ei:hover { color: #c9bccc; text-shadow: 0 0 8px rgba(255, 255, 255, 0.2); }
-        
         .p-one:hover { border-left-color: #9c2727; color: #e3d1d1; text-shadow: -2px 0 10px rgba(156, 39, 39, 0.5); }
-        
-        /* ㄨ 電腦版才有藥物暈眩特效，滑入時才變清晰 */
-        .p-wu { filter: blur(2px); opacity: 0.5; transition: all 0.6s ease-in-out; }
         .p-wu:hover { filter: blur(0); opacity: 1; color: #d1c5d6; transform: scale(0.98); }
-        
         .p-xu:hover { border-color: #726880; background: rgba(20, 15, 25, 0.5); }
-        
         .p-wo:hover { text-shadow: 0 0 20px rgba(156, 39, 39, 0.4); color: #f2e6e6; }
         .p-wo:hover .intense { color: #d13030; text-shadow: 0 0 15px rgba(209, 48, 48, 0.8); }
     }
 
     /* =========================
-       【手機版專屬】：靜態易讀模式
-       (解除模糊、統一提亮、防抖動)
+       【手機版自適應 & 點擊特效】
     ========================= */
     @media (max-width: 768px) {
         .poem { 
             font-size: 20px; 
             margin-bottom: 100px; 
-            opacity: 0.95; /* 整體提高不透明度，不須觸碰也能清楚閱讀 */
-            color: #8c839c; /* 基礎文字微幅提亮 */
-            transform: none !important; /* 強制移除旋轉與位移 */
+            opacity: 0.8; 
+            -webkit-tap-highlight-color: transparent; /* 移除手機預設點擊灰框 */
+            cursor: pointer; /* 讓手機瀏覽器知道這是可以點的 */
         }
         
-        /* 統一置中，防止破版 */
         .p-ai, .p-mo, .p-yu, .p-ei, .p-one, .p-wu, .p-wo { 
-            margin-left: auto; 
-            margin-right: auto; 
-            text-align: center; 
-            width: fit-content;
+            margin-left: auto; margin-right: auto; text-align: center; width: fit-content; 
         }
-
-        /* 針對各別詩篇在手機版給予「直接提亮」的靜態色調 */
-        .p-mo { color: #8a94a6; } 
-        .p-yu { color: #a39bb3; } 
-        .p-wu { color: #9c8da6; filter: none; opacity: 0.95; } /* <ㄨ> 直接解除模糊，清晰呈現 */
-        .p-wo { color: #9a8da8; }
-        
-        /* <一> 手機版：上方加上靜態的明顯血紅線條與偏紅字體 */
-        .p-one { 
-            border-left: none; 
-            border-top: 2px solid #a63030; 
-            padding-top: 20px; 
-            padding-left: 0; 
-            color: #cfaeaf;
-        }
-        
+        .p-mo { transform: rotate(-1.5deg); }
+        .p-ei { transform: rotate(2deg); }
+        .p-one { border-left: none; border-top: 2px solid #5c2323; padding-top: 20px; padding-left: 0; }
+        .p-wu { filter: blur(1.2px); opacity: 0.75; }
         .p-xu { width: 85%; padding: 25px; }
+
+        /* --- 手機專屬互動：點擊後掛上的 .active-poem 類別 --- */
+        .poem.active-poem { opacity: 1; color: #d6cae8; transform: scale(1.02); transition-duration: 0.3s; }
+        .p-ai.active-poem { transform: scale(0.97); letter-spacing: 2px; }
+        .p-mo.active-poem { color: #a8b8d0; transform: rotate(-1.5deg) translateY(-4px); text-shadow: 0 0 10px rgba(168,184,208,0.3); }
+        .p-yu.active-poem { color: #baaed1; transform: translateY(4px); }
+        .p-ei.active-poem { color: #c9bccc; text-shadow: 0 0 8px rgba(255,255,255,0.2); }
+        .p-one.active-poem { border-top-color: #d13030; color: #e3d1d1; text-shadow: 0 -2px 10px rgba(209,48,48,0.5); }
+        .p-wu.active-poem { filter: blur(0); opacity: 1; color: #d1c5d6; transform: scale(0.98); }
+        .p-xu.active-poem { border-color: #726880; background: rgba(20, 15, 25, 0.4); }
+        .p-wo.active-poem { text-shadow: 0 0 15px rgba(156, 39, 39, 0.4); color: #f2e6e6; }
+        .p-wo.active-poem .intense { color: #d13030; text-shadow: 0 0 15px rgba(209, 48, 48, 0.8); }
     }
 </style>
 </head>
-<body>
+<body ontouchstart="">
 
 <div class="container">
 
@@ -325,6 +300,28 @@
     </div>
 
 </div>
+
+<!-- JavaScript 魔法：控制手機版的點擊鎖定特效 -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const poems = document.querySelectorAll('.poem');
+        
+        poems.forEach(poem => {
+            poem.addEventListener('click', function() {
+                // 先檢查目前點擊的這首詩是不是已經亮著
+                const isActive = this.classList.contains('active-poem');
+                
+                // 把所有詩的發光/特效都關掉
+                poems.forEach(p => p.classList.remove('active-poem'));
+                
+                // 如果它原本沒有亮，就讓它亮起來 (達成切換與排他效果)
+                if (!isActive) {
+                    this.classList.add('active-poem');
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
