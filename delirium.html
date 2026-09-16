@@ -40,7 +40,7 @@
     }
 
     /* =========================
-       詩篇共用設定 (基礎排版)
+       詩篇共用設定 (基礎排版與優雅動畫)
     ========================= */
     .poem {
         position: relative;
@@ -49,6 +49,7 @@
         line-height: 2.5;
         font-size: 22px; 
         opacity: 0.65;
+        /* 這行是魔幻優雅漸變的靈魂：0.8秒的緩慢呼吸感 */
         transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         text-shadow: 0 0 5px rgba(0,0,0,0.8);
         width: fit-content; 
@@ -80,7 +81,7 @@
     .p-wu { text-align: center; margin: 0 auto; filter: blur(2px); opacity: 0.5; color: #6a5a73; }
     .p-xu { text-align: center; margin: 100px auto; line-height: 2.2; padding: 30px 40px; border: 1px dashed #42364d; }
     .p-wo { text-align: center; margin-top: 200px; color: #857896; }
-    .p-wo .intense { color: #9c2727; transition: 0.5s; }
+    .p-wo .intense { color: #9c2727; transition: all 0.8s ease; } /* 同步讓血紅色漸變也變優雅 */
 
     /* =========================
        【電腦版專屬特效】 (完全保留)
@@ -99,7 +100,7 @@
     }
 
     /* =========================
-       【手機版自適應 & 點擊特效】
+       【手機版自適應 & 點擊鎖定特效】
     ========================= */
     @media (max-width: 768px) {
         .poem { 
@@ -120,7 +121,8 @@
         .p-xu { width: 85%; padding: 25px; }
 
         /* --- 手機專屬互動：點擊後掛上的 .active-poem 類別 --- */
-        .poem.active-poem { opacity: 1; color: #d6cae8; transform: scale(1.02); transition-duration: 0.3s; }
+        /* 移除了 0.3s 的干擾，讓這裡完美繼承 0.8s 的優雅浮現 */
+        .poem.active-poem { opacity: 1; color: #d6cae8; transform: scale(1.02); }
         .p-ai.active-poem { transform: scale(0.97); letter-spacing: 2px; }
         .p-mo.active-poem { color: #a8b8d0; transform: rotate(-1.5deg) translateY(-4px); text-shadow: 0 0 10px rgba(168,184,208,0.3); }
         .p-yu.active-poem { color: #baaed1; transform: translateY(4px); }
@@ -308,13 +310,12 @@
         
         poems.forEach(poem => {
             poem.addEventListener('click', function() {
-                // 先檢查目前點擊的這首詩是不是已經亮著
                 const isActive = this.classList.contains('active-poem');
                 
                 // 把所有詩的發光/特效都關掉
                 poems.forEach(p => p.classList.remove('active-poem'));
                 
-                // 如果它原本沒有亮，就讓它亮起來 (達成切換與排他效果)
+                // 如果它原本沒有亮，就讓它亮起來
                 if (!isActive) {
                     this.classList.add('active-poem');
                 }
